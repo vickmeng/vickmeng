@@ -1,0 +1,11 @@
+**/*.md
+**/*.svg
+**/*.ejs
+**/*.html
+packages/cloud-web/src/runTimeConfig/diffConfig/.umi
+.umi-production
+package.json
+package-lock.json
+*.d.ts
+logs
+*.md
