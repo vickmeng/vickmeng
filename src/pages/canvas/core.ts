@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { getVerticesFromMesh } from '@/pages/utils';
+import { getVerticesFromMesh } from '@/pages/canvas/utils';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { ConfigMap } from '@/pages/config';
+import { ConfigMap } from '@/pages/canvas/config';
 
 // 创建场景
 export const scene = new THREE.Scene();
@@ -39,12 +39,12 @@ currentModelMesh.position.set(firstConfig.position.x, firstConfig.position.y, fi
 
 scene.add(currentModelMesh);
 
-const vertices = getVerticesFromMesh({ mesh: currentModelMesh, position: firstConfig.position });
-
-const position = new THREE.Float32BufferAttribute(vertices, 3);
-position.needsUpdate = true;
-
-pointsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+// const vertices = getVerticesFromMesh({ mesh: currentModelMesh, position: firstConfig.position });
+//
+// const position = new THREE.Float32BufferAttribute(vertices, 3);
+// position.needsUpdate = true;
+//
+// pointsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
 // points.geometry.attributes.position.needsUpdate = true;
 /**
