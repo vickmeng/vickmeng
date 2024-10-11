@@ -4,11 +4,11 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ConfigMap } from '@/pages/config';
 
 // 创建场景
-const scene = new THREE.Scene();
-const clock = new THREE.Clock();
+export const scene = new THREE.Scene();
+export const clock = new THREE.Clock();
 
 // 创建相机
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 // 创建渲染器
 const renderer = new THREE.WebGLRenderer();
@@ -27,24 +27,26 @@ camera.position.set(0, 20, 800);
 const firstConfig = ConfigMap['1'];
 
 const pointsGeometry = new THREE.BufferGeometry();
-const pointsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
+const pointsMaterial = new THREE.PointsMaterial({ color: 0xff0000, size: 1 });
 export const points = new THREE.Points(pointsGeometry, pointsMaterial);
 
 scene.add(points);
 
-// // 创建几何体和材质
-const currentModelGeometry = firstConfig.model;
-const currentModelMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
 //
 // // 创建网格
-const currentModelMesh = new THREE.Mesh(currentModelGeometry, currentModelMaterial);
+const currentModelMesh = firstConfig.mesh;
 currentModelMesh.position.set(firstConfig.position.x, firstConfig.position.y, firstConfig.position.z);
 
 scene.add(currentModelMesh);
 
-const vertices = getVerticesFromMesh(currentModelMesh);
+const vertices = getVerticesFromMesh({ mesh: currentModelMesh, position: firstConfig.position });
+
+const position = new THREE.Float32BufferAttribute(vertices, 3);
+position.needsUpdate = true;
 
 pointsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+// points.geometry.attributes.position.needsUpdate = true;
 /**
  * 创建第一个场景 end
  */
@@ -55,25 +57,29 @@ function animate() {
 
   renderer.render(scene, camera);
   controls.update();
-  const { position } = points.geometry.attributes;
-  position.needsUpdate = true;
 
-  for (let i = 0; i < position.count; i++) {
-    const px = position.getX(i);
-    const py = position.getY(i);
-    const pz = position.getZ(i);
+  // if (points.geometry.attributes.position) {
+  //   // const { position } = points.geometry.attributes;
+  //   points.geometry.attributes.position.needsUpdate = true;
+  // }
 
-    const delta = clock.getDelta();
-
-    // position.setXYZ(
-    //   i,
-    //   px + getRandomNumberFormZeroToOne() * delta * 999999,
-    //   py + getRandomNumberFormZeroToOne() * delta * 999999,
-    //   pz + getRandomNumberFormZeroToOne() * delta * 999999
-    // );
-
-    position.setXYZ(i, px + 1, py + 1, pz + 1);
-  }
+  //
+  // for (let i = 0; i < position.count; i++) {
+  //   const px = position.getX(i);
+  //   const py = position.getY(i);
+  //   const pz = position.getZ(i);
+  //
+  //   const delta = clock.getDelta();
+  //
+  //   // position.setXYZ(
+  //   //   i,
+  //   //   px + getRandomNumberFormZeroToOne() * delta * 999999,
+  //   //   py + getRandomNumberFormZeroToOne() * delta * 999999,
+  //   //   pz + getRandomNumberFormZeroToOne() * delta * 999999
+  //   // );
+  //
+  //   position.setXYZ(i, px + 1, py + 1, pz + 1);
+  // }
 }
 
 animate();

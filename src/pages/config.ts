@@ -1,11 +1,12 @@
-import { BufferGeometry, BoxGeometry, SphereGeometry, Vector3 } from 'three';
+import { Mesh, BoxGeometry, SphereGeometry, Vector3 } from 'three';
+import * as THREE from 'three';
 
 export interface Config {
   id: string;
   preId?: string;
   nextId?: string;
   position: Vector3;
-  model: BufferGeometry;
+  mesh: Mesh;
 }
 
 export const ConfigMap: Record<string, Config> = {
@@ -14,7 +15,10 @@ export const ConfigMap: Record<string, Config> = {
     preId: undefined,
     nextId: '2',
     position: new Vector3(-600, 0, 0),
-    model: new BoxGeometry(100, 100, 100, 10, 10, 10),
+    mesh: new THREE.Mesh(
+      new BoxGeometry(100, 100, 100, 10, 10, 10),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true })
+    ),
   },
 
   '2': {
@@ -22,6 +26,9 @@ export const ConfigMap: Record<string, Config> = {
     preId: '1',
     nextId: undefined,
     position: new Vector3(30, 0, 0),
-    model: new SphereGeometry(80, 60, 60),
+    mesh: new THREE.Mesh(
+      new SphereGeometry(80, 60, 60),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true })
+    ),
   },
 };

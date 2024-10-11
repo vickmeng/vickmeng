@@ -1,6 +1,14 @@
 import * as THREE from 'three';
+
+interface Params {
+  mesh: THREE.Mesh;
+  position: THREE.Vector3;
+}
+
 // 暂时不考虑导入模型
-export function getVerticesFromMesh(mesh: THREE.Mesh) {
+export function getVerticesFromMesh(params: Params) {
+  const { mesh, position } = params;
+
   const vertices: number[] = [];
   function processMesh(_mesh: THREE.Mesh) {
     if (_mesh.isMesh) {
@@ -8,9 +16,9 @@ export function getVerticesFromMesh(mesh: THREE.Mesh) {
       const positionAttribute = geometry.getAttribute('position');
       if (positionAttribute) {
         for (let i = 0; i < positionAttribute.count; i++) {
-          const x = positionAttribute.getX(i);
-          const y = positionAttribute.getY(i);
-          const z = positionAttribute.getZ(i);
+          const x = positionAttribute.getX(i) + position.x;
+          const y = positionAttribute.getY(i) + position.y;
+          const z = positionAttribute.getZ(i) + position.z;
           vertices.push(x, y, z);
         }
       }
