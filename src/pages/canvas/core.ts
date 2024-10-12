@@ -30,7 +30,7 @@ camera.position.set(0, 20, 800);
 const firstConfig = ConfigMap['1'];
 
 const pointsGeometry = new THREE.BufferGeometry();
-const pointsMaterial = new THREE.PointsMaterial({ color: 0xff0000, size: 1 });
+const pointsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
 export const points = new THREE.Points(pointsGeometry, pointsMaterial);
 
 scene.add(points);
@@ -42,14 +42,6 @@ currentModelMesh.position.set(firstConfig.position.x, firstConfig.position.y, fi
 
 scene.add(currentModelMesh);
 
-// const vertices = getVerticesFromMesh({ mesh: currentModelMesh, position: firstConfig.position });
-//
-// const position = new THREE.Float32BufferAttribute(vertices, 3);
-// position.needsUpdate = true;
-//
-// pointsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-
-// points.geometry.attributes.position.needsUpdate = true;
 /**
  * 创建第一个场景 end
  */

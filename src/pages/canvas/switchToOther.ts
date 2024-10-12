@@ -1,6 +1,6 @@
 import { ConfigMap } from '@/pages/canvas/config';
 import * as THREE from 'three';
-import { points, scene } from '@/pages/canvas/core';
+import { AnimationFrameSubject, points, scene } from '@/pages/canvas/core';
 import { getVerticesFromMesh } from '@/pages/canvas/utils';
 
 interface Options {
@@ -32,31 +32,50 @@ export const switchToOther = (opts: Options) => {
    */
   const vertices = getVerticesFromMesh({ mesh: currentConfig.mesh, position: currentConfig.position });
 
-  const position = new THREE.Float32BufferAttribute(vertices, 3);
-  position.needsUpdate = true;
   points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+  const position = points.geometry.attributes.position;
+  // position.needsUpdate = true;
   /**
    * 让当前点 end
    */
   /**
    * 让当前点四散 start
    */
-  // for (let i = 0; i < position.count; i++) {
-  //   const px = position.getX(i);
-  //   const py = position.getY(i);
-  //   const pz = position.getZ(i);
-  //
-  //   // const delta = clock.getDelta();
-  //
-  //   // position.setXYZ(
-  //   //   i,
-  //   //   px + getRandomNumberFormZeroToOne() * delta * 999999,
-  //   //   py + getRandomNumberFormZeroToOne() * delta * 999999,
-  //   //   pz + getRandomNumberFormZeroToOne() * delta * 999999
-  //   // );
-  //
-  //   position.setXYZ(i, px + 1, py + 1, pz + 1);
-  // }
+
+  AnimationFrameSubject.subscribe(() => {
+    position.needsUpdate = true;
+    for (let i = 0; i < position.count; i++) {
+      const originalPosition = new THREE.Vector3().fromBufferAttribute(position, i);
+      const direction = originalPosition.clone().sub(currentConfig.position);
+
+      const randomFactorX = (Math.random() - 0.5) * 1000;
+      const randomFactorY = (Math.random() - 0.5) * 1000;
+      const randomFactorZ = (Math.random() - 0.5) * 1000;
+
+      direction.x += randomFactorX;
+      direction.y += randomFactorY;
+      direction.z += randomFactorZ;
+
+      let newPosition = originalPosition.clone().add(direction.normalize().multiplyScalar(5)); // 0.1 是缩放因子，可以根据需要调整
+
+      const originalDistanceToCenter = originalPosition.distanceTo(currentConfig.position);
+      const newDistanceToCenter = newPosition.distanceTo(currentConfig.position);
+
+      if (newDistanceToCenter < originalDistanceToCenter) {
+        direction.x -= randomFactorX;
+        direction.y -= randomFactorY;
+        direction.z -= randomFactorZ;
+
+        // newPosition.set(direction.x, direction.y, direction.z);
+
+        newPosition = originalPosition.clone().add(direction.normalize().multiplyScalar(5)); // 0.1 是缩放因子，可以根据需要调整
+      }
+
+      position.setXYZ(i, newPosition.x, newPosition.y, newPosition.z);
+
+      // originalPosition
+    }
+  });
 
   /**
    * 让当前点四散 end
