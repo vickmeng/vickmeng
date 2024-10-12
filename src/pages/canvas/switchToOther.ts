@@ -1,7 +1,8 @@
-import { ConfigMap } from '@/pages/canvas/config';
+import { Config, ConfigMap } from '@/pages/canvas/config';
 import * as THREE from 'three';
 import { AnimationFrameSubject, clock, points, scene } from '@/pages/canvas/core';
 import { getVerticesFromMesh } from '@/pages/canvas/utils';
+import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 
 interface Options {
   currentId: string;
@@ -9,7 +10,7 @@ interface Options {
   onFinish?: () => void;
 }
 
-export const switchToOther = (opts: Options) => {
+export const switchToOther = async (opts: Options) => {
   const { currentId, targetId } = opts;
 
   const currentConfig = ConfigMap[currentId];
@@ -28,21 +29,35 @@ export const switchToOther = (opts: Options) => {
   // const { position } = points.geometry.attributes;
 
   /**
-   * 让当前点 start
+   * 生成沙子 start
    */
   const vertices = getVerticesFromMesh({ mesh: currentConfig.mesh, position: currentConfig.position });
 
   points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-  const position = points.geometry.attributes.position;
-  // position.needsUpdate = true;
+
   /**
-   * 让当前点 end
+   * 生成沙子 end
    */
   /**
    * 让当前点四散 start
    */
+  await sandsFly({ currentConfig });
 
-  AnimationFrameSubject.subscribe(() => {
+  /**
+   * 让当前点四散 end
+   */
+};
+
+// 沙子散开，物体隐藏
+const sandsFly = async (params: { currentConfig: Config }) => {
+  const { currentConfig } = params;
+
+  const position = points.geometry.attributes.position;
+
+  const sandsFlyFinishSubject = new Subject();
+
+  const sandsFly$ = AnimationFrameSubject.asObservable().pipe(takeUntil(sandsFlyFinishSubject));
+  sandsFly$.subscribe(() => {
     const delta = clock.getDelta();
     const scalar = 500 * delta; // 在不同帧率保持速度
     // console.log(delta);
@@ -79,7 +94,9 @@ export const switchToOther = (opts: Options) => {
     }
   });
 
-  /**
-   * 让当前点四散 end
-   */
+  setTimeout(() => {
+    sandsFlyFinishSubject.next(undefined);
+  }, 500);
+
+  await lastValueFrom(sandsFly$);
 };
