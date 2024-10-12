@@ -11,7 +11,7 @@ export default function HomePage() {
       <button>上上上上上上</button>
       <button
         onClick={() => {
-          switchToOther({ currentId: '1', targetId: '2' });
+          switchToOther({ fromIndex: 0, toIndex: 1 });
         }}
       >
         下下下下下下

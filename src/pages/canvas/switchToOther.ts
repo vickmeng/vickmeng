@@ -1,4 +1,4 @@
-import { Config, ConfigMap } from '@/pages/canvas/config';
+import { Config, ConfigList } from '@/pages/canvas/config';
 import * as THREE from 'three';
 import { AnimationFrameSubject, clock, points, scene } from '@/pages/canvas/core';
 import { getVerticesFromMesh } from '@/pages/canvas/utils';
@@ -7,26 +7,26 @@ import { Easing, Tween } from '@tweenjs/tween.js';
 import { MeshBasicMaterial } from 'three';
 
 interface Options {
-  currentId: string;
-  targetId: string;
+  fromIndex: number;
+  toIndex: number;
   onFinish?: () => void;
 }
 
 export const switchToOther = async (opts: Options) => {
-  const { currentId, targetId } = opts;
+  const { fromIndex, toIndex } = opts;
 
-  const currentConfig = ConfigMap[currentId];
-  const targetConfig = ConfigMap[targetId];
+  const fromConfig = ConfigList[fromIndex];
+  const toConfig = ConfigList[toIndex];
   // // 创建target网格
-  const targetModelMesh = targetConfig.mesh;
-  targetModelMesh.position.set(targetConfig.position.x, targetConfig.position.y, targetConfig.position.z);
+  const targetModelMesh = toConfig.mesh;
+  targetModelMesh.position.set(toConfig.position.x, toConfig.position.y, toConfig.position.z);
   scene.add(targetModelMesh);
   /**
    * 生成沙子 start
    */
-  const vertices = getVerticesFromMesh({ mesh: currentConfig.mesh, position: currentConfig.position });
+  // const vertices = getVerticesFromMesh({ mesh: fromConfig.mesh, position: fromConfig.position });
 
-  points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+  points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(fromConfig.pointVertices, 3));
 
   /**
    * 生成沙子 end
@@ -36,7 +36,7 @@ export const switchToOther = async (opts: Options) => {
    * 网格消失
    */
   // 直接干掉比缓动效果反倒好一些
-  const mesh = currentConfig.mesh;
+  const mesh = fromConfig.mesh;
   // scene.remove(mesh);
   (mesh.material as MeshBasicMaterial).opacity = 0;
   /**
@@ -47,9 +47,9 @@ export const switchToOther = async (opts: Options) => {
    * 让当前点四散 start
    */
 
-  await sandsFly({ currentConfig });
+  // await sandsFly({ fromConfig });
 
-  // await sandsFly({ currentConfig });
+  // await sandsFly({ fromConfig });
 
   /**
    * 让当前点四散 end

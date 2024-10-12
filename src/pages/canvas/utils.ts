@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Vector3 } from 'three';
 
 interface Params {
   mesh: THREE.Mesh;
@@ -51,4 +52,54 @@ const createNearPosition = (position: { x: number; y: number; z: number }, range
     y: position.y + (Math.random() - 0.5) * range,
     z: position.z + (Math.random() - 0.5) * range,
   };
+};
+
+export function getVectorListFromMesh(params: Params) {
+  const { mesh, position } = params;
+
+  const vectors: Vector3[] = [];
+  function processMesh(_mesh: THREE.Mesh) {
+    if (_mesh.isMesh) {
+      const geometry = _mesh.geometry;
+      const positionAttribute = geometry.getAttribute('position');
+
+      if (positionAttribute) {
+        for (let i = 0; i < positionAttribute.count; i++) {
+          const x = positionAttribute.getX(i) + position.x;
+          const y = positionAttribute.getY(i) + position.y;
+          const z = positionAttribute.getZ(i) + position.z;
+
+          // 随机差值 让点位更多些
+          const interpolateVectorList: Vector3[] = Array(20)
+            .fill(null)
+            .map(() => {
+              const _position = createNearPosition({ x, y, z }, 10);
+              return new Vector3(_position.x, _position.y, _position.z);
+            });
+
+          vectors.push(new Vector3(x, y, z), ...interpolateVectorList);
+        }
+      }
+    }
+    if (_mesh.children && _mesh.children.length > 0) {
+      for (let i = 0; i < _mesh.children.length; i++) {
+        processMesh(_mesh.children[i] as THREE.Mesh);
+      }
+    }
+  }
+  processMesh(mesh);
+
+  return vectors;
+
+  // return vertices;
+}
+// 将坐标转为数据
+export const getVerticesFromVectors = (vectors: Vector3[]) => {
+  const vertices: number[] = [];
+
+  vectors.forEach((vector) => {
+    vertices.push(vector.x, vector.y, vector.z);
+  });
+
+  return vertices;
 };
