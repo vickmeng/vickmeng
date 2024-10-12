@@ -2,8 +2,8 @@ import { Config, ConfigMap } from '@/pages/canvas/config';
 import * as THREE from 'three';
 import { AnimationFrameSubject, clock, points, scene } from '@/pages/canvas/core';
 import { getVerticesFromMesh } from '@/pages/canvas/utils';
-import { lastValueFrom, Subject, take, takeUntil } from 'rxjs';
-import { Tween, Easing } from '@tweenjs/tween.js';
+import { lastValueFrom, Subject, takeUntil } from 'rxjs';
+import { Easing, Tween } from '@tweenjs/tween.js';
 import { MeshBasicMaterial } from 'three';
 
 interface Options {
@@ -37,8 +37,8 @@ export const switchToOther = async (opts: Options) => {
    */
   // 直接干掉比缓动效果反倒好一些
   const mesh = currentConfig.mesh;
-  scene.remove(mesh);
-  // (mesh.material as MeshBasicMaterial).opacity = 0;
+  // scene.remove(mesh);
+  (mesh.material as MeshBasicMaterial).opacity = 0;
   /**
    * 网格消失 出现
    */

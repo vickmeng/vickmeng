@@ -54,4 +54,6 @@ AnimationFrameSubject.asObservable().subscribe(() => {
   });
 });
 
-AnimationFrameSubject.next(undefined);
+requestAnimationFrame((time) => {
+  AnimationFrameSubject.next(time);
+});
