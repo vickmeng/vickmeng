@@ -4,6 +4,7 @@ import { AnimationFrameSubject, clock, points, scene } from '@/pages/canvas/core
 import { getVerticesFromMesh } from '@/pages/canvas/utils';
 import { lastValueFrom, Subject, take, takeUntil } from 'rxjs';
 import { Tween, Easing } from '@tweenjs/tween.js';
+import { MeshBasicMaterial } from 'three';
 
 interface Options {
   currentId: string;
@@ -30,10 +31,23 @@ export const switchToOther = async (opts: Options) => {
   /**
    * 生成沙子 end
    */
+
+  /**
+   * 网格消失
+   */
+  // 直接干掉比缓动效果反倒好一些
+  const mesh = currentConfig.mesh;
+  scene.remove(mesh);
+  // (mesh.material as MeshBasicMaterial).opacity = 0;
+  /**
+   * 网格消失 出现
+   */
+
   /**
    * 让当前点四散 start
    */
-  await Promise.all([sandsFly({ currentConfig }), hideMesh({ currentConfig })]);
+
+  await sandsFly({ currentConfig });
 
   // await sandsFly({ currentConfig });
 
@@ -48,9 +62,9 @@ const sandsFly = async (params: { currentConfig: Config }) => {
 
   const position = points.geometry.attributes.position;
 
-  const sandsFlyFinish = new Subject();
+  const animateFinish = new Subject();
 
-  const sandsFly$ = AnimationFrameSubject.pipe(takeUntil(sandsFlyFinish));
+  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
 
   const moveParams = { speed: 4 };
 
@@ -91,11 +105,11 @@ const sandsFly = async (params: { currentConfig: Config }) => {
       }
     })
     .onComplete(() => {
-      sandsFlyFinish.next(undefined);
+      animateFinish.next(undefined);
     })
     .start(); // Start the tween immediately.
 
-  sandsFly$.subscribe({
+  animate$.subscribe({
     next: () => {
       tween.update();
     },
@@ -103,15 +117,5 @@ const sandsFly = async (params: { currentConfig: Config }) => {
       tween.stop();
     },
   });
-  await lastValueFrom(sandsFly$);
-};
-
-const hideMesh = async (params: { currentConfig: Config }) => {
-  const meshHide$ = AnimationFrameSubject.asObservable().pipe(take(20));
-
-  meshHide$.subscribe((v) => {
-    // console.log(v);
-  });
-
-  await lastValueFrom(meshHide$);
+  await lastValueFrom(animate$);
 };
