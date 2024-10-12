@@ -25,7 +25,7 @@ export const ConfigMap: Record<string, Config> = {
     id: '2',
     preId: '1',
     nextId: undefined,
-    position: new Vector3(30, 0, 0),
+    position: new Vector3(600, 0, 0),
     mesh: new THREE.Mesh(
       new SphereGeometry(80, 60, 60),
       new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true })
