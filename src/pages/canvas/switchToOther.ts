@@ -1,10 +1,9 @@
 import { Config, ConfigList } from '@/pages/canvas/config';
 import * as THREE from 'three';
+import { MeshBasicMaterial } from 'three';
 import { AnimationFrameSubject, clock, points, scene } from '@/pages/canvas/core';
-import { getVerticesFromMesh } from '@/pages/canvas/utils';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { MeshBasicMaterial } from 'three';
 
 interface Options {
   fromIndex: number;

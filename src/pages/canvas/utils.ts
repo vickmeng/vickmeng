@@ -6,53 +6,24 @@ interface Params {
   position: THREE.Vector3;
 }
 
-// 暂时不考虑导入模型
-export function getVerticesFromMesh(params: Params) {
-  const { mesh, position } = params;
-
-  const vertices: number[] = [];
-  function processMesh(_mesh: THREE.Mesh) {
-    if (_mesh.isMesh) {
-      const geometry = _mesh.geometry;
-      const positionAttribute = geometry.getAttribute('position');
-
-      if (positionAttribute) {
-        for (let i = 0; i < positionAttribute.count; i++) {
-          const x = positionAttribute.getX(i) + position.x;
-          const y = positionAttribute.getY(i) + position.y;
-          const z = positionAttribute.getZ(i) + position.z;
-
-          // 随机差值 让点位更多些
-          const interpolatePoints: number[] = Array(20)
-            .fill(null)
-            .reduce((pre) => {
-              const _point = createNearPosition({ x, y, z }, 10);
-              pre.push(_point.x, _point.y, _point.z);
-
-              return pre;
-            }, []);
-          vertices.push(x, y, z, ...interpolatePoints);
-        }
-      }
-    }
-    if (_mesh.children && _mesh.children.length > 0) {
-      for (let i = 0; i < _mesh.children.length; i++) {
-        processMesh(_mesh.children[i] as THREE.Mesh);
-      }
-    }
-  }
-  processMesh(mesh);
-
-  return vertices;
-}
-
-const createNearPosition = (position: { x: number; y: number; z: number }, range: number) => {
-  return {
-    x: position.x + (Math.random() - 0.5) * range,
-    y: position.y + (Math.random() - 0.5) * range,
-    z: position.z + (Math.random() - 0.5) * range,
-  };
+export const createNearVector = (position: { x: number; y: number; z: number }, range: number) => {
+  return new Vector3(
+    position.x + (Math.random() - 0.5) * range,
+    position.y + (Math.random() - 0.5) * range,
+    position.z + (Math.random() - 0.5) * range
+  );
 };
+
+/**
+ * getVectorListFromMesh
+ * 网格生成点位，并且进行插值
+ * 不考虑高模，正常模型不会有太多点位
+ * 写死为50000个 后面会生成50000个贝塞尔曲线
+ */
+const VECTOR_LIST_AMOUNT = 5000;
+
+// 生成随意点位的范围
+const NEAR_VECTOR_RANGE = 10;
 
 export function getVectorListFromMesh(params: Params) {
   const { mesh, position } = params;
@@ -63,6 +34,9 @@ export function getVectorListFromMesh(params: Params) {
       const geometry = _mesh.geometry;
       const positionAttribute = geometry.getAttribute('position');
 
+      // 向下取整 每个点生成这么多个插值
+      const interpolateAmount = Math.floor(VECTOR_LIST_AMOUNT / positionAttribute.count) - 1;
+
       if (positionAttribute) {
         for (let i = 0; i < positionAttribute.count; i++) {
           const x = positionAttribute.getX(i) + position.x;
@@ -70,11 +44,10 @@ export function getVectorListFromMesh(params: Params) {
           const z = positionAttribute.getZ(i) + position.z;
 
           // 随机差值 让点位更多些
-          const interpolateVectorList: Vector3[] = Array(20)
+          const interpolateVectorList: Vector3[] = Array(interpolateAmount)
             .fill(null)
             .map(() => {
-              const _position = createNearPosition({ x, y, z }, 10);
-              return new Vector3(_position.x, _position.y, _position.z);
+              return createNearVector({ x, y, z }, NEAR_VECTOR_RANGE);
             });
 
           vectors.push(new Vector3(x, y, z), ...interpolateVectorList);
@@ -89,9 +62,17 @@ export function getVectorListFromMesh(params: Params) {
   }
   processMesh(mesh);
 
-  return vectors;
+  //  生成插值是向下取整的，肯定会距离要求少了几个，最随机选中当前已有的点进行再补齐
+  const shortOfAmount = VECTOR_LIST_AMOUNT - vectors.length;
+  Array(shortOfAmount)
+    .fill(null)
+    .forEach(() => {
+      const randomIndex = Math.floor(Math.random() * (vectors.length - 1));
+      const randomVector = vectors[randomIndex];
+      vectors.push(createNearVector(randomVector, NEAR_VECTOR_RANGE));
+    });
 
-  // return vertices;
+  return vectors;
 }
 // 将坐标转为数据
 export const getVerticesFromVectors = (vectors: Vector3[]) => {

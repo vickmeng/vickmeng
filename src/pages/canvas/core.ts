@@ -1,9 +1,11 @@
 import * as THREE from 'three';
 // @ts-ignore
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { ConfigList, handleCalculateConfigList } from '@/pages/canvas/config';
+import { ConfigList, handleCalculateConfigList } from './config';
 import { Subject } from 'rxjs';
 import { MeshBasicMaterial } from 'three';
+
+console.log('ConfigList==', ConfigList);
 
 // 创建场景
 export const scene = new THREE.Scene();
@@ -17,13 +19,11 @@ export const AnimationFrameSubject = new Subject<number>();
 // 创建渲染器
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-
 document.body.appendChild(renderer.domElement);
 
-const controls = new OrbitControls(camera, renderer.domElement);
-
+export const controls = new OrbitControls(camera, renderer.domElement);
 controls.update();
-camera.position.set(0, 20, 800);
+camera.position.set(0, 0, 3000);
 
 /**
  * 创建points start
@@ -59,8 +59,10 @@ ConfigList.forEach((_config, _index) => {
   mesh.position.set(position.x, position.y, position.z);
 
   if (_index !== 0) {
-    // (mesh.material as MeshBasicMaterial).opacity = 0;
+    (mesh.material as MeshBasicMaterial).opacity = 0;
   }
+
+  // 测试贝塞尔
 
   scene.add(mesh);
 });
@@ -71,7 +73,7 @@ ConfigList.forEach((_config, _index) => {
 /**
  *  计算所有点位以及贝塞尔曲线 start
  */
-handleCalculateConfigList();
+handleCalculateConfigList(scene);
 /**
  *  计算所有点位以及贝塞尔曲线 end
  */

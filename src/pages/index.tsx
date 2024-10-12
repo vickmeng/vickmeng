@@ -1,10 +1,8 @@
-import { useEffect } from 'react';
 import { switchToOther } from '@/pages/canvas/switchToOther';
 
+import('./canvas/core');
 export default function HomePage() {
-  useEffect(() => {
-    import('./canvas/core');
-  }, []);
+  // useEffect(() => {}, []);
 
   return (
     <div style={{ position: 'fixed', top: 0, left: 0 }}>
