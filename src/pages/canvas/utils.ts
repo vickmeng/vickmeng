@@ -33,7 +33,7 @@ export function getVerticesFromMesh(params: Params) {
 
   return vertices;
 }
-
-export const getRandomNumberFormZeroToOne = () => {
-  return Math.random() * 2 - 1;
-};
+//
+// export const getRandomNumberFormZeroToOne = () => {
+//   return Math.random() * 2 - 1;
+// };

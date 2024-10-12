@@ -42,33 +42,33 @@ export const switchToOther = (opts: Options) => {
    * 让当前点四散 start
    */
 
+  const scalar = 4;
+
   AnimationFrameSubject.subscribe(() => {
     position.needsUpdate = true;
     for (let i = 0; i < position.count; i++) {
       const originalPosition = new THREE.Vector3().fromBufferAttribute(position, i);
-      const direction = originalPosition.clone().sub(currentConfig.position);
+      // 归一化方向
+      const directionNormalized = originalPosition.clone().sub(currentConfig.position).normalize();
 
-      const randomFactorX = (Math.random() - 0.5) * 1000;
-      const randomFactorY = (Math.random() - 0.5) * 1000;
-      const randomFactorZ = (Math.random() - 0.5) * 1000;
+      const randomFactor = (Math.random() - 0.5) * 6;
 
-      direction.x += randomFactorX;
-      direction.y += randomFactorY;
-      direction.z += randomFactorZ;
+      directionNormalized.x += randomFactor;
+      directionNormalized.y += randomFactor;
+      directionNormalized.z += randomFactor;
 
-      let newPosition = originalPosition.clone().add(direction.normalize().multiplyScalar(5)); // 0.1 是缩放因子，可以根据需要调整
+      let newPosition = originalPosition.clone().add(directionNormalized.multiplyScalar(scalar)); // 0.1 是缩放因子，可以根据需要调整
 
       const originalDistanceToCenter = originalPosition.distanceTo(currentConfig.position);
       const newDistanceToCenter = newPosition.distanceTo(currentConfig.position);
 
       if (newDistanceToCenter < originalDistanceToCenter) {
-        direction.x -= randomFactorX;
-        direction.y -= randomFactorY;
-        direction.z -= randomFactorZ;
+        // 如果方向反转了
+        directionNormalized.x -= randomFactor;
+        directionNormalized.y -= randomFactor;
+        directionNormalized.z -= randomFactor;
 
-        // newPosition.set(direction.x, direction.y, direction.z);
-
-        newPosition = originalPosition.clone().add(direction.normalize().multiplyScalar(5)); // 0.1 是缩放因子，可以根据需要调整
+        newPosition = originalPosition.clone().add(directionNormalized.multiplyScalar(scalar)); // 0.1 是缩放因子，可以根据需要调整
       }
 
       position.setXYZ(i, newPosition.x, newPosition.y, newPosition.z);
