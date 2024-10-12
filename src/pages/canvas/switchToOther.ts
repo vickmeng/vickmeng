@@ -44,7 +44,7 @@ export const switchToOther = (opts: Options) => {
 
   AnimationFrameSubject.subscribe(() => {
     const delta = clock.getDelta();
-    const scalar = 300 * delta; // 在不同帧率保持速度
+    const scalar = 500 * delta; // 在不同帧率保持速度
     // console.log(delta);
 
     position.needsUpdate = true;
@@ -53,7 +53,7 @@ export const switchToOther = (opts: Options) => {
       // 归一化方向
       const directionNormalized = originalPosition.clone().sub(currentConfig.position).normalize();
 
-      const randomFactor = (Math.random() - 0.5) * 6;
+      const randomFactor = Math.random() - 0.5;
 
       directionNormalized.x += randomFactor;
       directionNormalized.y += randomFactor;
