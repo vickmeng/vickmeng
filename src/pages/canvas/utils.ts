@@ -14,12 +14,23 @@ export function getVerticesFromMesh(params: Params) {
     if (_mesh.isMesh) {
       const geometry = _mesh.geometry;
       const positionAttribute = geometry.getAttribute('position');
+
       if (positionAttribute) {
         for (let i = 0; i < positionAttribute.count; i++) {
           const x = positionAttribute.getX(i) + position.x;
           const y = positionAttribute.getY(i) + position.y;
           const z = positionAttribute.getZ(i) + position.z;
-          vertices.push(x, y, z);
+
+          // 随机差值 让点位更多些
+          const interpolatePoints: number[] = Array(20)
+            .fill(null)
+            .reduce((pre) => {
+              const _point = createNearPosition({ x, y, z }, 10);
+              pre.push(_point.x, _point.y, _point.z);
+
+              return pre;
+            }, []);
+          vertices.push(x, y, z, ...interpolatePoints);
         }
       }
     }
@@ -33,7 +44,11 @@ export function getVerticesFromMesh(params: Params) {
 
   return vertices;
 }
-//
-// export const getRandomNumberFormZeroToOne = () => {
-//   return Math.random() * 2 - 1;
-// };
+
+const createNearPosition = (position: { x: number; y: number; z: number }, range: number) => {
+  return {
+    x: position.x + (Math.random() - 0.5) * range,
+    y: position.y + (Math.random() - 0.5) * range,
+    z: position.z + (Math.random() - 0.5) * range,
+  };
+};

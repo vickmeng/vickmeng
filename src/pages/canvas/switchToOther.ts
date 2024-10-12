@@ -2,7 +2,7 @@ import { Config, ConfigMap } from '@/pages/canvas/config';
 import * as THREE from 'three';
 import { AnimationFrameSubject, clock, points, scene } from '@/pages/canvas/core';
 import { getVerticesFromMesh } from '@/pages/canvas/utils';
-import { lastValueFrom, Subject, takeUntil } from 'rxjs';
+import { lastValueFrom, take } from 'rxjs';
 
 interface Options {
   currentId: string;
@@ -15,19 +15,10 @@ export const switchToOther = async (opts: Options) => {
 
   const currentConfig = ConfigMap[currentId];
   const targetConfig = ConfigMap[targetId];
-
-  // const targetModelGeometry = targetConfig.mesh;
-  // const targetModelMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
-
   // // 创建target网格
   const targetModelMesh = targetConfig.mesh;
   targetModelMesh.position.set(targetConfig.position.x, targetConfig.position.y, targetConfig.position.z);
   scene.add(targetModelMesh);
-
-  // const vertices = getVerticesFromMesh(currentConfig.model);
-
-  // const { position } = points.geometry.attributes;
-
   /**
    * 生成沙子 start
    */
@@ -54,13 +45,11 @@ const sandsFly = async (params: { currentConfig: Config }) => {
 
   const position = points.geometry.attributes.position;
 
-  const sandsFlyFinishSubject = new Subject();
+  const sandsFly$ = AnimationFrameSubject.asObservable().pipe(take(50));
 
-  const sandsFly$ = AnimationFrameSubject.asObservable().pipe(takeUntil(sandsFlyFinishSubject));
   sandsFly$.subscribe(() => {
     const delta = clock.getDelta();
     const scalar = 500 * delta; // 在不同帧率保持速度
-    // console.log(delta);
 
     position.needsUpdate = true;
     for (let i = 0; i < position.count; i++) {
@@ -89,14 +78,7 @@ const sandsFly = async (params: { currentConfig: Config }) => {
       }
 
       position.setXYZ(i, newPosition.x, newPosition.y, newPosition.z);
-
-      // originalPosition
     }
   });
-
-  setTimeout(() => {
-    sandsFlyFinishSubject.next(undefined);
-  }, 500);
-
   await lastValueFrom(sandsFly$);
 };
