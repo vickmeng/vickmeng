@@ -11,7 +11,7 @@ export const clock = new THREE.Clock();
 // 创建相机
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100000);
 
-export const AnimationFrameSubject = new Subject<unknown>();
+export const AnimationFrameSubject = new Subject<number>();
 
 // 创建渲染器
 const renderer = new THREE.WebGLRenderer();
@@ -49,8 +49,8 @@ scene.add(currentModelMesh);
 AnimationFrameSubject.asObservable().subscribe(() => {
   renderer.render(scene, camera);
   controls.update();
-  requestAnimationFrame(() => {
-    AnimationFrameSubject.next(undefined);
+  requestAnimationFrame((time) => {
+    AnimationFrameSubject.next(time);
   });
 });
 

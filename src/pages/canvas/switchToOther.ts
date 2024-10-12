@@ -32,7 +32,9 @@ export const switchToOther = async (opts: Options) => {
   /**
    * 让当前点四散 start
    */
-  await sandsFly({ currentConfig });
+  await Promise.all([sandsFly({ currentConfig }), hideMesh({ currentConfig })]);
+
+  // await sandsFly({ currentConfig });
 
   /**
    * 让当前点四散 end
@@ -81,4 +83,14 @@ const sandsFly = async (params: { currentConfig: Config }) => {
     }
   });
   await lastValueFrom(sandsFly$);
+};
+
+const hideMesh = async (params: { currentConfig: Config }) => {
+  const meshHide$ = AnimationFrameSubject.asObservable().pipe(take(20));
+
+  meshHide$.subscribe((v) => {
+    // console.log(v);
+  });
+
+  await lastValueFrom(meshHide$);
 };

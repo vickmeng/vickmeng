@@ -9,6 +9,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "@tweenjs/tween.js": "25.0.0",
     "@types/lodash": "4.17.10",
     "@types/three": "0.169.0",
     "lodash": "4.17.21",
