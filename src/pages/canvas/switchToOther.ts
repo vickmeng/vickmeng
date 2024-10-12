@@ -1,6 +1,6 @@
 import { ConfigMap } from '@/pages/canvas/config';
 import * as THREE from 'three';
-import { AnimationFrameSubject, points, scene } from '@/pages/canvas/core';
+import { AnimationFrameSubject, clock, points, scene } from '@/pages/canvas/core';
 import { getVerticesFromMesh } from '@/pages/canvas/utils';
 
 interface Options {
@@ -42,9 +42,11 @@ export const switchToOther = (opts: Options) => {
    * 让当前点四散 start
    */
 
-  const scalar = 4;
-
   AnimationFrameSubject.subscribe(() => {
+    const delta = clock.getDelta();
+    const scalar = 300 * delta; // 在不同帧率保持速度
+    // console.log(delta);
+
     position.needsUpdate = true;
     for (let i = 0; i < position.count; i++) {
       const originalPosition = new THREE.Vector3().fromBufferAttribute(position, i);
