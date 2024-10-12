@@ -52,14 +52,14 @@ const sandsFly = async (params: { currentConfig: Config }) => {
 
   const sandsFly$ = AnimationFrameSubject.pipe(takeUntil(sandsFlyFinish));
 
-  const moveParams = { speed: 1 };
+  const moveParams = { speed: 4 };
 
   const tween = new Tween(moveParams) // Create a new tween that modifies 'coords'.
     .to({ speed: 0 }, 1200) // Move to (300, 200) in 1 second.
-    .easing(Easing.Exponential.InOut) // Use an easing function to make the animation smooth.
+    .easing(Easing.Cubic.Out) // Use an easing function to make the animation smooth.
     .onUpdate(() => {
       const delta = clock.getDelta();
-      const scalar = 500 * delta * moveParams.speed; // 在不同帧率保持速度
+      const scalar = 300 * delta * moveParams.speed; // 在不同帧率保持速度
 
       position.needsUpdate = true;
       for (let i = 0; i < position.count; i++) {
