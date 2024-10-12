@@ -2,7 +2,8 @@ import { Config, ConfigMap } from '@/pages/canvas/config';
 import * as THREE from 'three';
 import { AnimationFrameSubject, clock, points, scene } from '@/pages/canvas/core';
 import { getVerticesFromMesh } from '@/pages/canvas/utils';
-import { lastValueFrom, take } from 'rxjs';
+import { lastValueFrom, Subject, take, takeUntil } from 'rxjs';
+import { Tween, Easing } from '@tweenjs/tween.js';
 
 interface Options {
   currentId: string;
@@ -47,40 +48,60 @@ const sandsFly = async (params: { currentConfig: Config }) => {
 
   const position = points.geometry.attributes.position;
 
-  const sandsFly$ = AnimationFrameSubject.asObservable().pipe(take(50));
+  const sandsFlyFinish = new Subject();
 
-  sandsFly$.subscribe(() => {
-    const delta = clock.getDelta();
-    const scalar = 500 * delta; // 在不同帧率保持速度
+  const sandsFly$ = AnimationFrameSubject.pipe(takeUntil(sandsFlyFinish));
 
-    position.needsUpdate = true;
-    for (let i = 0; i < position.count; i++) {
-      const originalPosition = new THREE.Vector3().fromBufferAttribute(position, i);
-      // 归一化方向
-      const directionNormalized = originalPosition.clone().sub(currentConfig.position).normalize();
+  const moveParams = { speed: 1 };
 
-      const randomFactor = Math.random() - 0.5;
+  const tween = new Tween(moveParams) // Create a new tween that modifies 'coords'.
+    .to({ speed: 0 }, 1200) // Move to (300, 200) in 1 second.
+    .easing(Easing.Exponential.InOut) // Use an easing function to make the animation smooth.
+    .onUpdate(() => {
+      const delta = clock.getDelta();
+      const scalar = 500 * delta * moveParams.speed; // 在不同帧率保持速度
 
-      directionNormalized.x += randomFactor;
-      directionNormalized.y += randomFactor;
-      directionNormalized.z += randomFactor;
+      position.needsUpdate = true;
+      for (let i = 0; i < position.count; i++) {
+        const originalPosition = new THREE.Vector3().fromBufferAttribute(position, i);
+        // 归一化方向
+        const directionNormalized = originalPosition.clone().sub(currentConfig.position).normalize();
 
-      let newPosition = originalPosition.clone().add(directionNormalized.multiplyScalar(scalar)); // 0.1 是缩放因子，可以根据需要调整
+        const randomFactor = Math.random() - 0.5;
 
-      const originalDistanceToCenter = originalPosition.distanceTo(currentConfig.position);
-      const newDistanceToCenter = newPosition.distanceTo(currentConfig.position);
+        directionNormalized.x += randomFactor;
+        directionNormalized.y += randomFactor;
+        directionNormalized.z += randomFactor;
 
-      if (newDistanceToCenter < originalDistanceToCenter) {
-        // 如果方向反转了
-        directionNormalized.x -= randomFactor;
-        directionNormalized.y -= randomFactor;
-        directionNormalized.z -= randomFactor;
+        let newPosition = originalPosition.clone().add(directionNormalized.multiplyScalar(scalar)); // 0.1 是缩放因子，可以根据需要调整
 
-        newPosition = originalPosition.clone().add(directionNormalized.multiplyScalar(scalar)); // 0.1 是缩放因子，可以根据需要调整
+        const originalDistanceToCenter = originalPosition.distanceTo(currentConfig.position);
+        const newDistanceToCenter = newPosition.distanceTo(currentConfig.position);
+
+        if (newDistanceToCenter < originalDistanceToCenter) {
+          // 如果方向反转了
+          directionNormalized.x -= randomFactor;
+          directionNormalized.y -= randomFactor;
+          directionNormalized.z -= randomFactor;
+
+          newPosition = originalPosition.clone().add(directionNormalized.multiplyScalar(scalar)); // 0.1 是缩放因子，可以根据需要调整
+        }
+
+        position.setXYZ(i, newPosition.x, newPosition.y, newPosition.z);
       }
+    })
+    .onComplete(() => {
+      sandsFlyFinish.next(undefined);
+    })
+    .start(); // Start the tween immediately.
 
-      position.setXYZ(i, newPosition.x, newPosition.y, newPosition.z);
-    }
+  sandsFly$.subscribe({
+    next: () => {
+      tween.update();
+    },
+    complete: () => {
+      tween.stop();
+    },
   });
   await lastValueFrom(sandsFly$);
 };
