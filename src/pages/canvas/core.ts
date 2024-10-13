@@ -5,8 +5,6 @@ import { ConfigList, handleCalculateConfigList } from './config';
 import { Subject } from 'rxjs';
 import { MeshBasicMaterial } from 'three';
 
-console.log('ConfigList==', ConfigList);
-
 // 创建场景
 export const scene = new THREE.Scene();
 export const clock = new THREE.Clock();
@@ -33,6 +31,7 @@ camera.position.set(0, 0, 3000);
 //
 const pointsGeometry = new THREE.BufferGeometry();
 const pointsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
+
 export const points = new THREE.Points(pointsGeometry, pointsMaterial);
 
 scene.add(points);
@@ -74,6 +73,7 @@ ConfigList.forEach((_config, _index) => {
  *  计算所有点位以及贝塞尔曲线 start
  */
 handleCalculateConfigList(scene);
+
 /**
  *  计算所有点位以及贝塞尔曲线 end
  */

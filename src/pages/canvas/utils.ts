@@ -20,10 +20,10 @@ export const createNearVector = (position: { x: number; y: number; z: number }, 
  * 不考虑高模，正常模型不会有太多点位
  * 写死为50000个 后面会生成50000个贝塞尔曲线
  */
-const VECTOR_LIST_AMOUNT = 3000;
+const VECTOR_LIST_AMOUNT = 50000;
 
 // 生成随意点位的范围
-const NEAR_VECTOR_RANGE = 10;
+const NEAR_VECTOR_RANGE = 100;
 
 export function getVectorListFromMesh(params: Params) {
   const { mesh, position } = params;
