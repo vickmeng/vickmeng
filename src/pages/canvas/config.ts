@@ -1,6 +1,11 @@
 import * as THREE from 'three';
 import { BoxGeometry, CubicBezierCurve3, Mesh, Scene, SphereGeometry, Vector3 } from 'three';
-import { createNearVector, getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
+import {
+  createNearVector,
+  createVerticalPosition,
+  getVectorListFromMesh,
+  getVerticesFromVectors,
+} from '@/pages/canvas/utils';
 
 //
 export interface Config {
@@ -13,7 +18,7 @@ export interface Config {
 
 export const ConfigList: Config[] = [
   {
-    position: new Vector3(-8500, 0, 0),
+    position: new Vector3(0, 0, 0),
     mesh: new THREE.Mesh(
       new BoxGeometry(500, 500, 500, 10, 10, 10),
       new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true })
@@ -23,7 +28,7 @@ export const ConfigList: Config[] = [
     toNextBezierCurves: [],
   },
   {
-    position: new Vector3(8500, 0, 0),
+    position: new Vector3(10000, 0, 0),
     mesh: new THREE.Mesh(
       new SphereGeometry(300, 40, 40),
       new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true })
@@ -34,7 +39,7 @@ export const ConfigList: Config[] = [
   },
 ];
 
-const BEZIER_CURVE_AMOUNT = 10;
+const BEZIER_CURVE_AMOUNT = 50;
 
 // handleCalculateConfigList通过计算补全配置
 export const handleCalculateConfigList = (scene: Scene) => {
@@ -44,7 +49,7 @@ export const handleCalculateConfigList = (scene: Scene) => {
     _config.pointVertices = getVerticesFromVectors(_config.pointVectorList);
   });
 
-  // 率先计算所有贝塞尔曲线 TODO
+  // 率先计算所有曲线
   ConfigList.forEach((fromConfig, i) => {
     const toConfig: Config | undefined = ConfigList[i + 1];
 
@@ -52,21 +57,35 @@ export const handleCalculateConfigList = (scene: Scene) => {
       return;
     }
 
+    // 确定多个坐标作为曲线的V1
     const bezierCurveV1List: Vector3[] = [];
+    // 确定多个坐标作为曲线的V2
     const bezierCurveV2List: Vector3[] = [];
 
-    const fromBaseVector = createNearVector(fromConfig.position, 18000);
-    const toBaseVector = createNearVector(toConfig.position, 12000);
+    const diffVector = toConfig.position.clone().sub(fromConfig.position);
+    const lineVector = new THREE.Vector3().subVectors(toConfig.position, fromConfig.position);
+
+    const fromBaseVector = createVerticalPosition(
+      fromConfig.position.clone().add(diffVector.clone().multiplyScalar(1 / 3)),
+      lineVector,
+      diffVector.length() / 2
+    );
+
+    const toBaseVector = createVerticalPosition(
+      fromConfig.position.clone().add(diffVector.clone().multiplyScalar(2 / 3)),
+      lineVector,
+      diffVector.length() / 2
+    );
 
     // 确定点位
     Array(BEZIER_CURVE_AMOUNT)
       .fill(null)
       .forEach(() => {
-        const newBezierCurveV1 = createNearVector(fromBaseVector, 6000);
-        const newBezierCurveV2 = createNearVector(toBaseVector, 6000);
+        const newBezierCurveV1 = createNearVector(fromBaseVector, diffVector.length() / 3);
+        const newBezierCurveV2 = createNearVector(toBaseVector, diffVector.length() / 3);
 
-        bezierCurveV1List.push(newBezierCurveV1);
-        bezierCurveV2List.push(newBezierCurveV2);
+        bezierCurveV1List.push(newBezierCurveV1); // 由1/3位置附近随意点位作为V1
+        bezierCurveV2List.push(newBezierCurveV2); // 由2/3位置附近随意点位作为V2
 
         // 测试
         const testPoint = new THREE.Mesh(new SphereGeometry(20), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
@@ -82,12 +101,12 @@ export const handleCalculateConfigList = (scene: Scene) => {
     fromConfig.pointVectorList.forEach((formVector, index) => {
       const toVector = toConfig.pointVectorList[index];
 
-      const curve = new THREE.CubicBezierCurve3(
+      const curve = new THREE.CatmullRomCurve3([
         formVector,
-        bezierCurveV1List[Math.floor(Math.random() * 10)],
-        bezierCurveV2List[Math.floor(Math.random() * 10)],
-        toVector
-      );
+        bezierCurveV1List[Math.floor(Math.random() * BEZIER_CURVE_AMOUNT)],
+        bezierCurveV2List[Math.floor(Math.random() * BEZIER_CURVE_AMOUNT)],
+        toVector,
+      ]);
 
       const points = curve.getPoints(500);
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
