@@ -3,7 +3,7 @@ import { MeshBasicMaterial } from 'three';
 // @ts-ignore
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ConfigList, handleCalculateConfigList } from './config';
-import { AnimationFrameSubject, camera, scene } from '@/pages/canvas/core';
+import { AnimationFrameSubject, camera, points, scene } from '@/pages/canvas/core';
 
 // 创建场景
 
@@ -17,18 +17,13 @@ controls.update();
 camera.position.set(0, 0, 1000);
 
 /**
- * 创建points start
+ * add points start
  * 暂时不显示点
  */
 
-const pointsGeometry = new THREE.BufferGeometry();
-const pointsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
-
-export const points = new THREE.Points(pointsGeometry, pointsMaterial);
-
 scene.add(points);
 /**
- * 创建points end
+ * add points end
  */
 
 /**
