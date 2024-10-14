@@ -1,6 +1,6 @@
 import { switchToOther } from '@/pages/canvas/switchToOther';
 
-import('./canvas/core');
+import('./canvas/init');
 export default function HomePage() {
   // useEffect(() => {}, []);
 

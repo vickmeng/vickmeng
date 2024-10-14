@@ -1,9 +1,10 @@
 import { Config, ConfigList } from '@/pages/canvas/config';
 import * as THREE from 'three';
-import { MeshBasicMaterial } from 'three';
-import { AnimationFrameSubject, points } from '@/pages/canvas/core';
+import { CatmullRomCurve3, MeshBasicMaterial } from 'three';
+import { points } from '@/pages/canvas/init';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
+import { AnimationFrameSubject, camera, scene } from '@/pages/canvas/core';
 
 interface Options {
   fromIndex: number;
@@ -32,8 +33,8 @@ export const switchToOther = async (opts: Options) => {
    */
   // 直接干掉比缓动效果反倒好一些
   const fromMesh = fromConfig.mesh;
-  // scene.remove(mesh);
-  (fromMesh.material as MeshBasicMaterial).opacity = 0;
+
+  // (fromMesh.material as MeshBasicMaterial).opacity = 0;
   /**
    * 网格消失 出现
    */
@@ -41,8 +42,7 @@ export const switchToOther = async (opts: Options) => {
   /**
    * 沙子飞 start
    */
-  await sandsFly({ fromConfig, toConfig });
-
+  await Promise.all([sandsFly({ fromConfig, toConfig }), cameraFollowSands({ fromConfig, toConfig })]);
   /**
    * sandsFly end
    */
@@ -75,6 +75,66 @@ const sandsFly = async (params: { fromConfig: Config; toConfig: Config }) => {
         const newPosition = curve.getPoint(_t);
 
         position.setXYZ(i, newPosition.x, newPosition.y, newPosition.z);
+      }
+    })
+    .onComplete(() => {
+      animateFinish.next(undefined);
+    })
+    .start(); // Start the tween immediately.
+
+  animate$.subscribe({
+    next: () => {
+      tween.update();
+    },
+    complete: () => {
+      tween.stop();
+    },
+  });
+  await lastValueFrom(animate$);
+};
+
+const cameraFollowSands = async (params: { fromConfig: Config; toConfig: Config }) => {
+  const { fromConfig, toConfig } = params;
+
+  const traceSandIndex = Math.floor(fromConfig.toNextCurves.length / 2);
+  // 选择中间的一条贝塞尔曲线
+  const sandCurve = fromConfig.toNextCurves[traceSandIndex];
+
+  const cameraCurvePoints = [camera.position, ...sandCurve.points.slice(1, -1), toConfig.position];
+
+  const cameraCurve = new CatmullRomCurve3(cameraCurvePoints);
+
+  const cameraDistance = toConfig.position.distanceTo(camera.position);
+  const cameraPoints = cameraCurve.getPoints(cameraDistance / 20);
+
+  // // test start
+  const geometry = new THREE.BufferGeometry().setFromPoints(cameraPoints);
+
+  const material = new THREE.LineBasicMaterial({ color: 0xff0000, linewidth: 10 });
+
+  const curveObject = new THREE.Line(geometry, material);
+
+  scene.add(curveObject);
+  // // test end
+
+  const animateFinish = new Subject();
+
+  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
+
+  const moveParams = { t: 0 };
+
+  const tween = new Tween(moveParams)
+    .to({ t: 1 }, 3000)
+
+    .easing(Easing.Cubic.Out)
+    .onUpdate(() => {
+      const _t = moveParams.t;
+
+      // if (_t > 0.2) {
+      // }
+      if (_t < 0.9) {
+        camera.position.copy(cameraCurve.getPoint(_t));
+        camera.lookAt(cameraCurve.getPoint(_t + 0.1));
       }
     })
     .onComplete(() => {

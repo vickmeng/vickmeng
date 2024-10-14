@@ -31,7 +31,7 @@ export const ConfigList: Config[] = [
     toNextDistance: 0,
   },
   {
-    position: new Vector3(2000, 0, 0),
+    position: new Vector3(3000, 0, 0),
     mesh: new THREE.Mesh(
       new SphereGeometry(300, 20, 20),
       new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
