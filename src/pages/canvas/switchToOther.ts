@@ -1,7 +1,7 @@
 import { Config, ConfigList } from '@/pages/canvas/config';
 import * as THREE from 'three';
 import { MeshBasicMaterial } from 'three';
-import { AnimationFrameSubject, points, scene } from '@/pages/canvas/core';
+import { AnimationFrameSubject, points } from '@/pages/canvas/core';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
 
@@ -20,7 +20,6 @@ export const switchToOther = async (opts: Options) => {
   /**
    * 生成沙子 start
    */
-  // const vertices = getVerticesFromMesh({ mesh: fromConfig.mesh, position: fromConfig.position });
 
   points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(fromConfig.pointVertices, 3));
 
@@ -48,7 +47,7 @@ export const switchToOther = async (opts: Options) => {
    * sandsFly end
    */
   const toMesh = toConfig.mesh;
-  // scene.remove(mesh);
+
   (toMesh.material as MeshBasicMaterial).opacity = 1;
 
   points.geometry.setAttribute('position', new THREE.Float32BufferAttribute([], 3));
@@ -70,9 +69,6 @@ const sandsFly = async (params: { fromConfig: Config; toConfig: Config }) => {
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
       const _t = moveParams.t;
-
-      console.log(_t);
-
       position.needsUpdate = true;
       for (let i = 0; i < position.count; i++) {
         const curve = fromConfig.toNextCurves[i];
@@ -96,67 +92,3 @@ const sandsFly = async (params: { fromConfig: Config; toConfig: Config }) => {
   });
   await lastValueFrom(animate$);
 };
-
-// // 沙子散开，物体隐藏
-// const sandsFly2 = async (params: { currentConfig: Config }) => {
-//   const { currentConfig } = params;
-//
-//   const position = points.geometry.attributes.position;
-//
-//   const animateFinish = new Subject();
-//
-//   const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
-//
-//   const moveParams = { speed: 4 };
-//
-//   const tween = new Tween(moveParams) // Create a new tween that modifies 'coords'.
-//     .to({ speed: 0 }, 1200) // Move to (300, 200) in 1 second.
-//     .easing(Easing.Cubic.Out) // Use an easing function to make the animation smooth.
-//     .onUpdate(() => {
-//       const delta = clock.getDelta();
-//       const scalar = 300 * delta * moveParams.speed; // 在不同帧率保持速度
-//
-//       position.needsUpdate = true;
-//       for (let i = 0; i < position.count; i++) {
-//         const originalPosition = new THREE.Vector3().fromBufferAttribute(position, i);
-//         // 归一化方向
-//         const directionNormalized = originalPosition.clone().sub(currentConfig.position).normalize();
-//
-//         const randomFactor = Math.random() - 0.5;
-//
-//         directionNormalized.x += randomFactor;
-//         directionNormalized.y += randomFactor;
-//         directionNormalized.z += randomFactor;
-//
-//         let newPosition = originalPosition.clone().add(directionNormalized.multiplyScalar(scalar)); // 0.1 是缩放因子，可以根据需要调整
-//
-//         const originalDistanceToCenter = originalPosition.distanceTo(currentConfig.position);
-//         const newDistanceToCenter = newPosition.distanceTo(currentConfig.position);
-//
-//         if (newDistanceToCenter < originalDistanceToCenter) {
-//           // 如果方向反转了
-//           directionNormalized.x -= randomFactor;
-//           directionNormalized.y -= randomFactor;
-//           directionNormalized.z -= randomFactor;
-//
-//           newPosition = originalPosition.clone().add(directionNormalized.multiplyScalar(scalar)); // 0.1 是缩放因子，可以根据需要调整
-//         }
-//
-//         position.setXYZ(i, newPosition.x, newPosition.y, newPosition.z);
-//       }
-//     })
-//     .onComplete(() => {
-//       animateFinish.next(undefined);
-//     })
-//     .start(); // Start the tween immediately.
-//
-//   animate$.subscribe({
-//     next: () => {
-//       tween.update();
-//     },
-//     complete: () => {
-//       tween.stop();
-//     },
-//   });
-//   await lastValueFrom(animate$);
-// };

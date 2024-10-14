@@ -23,7 +23,7 @@ export const ConfigList: Config[] = [
     position: new Vector3(0, 0, 0),
     mesh: new THREE.Mesh(
       new BoxGeometry(500, 500, 500, 10, 10, 10),
-      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true })
+      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
     ),
     pointVectorList: [],
     pointVertices: [],
@@ -34,7 +34,7 @@ export const ConfigList: Config[] = [
     position: new Vector3(2000, 0, 0),
     mesh: new THREE.Mesh(
       new SphereGeometry(300, 20, 20),
-      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true })
+      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
     ),
     pointVectorList: [],
     pointVertices: [],
@@ -42,8 +42,6 @@ export const ConfigList: Config[] = [
     toNextDistance: 0,
   },
 ];
-
-// const BEZIER_CURVE_AMOUNT = 50;
 
 // handleCalculateConfigList通过计算补全配置
 export const handleCalculateConfigList = (scene: Scene) => {
@@ -93,15 +91,6 @@ export const handleCalculateConfigList = (scene: Scene) => {
 
         bezierCurveV1List.push(newBezierCurveV1); // 由1/3位置附近随意点位作为V1
         bezierCurveV2List.push(newBezierCurveV2); // 由2/3位置附近随意点位作为V2
-
-        // // 测试
-        // const testPoint = new THREE.Mesh(new SphereGeometry(20), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-        // testPoint.position.copy(newBezierCurveV1);
-        // scene.add(testPoint);
-        // // 测试
-        // const testPoint2 = new THREE.Mesh(new SphereGeometry(20), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-        // testPoint2.position.copy(newBezierCurveV2);
-        // scene.add(testPoint2);
       });
 
     // 设置曲线
@@ -117,16 +106,6 @@ export const handleCalculateConfigList = (scene: Scene) => {
       curve.getPoints(distance / 20);
 
       fromConfig.toNextCurves.push(curve);
-
-      // const points = curve.getPoints(distance / 20);
-      // const geometry = new THREE.BufferGeometry().setFromPoints(points);
-      //
-      // const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
-
-      // Create the final object to add to the scene
-      // const curveObject = new THREE.Line(geometry, material);
-      //
-      // scene.add(curveObject);
     });
   });
 };
