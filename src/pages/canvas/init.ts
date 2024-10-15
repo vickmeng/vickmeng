@@ -12,9 +12,8 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-export const controls = new OrbitControls(camera, renderer.domElement);
-controls.update();
-camera.position.set(0, 0, 1000);
+// export const controls = new OrbitControls(camera, renderer.domElement);
+// controls.update();
 
 /**
  * add points start
@@ -60,7 +59,7 @@ handleCalculateConfigList(scene);
 
 AnimationFrameSubject.asObservable().subscribe(() => {
   renderer.render(scene, camera);
-  controls.update();
+  // controls.update();
   requestIdleCallback(() => {
     AnimationFrameSubject.next(undefined);
   });
