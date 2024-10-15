@@ -61,11 +61,11 @@ handleCalculateConfigList(scene);
 AnimationFrameSubject.asObservable().subscribe(() => {
   renderer.render(scene, camera);
   controls.update();
-  requestAnimationFrame((time) => {
-    AnimationFrameSubject.next(time);
+  requestIdleCallback(() => {
+    AnimationFrameSubject.next(undefined);
   });
 });
 
-requestAnimationFrame((time) => {
-  AnimationFrameSubject.next(time);
+requestIdleCallback(() => {
+  AnimationFrameSubject.next(undefined);
 });

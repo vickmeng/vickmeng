@@ -1,12 +1,6 @@
 import * as THREE from 'three';
 import { BoxGeometry, CatmullRomCurve3, Mesh, Scene, SphereGeometry, Vector3 } from 'three';
-import {
-  createNearVector,
-  createVerticalPosition,
-  getVectorListFromMesh,
-  getVerticesFromVectors,
-} from '@/pages/canvas/utils';
-import { CURVE_V_AMOUNT } from '@/pages/canvas/constants';
+import { createRandomVerticalPosition, getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
 
 //
 export interface Config {
@@ -15,23 +9,23 @@ export interface Config {
   pointVectorList: Vector3[];
   pointVertices: number[];
   toNextCurves: CatmullRomCurve3[];
-  toNextDistance: number;
+  // toNextDistance: number;
 }
 
 export const ConfigList: Config[] = [
   {
-    position: new Vector3(0, 0, 0),
+    position: new Vector3(-1000, 0, 0),
     mesh: new THREE.Mesh(
-      new BoxGeometry(500, 500, 500, 10, 10, 10),
+      new BoxGeometry(200, 200, 200, 10, 10, 10),
       new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
     ),
     pointVectorList: [],
     pointVertices: [],
     toNextCurves: [],
-    toNextDistance: 0,
+    // toNextDistance: 0,
   },
   {
-    position: new Vector3(3000, 0, 0),
+    position: new Vector3(1000, 0, 0),
     mesh: new THREE.Mesh(
       new SphereGeometry(300, 20, 20),
       new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
@@ -39,7 +33,7 @@ export const ConfigList: Config[] = [
     pointVectorList: [],
     pointVertices: [],
     toNextCurves: [],
-    toNextDistance: 0,
+    // toNextDistance: 0,
   },
 ];
 
@@ -60,37 +54,18 @@ export const handleCalculateConfigList = (scene: Scene) => {
     }
 
     // 确定多个坐标作为曲线的V1
-    const bezierCurveV1List: Vector3[] = [];
-    // 确定多个坐标作为曲线的V2
-    const bezierCurveV2List: Vector3[] = [];
+    const curveMidPointList: Vector3[] = [];
 
-    const diffVector = toConfig.position.clone().sub(fromConfig.position);
     const lineVector = new THREE.Vector3().subVectors(toConfig.position, fromConfig.position);
-    const distance = toConfig.position.distanceTo(fromConfig.position);
-
-    fromConfig.toNextDistance = distance;
-
-    const fromBaseVector = createVerticalPosition(
-      fromConfig.position.clone().add(diffVector.clone().multiplyScalar(1 / 3)),
-      lineVector,
-      diffVector.length() / 2
-    );
-
-    const toBaseVector = createVerticalPosition(
-      fromConfig.position.clone().add(diffVector.clone().multiplyScalar(2 / 3)),
-      lineVector,
-      diffVector.length() / 2
-    );
 
     // 确定点位
-    Array(CURVE_V_AMOUNT)
+    Array(10)
       .fill(null)
       .forEach(() => {
-        const newBezierCurveV1 = createNearVector(fromBaseVector, diffVector.length() / 3);
-        const newBezierCurveV2 = createNearVector(toBaseVector, diffVector.length() / 3);
+        const newMidPoint = createRandomVerticalPosition(new Vector3(0, 0, 0), lineVector, 500); // TODO
 
-        bezierCurveV1List.push(newBezierCurveV1); // 由1/3位置附近随意点位作为V1
-        bezierCurveV2List.push(newBezierCurveV2); // 由2/3位置附近随意点位作为V2
+        curveMidPointList.push(newMidPoint); // 由1/3位置附近随意点位作为V1
+        // bezierCurveV2List.push(newBezierCurveV2); // 由2/3位置附近随意点位作为V2
       });
 
     // 设置曲线
@@ -99,11 +74,21 @@ export const handleCalculateConfigList = (scene: Scene) => {
 
       const curve = new CatmullRomCurve3([
         formVector,
-        bezierCurveV1List[Math.floor(Math.random() * CURVE_V_AMOUNT)],
-        bezierCurveV2List[Math.floor(Math.random() * CURVE_V_AMOUNT)],
+        curveMidPointList[index % curveMidPointList.length],
+        // createRandomVerticalPosition(new Vector3((Math.random() - 0.5) * 600, 0, 0), lineVector, Math.random() * 500),
         toVector,
       ]);
-      curve.getPoints(distance / 20);
+      const curvePoints = curve.getPoints(500);
+
+      // if (index % 100 === 1) {
+      //   const geometry = new THREE.BufferGeometry().setFromPoints(curvePoints);
+      //
+      //   const material = new THREE.LineBasicMaterial({ color: 0xff0000, linewidth: 1 });
+      //
+      //   const curveObject = new THREE.Line(geometry, material);
+      //
+      //   scene.add(curveObject);
+      // }
 
       fromConfig.toNextCurves.push(curve);
     });

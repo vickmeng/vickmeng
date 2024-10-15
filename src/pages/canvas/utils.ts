@@ -20,7 +20,7 @@ export const createNearVector = (position: { x: number; y: number; z: number }, 
  * 不考虑高模，正常模型不会有太多点位
  * 写死为50000个 后面会生成50000个贝塞尔曲线
  */
-const VECTOR_LIST_AMOUNT = 50000;
+const VECTOR_LIST_AMOUNT = 5000;
 
 // 生成随意点位的范围
 const NEAR_VECTOR_RANGE = 100;
@@ -85,7 +85,7 @@ export const getVerticesFromVectors = (vectors: Vector3[]) => {
   return vertices;
 };
 
-export const createVerticalPosition = (point: Vector3, lineVector: Vector3, scalar: number) => {
+export const createRandomVerticalPosition = (point: Vector3, lineVector: Vector3, scalar: number) => {
   // 生成一个与方向向量不平行
   const assistVector = new Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
   // 进行叉乘与归一化，获取垂直的地方向量

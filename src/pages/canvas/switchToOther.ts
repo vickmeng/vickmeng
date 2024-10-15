@@ -34,7 +34,7 @@ export const switchToOther = async (opts: Options) => {
   // 直接干掉比缓动效果反倒好一些
   const fromMesh = fromConfig.mesh;
 
-  // (fromMesh.material as MeshBasicMaterial).opacity = 0;
+  (fromMesh.material as MeshBasicMaterial).opacity = 0;
   /**
    * 网格消失 出现
    */
@@ -42,7 +42,7 @@ export const switchToOther = async (opts: Options) => {
   /**
    * 沙子飞 start
    */
-  await Promise.all([sandsFly({ fromConfig, toConfig }), cameraFollowSands({ fromConfig, toConfig })]);
+  await Promise.all([sandsFly({ fromConfig, toConfig })]);
   /**
    * sandsFly end
    */
@@ -56,7 +56,6 @@ export const switchToOther = async (opts: Options) => {
 const sandsFly = async (params: { fromConfig: Config; toConfig: Config }) => {
   const { fromConfig } = params;
   const position = points.geometry.attributes.position;
-  // const curve = fromConfig.toNextCurves[0];
 
   const animateFinish = new Subject();
 
@@ -100,23 +99,6 @@ const cameraFollowSands = async (params: { fromConfig: Config; toConfig: Config 
   // 选择中间的一条贝塞尔曲线
   const sandCurve = fromConfig.toNextCurves[traceSandIndex];
 
-  const cameraCurvePoints = [camera.position, ...sandCurve.points.slice(1, -1), toConfig.position];
-
-  const cameraCurve = new CatmullRomCurve3(cameraCurvePoints);
-
-  const cameraDistance = toConfig.position.distanceTo(camera.position);
-  const cameraPoints = cameraCurve.getPoints(cameraDistance / 20);
-
-  // // test start
-  const geometry = new THREE.BufferGeometry().setFromPoints(cameraPoints);
-
-  const material = new THREE.LineBasicMaterial({ color: 0xff0000, linewidth: 10 });
-
-  const curveObject = new THREE.Line(geometry, material);
-
-  scene.add(curveObject);
-  // // test end
-
   const animateFinish = new Subject();
 
   const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
@@ -129,13 +111,16 @@ const cameraFollowSands = async (params: { fromConfig: Config; toConfig: Config 
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
       const _t = moveParams.t;
-
-      // if (_t > 0.2) {
+      camera.lookAt(sandCurve.getPoint(_t));
+      //
+      // // if (_t > 0.2) {
+      // // }
+      // if (_t < 0.9) {
+      //   camera.position.copy(cameraCurve.getPoint(_t));
       // }
-      if (_t < 0.9) {
-        camera.position.copy(cameraCurve.getPoint(_t));
-        camera.lookAt(cameraCurve.getPoint(_t + 0.1));
-      }
+      // if (_t > 0.01) {
+      //   // camera.lookAt(sandCurve.getPoint(_t - 0.01));
+      // }
     })
     .onComplete(() => {
       animateFinish.next(undefined);
