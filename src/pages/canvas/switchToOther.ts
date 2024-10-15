@@ -73,7 +73,7 @@ const sandsFly = async (params: { fromConfig: Config; toConfig: Config }) => {
       const moveParams = { t: 0 };
 
       const tween = new Tween(moveParams)
-        .to({ t: 1 }, 3000 + currentIndex * 10)
+        .to({ t: 1 }, 3000 + currentIndex * 20)
         .easing(Easing.Cubic.Out)
         .onUpdate(() => {
           const _t = moveParams.t;

@@ -59,36 +59,32 @@ export const handleCalculateConfigList = (scene: Scene) => {
     const lineVector = new THREE.Vector3().subVectors(toConfig.position, fromConfig.position);
 
     // 确定点位
-    Array(10)
+    Array(60)
       .fill(null)
       .forEach(() => {
-        const newMidPoint = createRandomVerticalPosition(new Vector3(0, 0, 0), lineVector, 500); // TODO
+        const newMidPoint = createRandomVerticalPosition(
+          new Vector3((Math.random() - 0.5) * 600, 0, 0),
+          lineVector,
+          500
+        );
 
         curveMidPointList.push(newMidPoint); // 由1/3位置附近随意点位作为V1
-        // bezierCurveV2List.push(newBezierCurveV2); // 由2/3位置附近随意点位作为V2
       });
 
     // 设置曲线
     fromConfig.pointVectorList.forEach((formVector, index) => {
       const toVector = toConfig.pointVectorList[index];
 
-      const curve = new CatmullRomCurve3([
-        formVector,
-        curveMidPointList[index % curveMidPointList.length],
-        // createRandomVerticalPosition(new Vector3((Math.random() - 0.5) * 600, 0, 0), lineVector, Math.random() * 500),
-        toVector,
-      ]);
+      const curve = new CatmullRomCurve3([formVector, curveMidPointList[index % curveMidPointList.length], toVector]);
       const curvePoints = curve.getPoints(500);
 
-      // if (index % 100 === 1) {
-      //   const geometry = new THREE.BufferGeometry().setFromPoints(curvePoints);
+      // const geometry = new THREE.BufferGeometry().setFromPoints(curvePoints);
       //
-      //   const material = new THREE.LineBasicMaterial({ color: 0xff0000, linewidth: 1 });
+      // const material = new THREE.LineBasicMaterial({ color: 0xff0000, linewidth: 1 });
       //
-      //   const curveObject = new THREE.Line(geometry, material);
+      // const curveObject = new THREE.Line(geometry, material);
       //
-      //   scene.add(curveObject);
-      // }
+      // scene.add(curveObject);
 
       fromConfig.toNextCurves.push(curve);
     });
