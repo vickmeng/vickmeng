@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Vector3 } from 'three';
+import { SANDS_COUNT } from '@/pages/canvas/constants';
 
 interface Params {
   mesh: THREE.Mesh;
@@ -20,7 +21,6 @@ export const createNearVector = (position: { x: number; y: number; z: number }, 
  * 不考虑高模，正常模型不会有太多点位
  * 写死为50000个 后面会生成50000个贝塞尔曲线
  */
-const VECTOR_LIST_AMOUNT = 5000;
 
 // 生成随意点位的范围
 const NEAR_VECTOR_RANGE = 100;
@@ -35,7 +35,7 @@ export function getVectorListFromMesh(params: Params) {
       const positionAttribute = geometry.getAttribute('position');
 
       // 向下取整 每个点生成这么多个插值
-      const interpolateAmount = Math.floor(VECTOR_LIST_AMOUNT / positionAttribute.count) - 1;
+      const interpolateAmount = Math.floor(SANDS_COUNT / positionAttribute.count) - 1;
 
       if (positionAttribute) {
         for (let i = 0; i < positionAttribute.count; i++) {
@@ -63,7 +63,7 @@ export function getVectorListFromMesh(params: Params) {
   processMesh(mesh);
 
   //  生成插值是向下取整的，肯定会距离要求少了几个，最随机选中当前已有的点进行再补齐
-  const shortOfAmount = VECTOR_LIST_AMOUNT - vectors.length;
+  const shortOfAmount = SANDS_COUNT - vectors.length;
   Array(shortOfAmount)
     .fill(null)
     .forEach(() => {
