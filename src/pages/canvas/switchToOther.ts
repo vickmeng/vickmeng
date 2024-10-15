@@ -1,10 +1,10 @@
 import { Config, ConfigList } from '@/pages/canvas/config';
 import * as THREE from 'three';
-import { CatmullRomCurve3, MeshBasicMaterial } from 'three';
+import { MeshBasicMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, points, scene } from '@/pages/canvas/core';
+import { AnimationFrameSubject, camera, points } from '@/pages/canvas/core';
 import { SANDS_COUNT } from '@/pages/canvas/constants';
 
 interface Options {
