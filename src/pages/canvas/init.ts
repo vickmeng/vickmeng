@@ -2,7 +2,7 @@
  *  计算所有点位以及贝塞尔曲线 end
  */
 import * as THREE from 'three';
-import { MeshBasicMaterial } from 'three';
+import { MeshBasicMaterial, SphereGeometry } from 'three';
 // @ts-ignore
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ConfigList, handleCalculateConfigList } from './config';
@@ -43,10 +43,14 @@ ConfigList.forEach((_config, _index) => {
     (mesh.material as MeshBasicMaterial).opacity = 0;
   }
 
-  // 测试贝塞尔
-
   scene.add(mesh);
 });
+
+// 这只是个标记
+const testMesh = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+testMesh.position.set(0, 0, 0);
+scene.add(testMesh);
+
 /**
  * 一次创建所有场景 end
  */
