@@ -6,7 +6,9 @@ export const clock = new THREE.Clock();
 
 // 创建相机
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100000);
-camera.position.set(0, 0, 1000);
+camera.position.set(0, 200, 1000);
+
+camera.rotation.y = THREE.MathUtils.degToRad(10);
 
 export const AnimationFrameSubject = new Subject();
 
@@ -14,3 +16,7 @@ export const points = new THREE.Points(
   new THREE.BufferGeometry(),
   new THREE.PointsMaterial({ color: 0xffffff, size: 1 })
 );
+
+export const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);

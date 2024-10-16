@@ -4,7 +4,7 @@ import { MeshBasicMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, points } from '@/pages/canvas/core';
+import { AnimationFrameSubject, camera, points, renderer, scene } from '@/pages/canvas/core';
 import { SANDS_COUNT } from '@/pages/canvas/constants';
 
 interface Options {
@@ -44,7 +44,7 @@ export const switchToOther = async (opts: Options) => {
    * 沙子飞 start
    * TODO 分批
    */
-  await Promise.all([sandsFly({ fromConfig, toConfig })]);
+  await Promise.all([sandsFly({ fromConfig, toConfig }), cameraRoll({ fromConfig, toConfig })]);
   /**
    * sandsFly end
    */
@@ -113,35 +113,19 @@ const sandsFly = async (params: { fromConfig: Config; toConfig: Config }) => {
   await lastValueFrom(animate$);
 };
 
-const cameraFollowSands = async (params: { fromConfig: Config; toConfig: Config }) => {
-  const { fromConfig, toConfig } = params;
-
-  const traceSandIndex = Math.floor(fromConfig.toNextCurves.length / 2);
-  // 选择中间的一条贝塞尔曲线
-  const sandCurve = fromConfig.toNextCurves[traceSandIndex];
-
+const cameraRoll = async (params: { fromConfig: Config; toConfig: Config }) => {
   const animateFinish = new Subject();
 
   const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
 
-  const moveParams = { t: 0 };
+  const moveParams = { deg: 10 };
 
   const tween = new Tween(moveParams)
-    .to({ t: 1 }, 3000)
-
+    .to({ deg: -10 }, 4000)
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
-      const _t = moveParams.t;
-      camera.lookAt(sandCurve.getPoint(_t));
-      //
-      // // if (_t > 0.2) {
-      // // }
-      // if (_t < 0.9) {
-      //   camera.position.copy(cameraCurve.getPoint(_t));
-      // }
-      // if (_t > 0.01) {
-      //   // camera.lookAt(sandCurve.getPoint(_t - 0.01));
-      // }
+      camera.rotation.y = THREE.MathUtils.degToRad(moveParams.deg);
+      renderer.render(scene, camera);
     })
     .onComplete(() => {
       animateFinish.next(undefined);

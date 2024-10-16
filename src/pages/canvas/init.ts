@@ -1,16 +1,19 @@
+/**
+ *  计算所有点位以及贝塞尔曲线 end
+ */
 import * as THREE from 'three';
 import { MeshBasicMaterial } from 'three';
 // @ts-ignore
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ConfigList, handleCalculateConfigList } from './config';
-import { AnimationFrameSubject, camera, points, scene } from '@/pages/canvas/core';
+import { AnimationFrameSubject, camera, points, renderer, scene } from '@/pages/canvas/core';
 
 // 创建场景
 
 // 创建渲染器
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+// const renderer = new THREE.WebGLRenderer();
+// renderer.setSize(window.innerWidth, window.innerHeight);
+// document.body.appendChild(renderer.domElement);
 
 // export const controls = new OrbitControls(camera, renderer.domElement);
 // controls.update();
@@ -52,10 +55,6 @@ ConfigList.forEach((_config, _index) => {
  *  计算所有点位以及贝塞尔曲线 start
  */
 handleCalculateConfigList(scene);
-
-/**
- *  计算所有点位以及贝塞尔曲线 end
- */
 
 AnimationFrameSubject.asObservable().subscribe(() => {
   renderer.render(scene, camera);

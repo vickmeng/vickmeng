@@ -16,7 +16,7 @@ export const ConfigList: Config[] = [
   {
     position: new Vector3(-1000, 0, 0),
     mesh: new THREE.Mesh(
-      new BoxGeometry(200, 200, 200, 10, 10, 10),
+      new BoxGeometry(200, 300, 200, 10, 10, 10),
       new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
     ),
     pointVectorList: [],
@@ -26,6 +26,10 @@ export const ConfigList: Config[] = [
   },
   {
     position: new Vector3(1000, 0, 0),
+    // mesh: new THREE.Mesh(
+    //   new BoxGeometry(200, 300, 200, 10, 10, 10),
+    //   new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
+    // ),
     mesh: new THREE.Mesh(
       new SphereGeometry(300, 20, 20),
       new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
