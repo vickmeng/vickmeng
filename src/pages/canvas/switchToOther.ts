@@ -42,7 +42,6 @@ export const switchToOther = async (opts: Options) => {
 
   /**
    * 沙子飞 start
-   * TODO 分批
    */
   await Promise.all([sandsFly({ fromConfig, toConfig }), cameraRoll({ fromConfig, toConfig })]);
   /**
