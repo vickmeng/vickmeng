@@ -35,21 +35,32 @@ scene.add(points);
 /**
  * 一次创建所有场景 start
  */
-ConfigList.forEach((_config, _index) => {
-  const { mesh, position } = _config;
-  mesh.position.set(position.x, position.y, position.z);
 
-  if (_index !== 0) {
-    (mesh.material as MeshBasicMaterial).opacity = 0;
-  }
+await Promise.all(
+  ConfigList.map(async (_config, _index) => {
+    const _mesh = await _config.loadModal();
 
-  scene.add(mesh);
-});
+    _config.mesh = _mesh;
+
+    if (_index !== 0) {
+      (_mesh.material as MeshBasicMaterial).opacity = 0;
+    }
+    scene.add(_mesh);
+  })
+);
 
 // 这只是个标记
 const testMesh = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
 testMesh.position.set(0, 0, 0);
 scene.add(testMesh);
+
+const testMesh1 = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+testMesh1.position.set(-1000, 0, 0);
+scene.add(testMesh1);
+
+const testMesh2 = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+testMesh2.position.set(1000, 0, 0);
+scene.add(testMesh2);
 
 /**
  * 一次创建所有场景 end
@@ -59,6 +70,8 @@ scene.add(testMesh);
  *  计算所有点位以及贝塞尔曲线 start
  */
 handleCalculateConfigList(scene);
+
+points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(ConfigList[0].pointVertices, 3));
 
 AnimationFrameSubject.asObservable().subscribe(() => {
   renderer.render(scene, camera);

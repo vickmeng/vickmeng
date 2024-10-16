@@ -1,11 +1,15 @@
 import * as THREE from 'three';
 import { BoxGeometry, CatmullRomCurve3, Mesh, Scene, SphereGeometry, Vector3 } from 'three';
 import { createRandomVerticalPosition, getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
+import ship from './../../assets/ship.fbx?url';
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+import { scene } from '@/pages/canvas/core';
 
 //
 export interface Config {
   position: Vector3;
   mesh: Mesh;
+  loadModal: () => Promise<Mesh>;
   pointVectorList: Vector3[];
   pointVertices: number[];
   toNextCurves: CatmullRomCurve3[];
@@ -15,10 +19,22 @@ export interface Config {
 export const ConfigList: Config[] = [
   {
     position: new Vector3(-1000, 0, 0),
-    mesh: new THREE.Mesh(
-      new BoxGeometry(200, 300, 200, 10, 10, 10),
-      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
-    ),
+
+    // @ts-ignore
+    mesh: undefined,
+    loadModal: async () => {
+      const loader = new FBXLoader();
+      const shipModel = await loader.loadAsync(ship);
+
+      const shipMesh = shipModel.children[1].children[0] as Mesh;
+      shipMesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
+
+      shipMesh.position.set(-1000, 0, 0);
+      shipMesh.rotation.set(0, 40, 0);
+      shipMesh.scale.set(0.05, 0.05, 0.05);
+
+      return shipMesh;
+    },
     pointVectorList: [],
     pointVertices: [],
     toNextCurves: [],
@@ -26,14 +42,20 @@ export const ConfigList: Config[] = [
   },
   {
     position: new Vector3(1000, 0, 0),
-    // mesh: new THREE.Mesh(
-    //   new BoxGeometry(200, 300, 200, 10, 10, 10),
-    //   new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
-    // ),
-    mesh: new THREE.Mesh(
-      new SphereGeometry(300, 20, 20),
-      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true })
-    ),
+    // @ts-ignore
+    mesh: undefined,
+    loadModal: async () => {
+      const loader = new FBXLoader();
+      const shipModel = await loader.loadAsync(ship);
+
+      const shipMesh = shipModel.children[1].children[0] as Mesh;
+      shipMesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
+
+      shipMesh.position.set(1000, 0, 0);
+      shipMesh.rotation.set(0, 40, 0);
+
+      return shipMesh;
+    },
     pointVectorList: [],
     pointVertices: [],
     toNextCurves: [],
@@ -45,7 +67,7 @@ export const ConfigList: Config[] = [
 export const handleCalculateConfigList = (scene: Scene) => {
   // 率先计算所有点位
   ConfigList.forEach((_config) => {
-    _config.pointVectorList = getVectorListFromMesh({ mesh: _config.mesh, position: _config.position });
+    _config.pointVectorList = getVectorListFromMesh({ mesh: _config.mesh });
     _config.pointVertices = getVerticesFromVectors(_config.pointVectorList);
   });
 

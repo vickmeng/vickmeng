@@ -4,7 +4,7 @@ import { SANDS_COUNT } from '@/pages/canvas/constants';
 
 interface Params {
   mesh: THREE.Mesh;
-  position: THREE.Vector3;
+  // position: THREE.Vector3;
 }
 
 export const createNearVector = (position: { x: number; y: number; z: number }, range: number) => {
@@ -26,31 +26,31 @@ export const createNearVector = (position: { x: number; y: number; z: number }, 
 const NEAR_VECTOR_RANGE = 100;
 
 export function getVectorListFromMesh(params: Params) {
-  const { mesh, position } = params;
+  const { mesh } = params;
 
   const vectors: Vector3[] = [];
   function processMesh(_mesh: THREE.Mesh) {
     if (_mesh.isMesh) {
+      const matrix = new THREE.Matrix4();
+      matrix.compose(mesh.position, mesh.quaternion, mesh.scale);
+
       const geometry = _mesh.geometry;
       const positionAttribute = geometry.getAttribute('position');
 
       // 向下取整 每个点生成这么多个插值
       const interpolateAmount = Math.floor(SANDS_COUNT / positionAttribute.count) - 1;
-
       if (positionAttribute) {
         for (let i = 0; i < positionAttribute.count; i++) {
-          const x = positionAttribute.getX(i) + position.x;
-          const y = positionAttribute.getY(i) + position.y;
-          const z = positionAttribute.getZ(i) + position.z;
-
+          const localPosition = new THREE.Vector3().fromBufferAttribute(positionAttribute, i);
+          const worldPosition = localPosition.clone().applyMatrix4(matrix);
           // 随机差值 让点位更多些
           const interpolateVectorList: Vector3[] = Array(interpolateAmount)
             .fill(null)
             .map(() => {
-              return createNearVector({ x, y, z }, NEAR_VECTOR_RANGE);
+              return worldPosition.clone();
             });
 
-          vectors.push(new Vector3(x, y, z), ...interpolateVectorList);
+          vectors.push(worldPosition, ...interpolateVectorList);
         }
       }
     }
@@ -68,12 +68,13 @@ export function getVectorListFromMesh(params: Params) {
     .fill(null)
     .forEach(() => {
       const randomIndex = Math.floor(Math.random() * (vectors.length - 1));
-      const randomVector = vectors[randomIndex];
-      vectors.push(createNearVector(randomVector, NEAR_VECTOR_RANGE));
+      const randomVector = vectors[randomIndex].clone();
+      vectors.push(randomVector);
     });
 
   return vectors;
 }
+
 // 将坐标转为数据
 export const getVerticesFromVectors = (vectors: Vector3[]) => {
   const vertices: number[] = [];
