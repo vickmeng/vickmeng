@@ -23,7 +23,7 @@ export const createNearVector = (position: { x: number; y: number; z: number }, 
  */
 
 // 生成随意点位的范围
-const NEAR_VECTOR_RANGE = 100;
+// const NEAR_VECTOR_RANGE = 100;
 
 export function getVectorListFromMesh(params: Params) {
   const { mesh } = params;
@@ -36,6 +36,8 @@ export function getVectorListFromMesh(params: Params) {
 
       const geometry = _mesh.geometry;
       const positionAttribute = geometry.getAttribute('position');
+
+      console.log('positionAttribute.count', positionAttribute.count);
 
       // 向下取整 每个点生成这么多个插值
       const interpolateAmount = Math.floor(SANDS_COUNT / positionAttribute.count) - 1;

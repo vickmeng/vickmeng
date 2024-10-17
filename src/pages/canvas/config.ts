@@ -3,8 +3,10 @@ import { CatmullRomCurve3, Euler, Mesh, Scene, Vector3 } from 'three';
 import { createRandomVerticalPosition, getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
 // @ts-ignore
 import ship from './../../assets/ship.fbx?url';
+import pumpjack from './../../assets/pumpjack.obj?url';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 
 //
 export interface Config {
@@ -22,34 +24,33 @@ export interface Config {
 export const ConfigList: Config[] = [
   {
     position: new Vector3(-1000, 0, 0),
-    scale: new Vector3(0.05, 0.05, 0.05),
-    rotation: new Euler(0, 40, 0),
+    scale: new Vector3(2, 2, 2),
+    rotation: new Euler(0, 3.2, 0),
     // @ts-ignore
     mesh: undefined,
     loadModal: async (config: Config) => {
       const { position, scale, rotation } = config;
 
-      const loader = new FBXLoader();
-      const shipModel = await loader.loadAsync(ship);
+      const loader = new OBJLoader();
+      const pumpjackModel = await loader.loadAsync(pumpjack);
+      const mesh = pumpjackModel.children[0];
 
-      const shipMesh = shipModel.children[1].children[0] as Mesh;
-      shipMesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
+      mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
 
-      shipMesh.position.set(position.x, position.y, position.z);
-      shipMesh.rotation.set(rotation.x, rotation.y, rotation.z);
-      shipMesh.scale.set(scale.x, scale.y, scale.z);
+      mesh.position.set(position.x, position.y, position.z);
+      mesh.rotation.set(rotation.x, rotation.y, rotation.z);
+      mesh.scale.set(scale.x, scale.y, scale.z);
 
-      return shipMesh;
+      return mesh;
     },
     pointVectorList: [],
     pointVertices: [],
     toNextCurves: [],
-    // toNextDistance: 0,
   },
   {
     position: new Vector3(1000, 0, 0),
     scale: new Vector3(0.05, 0.05, 0.05),
-    rotation: new Euler(0, 40, 0),
+    rotation: new Euler(0, 0, 0),
     // @ts-ignore
     mesh: undefined,
     loadModal: async (config: Config) => {
@@ -70,7 +71,6 @@ export const ConfigList: Config[] = [
     pointVectorList: [],
     pointVertices: [],
     toNextCurves: [],
-    // toNextDistance: 0,
   },
 ];
 
@@ -100,7 +100,7 @@ export const handleCalculateConfigList = (scene: Scene) => {
       .fill(null)
       .forEach(() => {
         const newMidPoint = createRandomVerticalPosition(
-          new Vector3((Math.random() - 0.5) * 600, 0, 0),
+          new Vector3((Math.random() - 0.5) * 1000, 480, 0),
           lineVector,
           500
         );
@@ -113,16 +113,7 @@ export const handleCalculateConfigList = (scene: Scene) => {
       const toVector = toConfig.pointVectorList[index];
 
       const curve = new CatmullRomCurve3([formVector, curveMidPointList[index % curveMidPointList.length], toVector]);
-      const curvePoints = curve.getPoints(500);
-
-      // const geometry = new THREE.BufferGeometry().setFromPoints(curvePoints);
-      //
-      // const material = new THREE.LineBasicMaterial({ color: 0xff0000, linewidth: 1 });
-      //
-      // const curveObject = new THREE.Line(geometry, material);
-      //
-      // scene.add(curveObject);
-
+      curve.getPoints(500);
       fromConfig.toNextCurves.push(curve);
     });
   });
