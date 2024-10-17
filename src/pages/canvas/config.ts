@@ -3,13 +3,19 @@ import { CatmullRomCurve3, Euler, Mesh, Scene, Vector3 } from 'three';
 import { createRandomVerticalPosition, getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
 // @ts-ignore
 import ship from './../../assets/ship.fbx?url';
+// @ts-ignore
 import pumpjack from './../../assets/pumpjack.obj?url';
 // @ts-ignore
+import football from './../../assets/football.fbx?url';
+// @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+// @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { scene } from '@/pages/canvas/core';
 
 //
 export interface Config {
+  name: string;
   position: Vector3;
   scale: Vector3;
   rotation: Euler;
@@ -21,63 +27,102 @@ export interface Config {
   // toNextDistance: number;
 }
 
-export const ConfigList: Config[] = [
-  {
-    position: new Vector3(-1000, 0, 0),
-    scale: new Vector3(2, 2, 2),
-    rotation: new Euler(0, 3.2, 0),
-    // @ts-ignore
-    mesh: undefined,
-    loadModal: async (config: Config) => {
-      const { position, scale, rotation } = config;
+const pumpjackConfig: Config = {
+  name: 'pumpjack',
+  position: new Vector3(-1000, 0, 0),
+  scale: new Vector3(2, 2, 2),
+  rotation: new Euler(0, 3.2, 0),
+  // @ts-ignore
+  mesh: undefined,
+  loadModal: async (config: Config) => {
+    const { position, scale, rotation } = config;
 
-      const loader = new OBJLoader();
-      const pumpjackModel = await loader.loadAsync(pumpjack);
-      const mesh = pumpjackModel.children[0];
+    const loader = new OBJLoader();
+    const model = await loader.loadAsync(pumpjack);
+    const mesh = model.children[0];
 
-      mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
+    mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
 
-      mesh.position.set(position.x, position.y, position.z);
-      mesh.rotation.set(rotation.x, rotation.y, rotation.z);
-      mesh.scale.set(scale.x, scale.y, scale.z);
+    mesh.position.set(position.x, position.y, position.z);
+    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
+    mesh.scale.set(scale.x, scale.y, scale.z);
 
-      return mesh;
-    },
-    pointVectorList: [],
-    pointVertices: [],
-    toNextCurves: [],
+    scene.add(mesh);
+
+    return mesh;
   },
-  {
-    position: new Vector3(1000, 0, 0),
-    scale: new Vector3(0.05, 0.05, 0.05),
-    rotation: new Euler(0, 0, 0),
-    // @ts-ignore
-    mesh: undefined,
-    loadModal: async (config: Config) => {
-      const { position, scale, rotation } = config;
+  pointVectorList: [],
+  pointVertices: [],
+  toNextCurves: [],
+};
+const shipConfig: Config = {
+  name: 'ship',
+  position: new Vector3(1000, 0, 0),
+  scale: new Vector3(0.05, 0.05, 0.05),
+  rotation: new Euler(0, 0, 0),
+  // @ts-ignore
+  mesh: undefined,
+  loadModal: async (config: Config) => {
+    const { position, scale, rotation } = config;
 
-      const loader = new FBXLoader();
-      const shipModel = await loader.loadAsync(ship);
+    const loader = new FBXLoader();
+    const shipModel = await loader.loadAsync(ship);
 
-      const shipMesh = shipModel.children[1].children[0] as Mesh;
-      shipMesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
+    const mesh = shipModel.children[1].children[0] as Mesh;
+    mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
+    mesh.position.set(position.x, position.y, position.z);
+    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
+    mesh.scale.set(scale.x, scale.y, scale.z);
 
-      shipMesh.position.set(position.x, position.y, position.z);
-      shipMesh.rotation.set(rotation.x, rotation.y, rotation.z);
-      shipMesh.scale.set(scale.x, scale.y, scale.z);
+    scene.add(mesh);
 
-      return shipMesh;
-    },
-    pointVectorList: [],
-    pointVertices: [],
-    toNextCurves: [],
+    return mesh;
   },
-];
+  pointVectorList: [],
+  pointVertices: [],
+  toNextCurves: [],
+};
+
+const footballConfig: Config = {
+  name: 'football',
+  position: new Vector3(-1000, 400, 0),
+  scale: new Vector3(0.05, 0.05, 0.05),
+  rotation: new Euler(0, 0, 0),
+  // @ts-ignore
+  mesh: undefined,
+  loadModal: async (config: Config) => {
+    const { position, scale, rotation } = config;
+
+    const loader = new FBXLoader();
+    const model = await loader.loadAsync(football);
+    const mesh = model.children[0];
+    mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
+    mesh.position.set(position.x, position.y, position.z);
+    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
+    mesh.scale.set(scale.x, scale.y, scale.z);
+
+    scene.add(mesh);
+
+    return mesh;
+
+    // return model.children.filter((_mesh: Mesh) => {
+    //   // 黑名单，有些小细节不要了
+    //   const blackList: string[] = ['Cylinder006', 'Cylinder007', 'Cylinder008', 'Cylinder009', 'Line006', 'Line007'];
+    //   return !blackList.includes(_mesh.name);
+    // });
+  },
+  pointVectorList: [],
+  pointVertices: [],
+  toNextCurves: [],
+};
+
+export const ConfigList: Config[] = [pumpjackConfig, shipConfig, footballConfig];
 
 // handleCalculateConfigList通过计算补全配置
-export const handleCalculateConfigList = (scene: Scene) => {
+export const handleCalculateConfigList = (_scene: Scene) => {
   // 率先计算所有点位
   ConfigList.forEach((_config) => {
+    // debugger;
     _config.pointVectorList = getVectorListFromMesh({ mesh: _config.mesh });
     _config.pointVertices = getVerticesFromVectors(_config.pointVectorList);
   });

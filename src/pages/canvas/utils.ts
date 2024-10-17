@@ -7,13 +7,13 @@ interface Params {
   // position: THREE.Vector3;
 }
 
-export const createNearVector = (position: { x: number; y: number; z: number }, range: number) => {
-  return new Vector3(
-    position.x + (Math.random() - 0.5) * range,
-    position.y + (Math.random() - 0.5) * range,
-    position.z + (Math.random() - 0.5) * range
-  );
-};
+// export const createNearVector = (position: { x: number; y: number; z: number }, range: number) => {
+//   return new Vector3(
+//     position.x + (Math.random() - 0.5) * range,
+//     position.y + (Math.random() - 0.5) * range,
+//     position.z + (Math.random() - 0.5) * range
+//   );
+// };
 
 /**
  * getVectorListFromMesh
@@ -32,28 +32,27 @@ export function getVectorListFromMesh(params: Params) {
   function processMesh(_mesh: THREE.Mesh) {
     if (_mesh.isMesh) {
       const matrix = new THREE.Matrix4();
-      matrix.compose(mesh.position, mesh.quaternion, mesh.scale);
+      matrix.compose(_mesh.position, _mesh.quaternion, _mesh.scale);
 
       const geometry = _mesh.geometry;
       const positionAttribute = geometry.getAttribute('position');
 
-      console.log('positionAttribute.count', positionAttribute.count);
-
       // 向下取整 每个点生成这么多个插值
-      const interpolateAmount = Math.floor(SANDS_COUNT / positionAttribute.count) - 1;
-      if (positionAttribute) {
-        for (let i = 0; i < positionAttribute.count; i++) {
-          const localPosition = new THREE.Vector3().fromBufferAttribute(positionAttribute, i);
-          const worldPosition = localPosition.clone().applyMatrix4(matrix);
-          // 随机差值 让点位更多些
-          const interpolateVectorList: Vector3[] = Array(interpolateAmount)
-            .fill(null)
-            .map(() => {
-              return worldPosition.clone();
-            });
+      // const interpolateAmount = Math.floor(SANDS_COUNT / positionAttribute.count) - 1;
 
-          vectors.push(worldPosition, ...interpolateVectorList);
-        }
+      for (let i = 0; i < positionAttribute.count; i++) {
+        const localPosition = new THREE.Vector3().fromBufferAttribute(positionAttribute, i);
+        const worldPosition = localPosition.clone().applyMatrix4(matrix);
+        // 随机差值 让点位更多些
+        // const interpolateVectorList: Vector3[] = Array(interpolateAmount)
+        //   .fill(null)
+        //   .map(() => {
+        //     return worldPosition.clone();
+        //   });
+
+        // vectors.push(worldPosition, ...interpolateVectorList);
+
+        vectors.push(worldPosition);
       }
     }
     if (_mesh.children && _mesh.children.length > 0) {
@@ -62,9 +61,11 @@ export function getVectorListFromMesh(params: Params) {
       }
     }
   }
-  processMesh(mesh);
 
+  processMesh(mesh);
   //  生成插值是向下取整的，肯定会距离要求少了几个，最随机选中当前已有的点进行再补齐
+  console.log(vectors.length);
+
   const shortOfAmount = SANDS_COUNT - vectors.length;
   Array(shortOfAmount)
     .fill(null)
@@ -73,7 +74,6 @@ export function getVectorListFromMesh(params: Params) {
       const randomVector = vectors[randomIndex].clone();
       vectors.push(randomVector);
     });
-
   return vectors;
 }
 

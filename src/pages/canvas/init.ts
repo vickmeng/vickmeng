@@ -45,7 +45,7 @@ await Promise.all(
     if (_index !== 0) {
       (_mesh.material as MeshBasicMaterial).opacity = 0;
     }
-    scene.add(_mesh);
+    // scene.add(_mesh);
   })
 );
 
