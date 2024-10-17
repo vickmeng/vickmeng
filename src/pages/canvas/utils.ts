@@ -64,7 +64,6 @@ export function getVectorListFromMesh(params: Params) {
 
   processMesh(mesh);
   //  生成插值是向下取整的，肯定会距离要求少了几个，最随机选中当前已有的点进行再补齐
-  console.log(vectors.length);
 
   const shortOfAmount = SANDS_COUNT - vectors.length;
   Array(shortOfAmount)

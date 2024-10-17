@@ -71,7 +71,9 @@ scene.add(testMesh2);
  */
 handleCalculateConfigList(scene);
 
-points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(ConfigList[0].pointVertices, 3));
+console.log(ConfigList);
+
+// points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(ConfigList[0].pointVertices, 3));
 
 AnimationFrameSubject.asObservable().subscribe(() => {
   renderer.render(scene, camera);

@@ -14,10 +14,13 @@ interface Options {
 }
 
 export const switchToOther = async (opts: Options) => {
+  console.log(opts);
+
   const { fromIndex, toIndex } = opts;
 
   const fromConfig = ConfigList[fromIndex];
   const toConfig = ConfigList[toIndex];
+
   // // 创建target网格
   /**
    * 生成沙子 start
@@ -43,7 +46,7 @@ export const switchToOther = async (opts: Options) => {
   /**
    * 沙子飞 start
    */
-  await Promise.all([sandsFly({ fromConfig, toConfig }), cameraRoll({ fromConfig, toConfig })]);
+  await Promise.all([sandsFly({ fromIndex, toIndex, fromConfig, toConfig }), cameraRoll({ fromIndex })]);
   /**
    * sandsFly end
    */
@@ -54,8 +57,13 @@ export const switchToOther = async (opts: Options) => {
   points.geometry.setAttribute('position', new THREE.Float32BufferAttribute([], 3));
 };
 
-const sandsFly = async (params: { fromConfig: Config; toConfig: Config }) => {
-  const { fromConfig } = params;
+const sandsFly = async (params: { fromIndex: number; toIndex: number; fromConfig: Config; toConfig: Config }) => {
+  const { fromConfig, toConfig, fromIndex, toIndex } = params;
+
+  const toNext = fromIndex < toIndex;
+  // debugger;
+  const curves = toNext ? fromConfig.toNextCurves : toConfig.toNextCurves;
+
   const position = points.geometry.attributes.position;
 
   const animateFinish = new Subject();
@@ -69,16 +77,18 @@ const sandsFly = async (params: { fromConfig: Config; toConfig: Config }) => {
   const tweenList: Tween[] = Array(batchCount)
     .fill(null)
     .reduce((previousValue, currentValue, currentIndex) => {
-      const moveParams = { t: 0 };
+      const moveParams = { t: toNext ? 0 : 1 };
 
       const tween = new Tween(moveParams)
-        .to({ t: 1 }, 3000 + currentIndex * 20)
+        .to({ t: toNext ? 1 : 0 }, 3000 + currentIndex * 20)
         .easing(Easing.Cubic.Out)
         .onUpdate(() => {
           const _t = moveParams.t;
+
           position.needsUpdate = true;
           for (let i = currentIndex * batchSandsCount; i < (currentIndex + 1) * batchSandsCount; i++) {
-            const curve = fromConfig.toNextCurves[i];
+            // 如果是返回，则采用上一个的曲线
+            const curve = curves[i];
             const newPosition = curve.getPoint(_t);
 
             position.setXYZ(i, newPosition.x, newPosition.y, newPosition.z);
@@ -112,15 +122,17 @@ const sandsFly = async (params: { fromConfig: Config; toConfig: Config }) => {
   await lastValueFrom(animate$);
 };
 
-const cameraRoll = async (params: { fromConfig: Config; toConfig: Config }) => {
+const cameraRoll = async (params: { fromIndex: number }) => {
   const animateFinish = new Subject();
 
   const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
 
-  const moveParams = { deg: 10 };
+  const leftToRight = params.fromIndex % 2 === 0;
+
+  const moveParams = { deg: leftToRight ? 10 : -10 };
 
   const tween = new Tween(moveParams)
-    .to({ deg: -10 }, 4000)
+    .to({ deg: leftToRight ? -10 : 10 }, 4000)
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
       camera.rotation.y = THREE.MathUtils.degToRad(moveParams.deg);

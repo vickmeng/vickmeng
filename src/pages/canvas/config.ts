@@ -144,10 +144,16 @@ export const handleCalculateConfigList = (_scene: Scene) => {
     Array(60)
       .fill(null)
       .forEach(() => {
-        const newMidPoint = createRandomVerticalPosition(
-          new Vector3((Math.random() - 0.5) * 1000, 480, 0),
-          lineVector,
-          500
+        // const newMidPoint = createRandomVerticalPosition(
+        //   new Vector3((Math.random() - 0.5) * 1000, 480, 0),
+        //   lineVector,
+        //   500
+        // );
+
+        const newMidPoint = new Vector3(
+          (Math.random() - 0.5) * 1000,
+          (Math.random() - 0.5) * 1000 + 480,
+          (Math.random() - 0.5) * 1000
         );
 
         curveMidPointList.push(newMidPoint); // 由1/3位置附近随意点位作为V1
