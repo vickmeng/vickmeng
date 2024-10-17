@@ -1,12 +1,13 @@
 import * as THREE from 'three';
-import { CatmullRomCurve3, Euler, Mesh, Scene, Vector3 } from 'three';
+import { CatmullRomCurve3, Euler, MathUtils, Mesh, Scene, Vector3 } from 'three';
 import { createRandomVerticalPosition, getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
 // @ts-ignore
 import ship from './../../assets/ship.fbx?url';
 // @ts-ignore
 import pumpjack from './../../assets/pumpjack.obj?url';
 // @ts-ignore
-import football from './../../assets/football.fbx?url';
+// import football from './../../assets/football.fbx?url';
+import bridge from './../../assets/bridge.fbx?url';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 // @ts-ignore
@@ -83,18 +84,18 @@ const shipConfig: Config = {
   toNextCurves: [],
 };
 
-const footballConfig: Config = {
-  name: 'football',
-  position: new Vector3(-1000, 400, 0),
-  scale: new Vector3(0.05, 0.05, 0.05),
-  rotation: new Euler(0, 0, 0),
+const bridgeConfig: Config = {
+  name: 'bridge',
+  position: new Vector3(-1100, 200, 0),
+  scale: new Vector3(24, 2.5, 95.4),
+  rotation: new Euler(0, MathUtils.degToRad(160), 0),
   // @ts-ignore
   mesh: undefined,
   loadModal: async (config: Config) => {
     const { position, scale, rotation } = config;
 
     const loader = new FBXLoader();
-    const model = await loader.loadAsync(football);
+    const model = await loader.loadAsync(bridge);
     const mesh = model.children[0];
     mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
     mesh.position.set(position.x, position.y, position.z);
@@ -116,7 +117,7 @@ const footballConfig: Config = {
   toNextCurves: [],
 };
 
-export const ConfigList: Config[] = [pumpjackConfig, shipConfig, footballConfig];
+export const ConfigList: Config[] = [pumpjackConfig, shipConfig, bridgeConfig];
 
 // handleCalculateConfigList通过计算补全配置
 export const handleCalculateConfigList = (_scene: Scene) => {

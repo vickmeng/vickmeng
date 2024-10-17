@@ -13,9 +13,7 @@ interface Options {
   onFinish?: () => void;
 }
 
-export const switchToOther = async (opts: Options) => {
-  console.log(opts);
-
+export const switchModal = async (opts: Options) => {
   const { fromIndex, toIndex } = opts;
 
   const fromConfig = ConfigList[fromIndex];
