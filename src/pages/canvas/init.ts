@@ -38,7 +38,7 @@ scene.add(points);
 
 await Promise.all(
   ConfigList.map(async (_config, _index) => {
-    const _mesh = await _config.loadModal();
+    const _mesh = await _config.loadModal(_config);
 
     _config.mesh = _mesh;
 

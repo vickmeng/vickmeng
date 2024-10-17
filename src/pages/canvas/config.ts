@@ -1,15 +1,18 @@
 import * as THREE from 'three';
-import { BoxGeometry, CatmullRomCurve3, Mesh, Scene, SphereGeometry, Vector3 } from 'three';
+import { CatmullRomCurve3, Euler, Mesh, Scene, Vector3 } from 'three';
 import { createRandomVerticalPosition, getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
+// @ts-ignore
 import ship from './../../assets/ship.fbx?url';
+// @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import { scene } from '@/pages/canvas/core';
 
 //
 export interface Config {
   position: Vector3;
+  scale: Vector3;
+  rotation: Euler;
   mesh: Mesh;
-  loadModal: () => Promise<Mesh>;
+  loadModal: (config: Config) => Promise<Mesh>;
   pointVectorList: Vector3[];
   pointVertices: number[];
   toNextCurves: CatmullRomCurve3[];
@@ -19,19 +22,22 @@ export interface Config {
 export const ConfigList: Config[] = [
   {
     position: new Vector3(-1000, 0, 0),
-
+    scale: new Vector3(0.05, 0.05, 0.05),
+    rotation: new Euler(0, 40, 0),
     // @ts-ignore
     mesh: undefined,
-    loadModal: async () => {
+    loadModal: async (config: Config) => {
+      const { position, scale, rotation } = config;
+
       const loader = new FBXLoader();
       const shipModel = await loader.loadAsync(ship);
 
       const shipMesh = shipModel.children[1].children[0] as Mesh;
       shipMesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
 
-      shipMesh.position.set(-1000, 0, 0);
-      shipMesh.rotation.set(0, 40, 0);
-      shipMesh.scale.set(0.05, 0.05, 0.05);
+      shipMesh.position.set(position.x, position.y, position.z);
+      shipMesh.rotation.set(rotation.x, rotation.y, rotation.z);
+      shipMesh.scale.set(scale.x, scale.y, scale.z);
 
       return shipMesh;
     },
@@ -42,17 +48,22 @@ export const ConfigList: Config[] = [
   },
   {
     position: new Vector3(1000, 0, 0),
+    scale: new Vector3(0.05, 0.05, 0.05),
+    rotation: new Euler(0, 40, 0),
     // @ts-ignore
     mesh: undefined,
-    loadModal: async () => {
+    loadModal: async (config: Config) => {
+      const { position, scale, rotation } = config;
+
       const loader = new FBXLoader();
       const shipModel = await loader.loadAsync(ship);
 
       const shipMesh = shipModel.children[1].children[0] as Mesh;
       shipMesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
 
-      shipMesh.position.set(1000, 0, 0);
-      shipMesh.rotation.set(0, 40, 0);
+      shipMesh.position.set(position.x, position.y, position.z);
+      shipMesh.rotation.set(rotation.x, rotation.y, rotation.z);
+      shipMesh.scale.set(scale.x, scale.y, scale.z);
 
       return shipMesh;
     },
