@@ -132,7 +132,7 @@ const chengduConfig: Config = {
   name: 'bridge',
   position: new Vector3(1000, 0, 0),
   scale: new Vector3(6, 6, 6),
-  rotation: new Euler(0, 0, 0),
+  rotation: new Euler(0, MathUtils.degToRad(-60), 0),
   // @ts-ignore
   mesh: undefined,
   loadModal: async (config: Config) => {

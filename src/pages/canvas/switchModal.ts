@@ -5,7 +5,7 @@ import { MeshBasicMaterial } from 'three';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { AnimationFrameSubject, camera, points, renderer, scene } from '@/pages/canvas/core';
-import { SANDS_COUNT } from '@/pages/canvas/constants';
+import { SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/canvas/constants';
 
 interface Options {
   fromIndex: number;
@@ -13,6 +13,11 @@ interface Options {
   onFinish?: () => void;
 }
 
+/**
+ * switchModal
+ * 切换模型
+ * 仅支持上一个下一个，不能跨
+ */
 export const switchModal = async (opts: Options) => {
   const { fromIndex, toIndex } = opts;
 
@@ -45,13 +50,17 @@ export const switchModal = async (opts: Options) => {
   /**
    * 沙子飞 start
    */
-  await Promise.all([sandsFly({ fromIndex, toIndex, fromConfig, toConfig }), cameraRoll({ fromIndex })]);
+  await Promise.all([
+    sandsFly({ fromIndex, toIndex, fromConfig, toConfig }),
+    cameraRoll({ fromIndex }),
+    showModal({ toConfig }),
+  ]);
   /**
    * sandsFly end
    */
-  const toMesh = toConfig.mesh;
+  // const toMesh = toConfig.mesh;
 
-  (toMesh.material as MeshBasicMaterial).opacity = 1;
+  // (toMesh.material as MeshBasicMaterial).opacity = 1;
 
   points.geometry.setAttribute('position', new THREE.Float32BufferAttribute([], 3));
 };
@@ -69,11 +78,9 @@ const sandsFly = async (params: { fromIndex: number; toIndex: number; fromConfig
 
   const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
 
-  const batchCount = 100; // 一共100个批次
+  const batchSandsCount = SANDS_COUNT / SANDS_FLY_BATCH_COUNT;
 
-  const batchSandsCount = SANDS_COUNT / batchCount;
-
-  const tweenList: Tween[] = Array(batchCount)
+  const tweenList: Tween[] = Array(SANDS_FLY_BATCH_COUNT)
     .fill(null)
     .reduce((previousValue, currentValue, currentIndex) => {
       const moveParams = { t: toNext ? 0 : 1 };
@@ -150,5 +157,42 @@ const cameraRoll = async (params: { fromIndex: number }) => {
       tween.stop();
     },
   });
+  await lastValueFrom(animate$);
+};
+
+const showModal = async (params: { toConfig: Config }) => {
+  const { toConfig } = params;
+
+  const animateFinish = new Subject();
+
+  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
+
+  const opacityParams = { opacity: 0 };
+
+  const toMesh = toConfig.mesh;
+
+  const tween = new Tween(opacityParams)
+    .delay(3000)
+    .to({ opacity: 1 }, 2000)
+    .easing(Easing.Cubic.Out)
+    .onUpdate(() => {
+      console.log(opacityParams.opacity);
+
+      (toMesh.material as MeshBasicMaterial).opacity = opacityParams.opacity;
+    })
+    .onComplete(() => {
+      animateFinish.next(undefined);
+    })
+    .start(); // Start the tween immediately.
+
+  animate$.subscribe({
+    next: () => {
+      tween.update();
+    },
+    complete: () => {
+      tween.stop();
+    },
+  });
+
   await lastValueFrom(animate$);
 };

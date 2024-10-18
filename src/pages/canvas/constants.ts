@@ -1,7 +1,5 @@
-export const CURVE_V_AMOUNT = 500;
-
-// 网格距离相机距离
-export const MESH_DISTANCE = 2000;
-
 // 沙子数量
 export const SANDS_COUNT = 10000;
+
+// 沙子分批飞行 批次
+export const SANDS_FLY_BATCH_COUNT = 100; // 一共100个批次
