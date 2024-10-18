@@ -4,7 +4,7 @@ import { MeshBasicMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, points, renderer, scene, SwitchSubject } from '@/pages/canvas/core';
+import { AnimationFrameSubject, camera, points, SwitchSubject } from '@/pages/canvas/core';
 import { SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/canvas/constants';
 
 interface Options {
