@@ -151,7 +151,6 @@ const cameraRoll = async (params: { fromIndex: number }) => {
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
       camera.rotation.y = THREE.MathUtils.degToRad(moveParams.deg);
-      renderer.render(scene, camera);
     })
     .onComplete(() => {
       animateFinish.next(undefined);
