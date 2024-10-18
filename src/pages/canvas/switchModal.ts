@@ -174,10 +174,7 @@ const showModal = async (params: { toConfig: Config }) => {
   const tween = new Tween(opacityParams)
     .delay(3000)
     .to({ opacity: 1 }, 2000)
-    .easing(Easing.Cubic.Out)
     .onUpdate(() => {
-      console.log(opacityParams.opacity);
-
       (toMesh.material as MeshBasicMaterial).opacity = opacityParams.opacity;
     })
     .onComplete(() => {
