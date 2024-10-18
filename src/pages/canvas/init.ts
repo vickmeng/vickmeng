@@ -60,8 +60,16 @@ console.log('ConfigList', ConfigList);
 
 // points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(ConfigList[0].pointVertices, 3));
 
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+window.addEventListener('resize', onWindowResize);
+
 AnimationFrameSubject.asObservable().subscribe(() => {
   renderer.render(scene, camera);
+
   // controls.update();
   requestIdleCallback(() => {
     AnimationFrameSubject.next(undefined);
