@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { AnimationMixer, CatmullRomCurve3, Euler, Group, MathUtils, Mesh, Scene, Vector3 } from 'three';
+import { AnimationMixer, CatmullRomCurve3, Euler, Group, MathUtils, Mesh, Vector3 } from 'three';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
 // @ts-ignore
 import ship from './../../assets/ship.fbx?url';
@@ -163,8 +163,7 @@ const chengduConfig: Config = {
     config.pointVectorList = getVectorListFromMesh({ mesh });
     config.pointVertices = getVerticesFromVectors(config.pointVectorList);
 
-    const mixer = new THREE.AnimationMixer(model);
-    model.mixer = mixer;
+    model.mixer = new THREE.AnimationMixer(model);
   },
   onSwitchIn: (params) => {
     const { animations } = params.toConfig.model;
@@ -195,7 +194,7 @@ const chengduConfig: Config = {
 export const ConfigList: Config[] = [daqingConfig, dalianConfig, qingdaoConfig, chengduConfig];
 
 // handleCalculateConfigList通过计算补全配置
-export const handleCalculateConfigList = (_scene: Scene) => {
+export const handleCalculateConfigList = () => {
   // 率先计算所有曲线
   ConfigList.forEach((fromConfig, i) => {
     const toConfig: Config | undefined = ConfigList[i + 1];
@@ -206,8 +205,6 @@ export const handleCalculateConfigList = (_scene: Scene) => {
 
     // 确定多个坐标作为曲线的V1
     const curveMidPointList: Vector3[] = [];
-
-    // const lineVector = new THREE.Vector3().subVectors(toConfig.position, fromConfig.position);
 
     // 确定点位
     Array(60)

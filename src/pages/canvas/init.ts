@@ -3,20 +3,8 @@
  */
 import * as THREE from 'three';
 import { MeshBasicMaterial, SphereGeometry } from 'three';
-// @ts-ignore
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ConfigList, handleCalculateConfigList } from './config';
 import { AnimationFrameSubject, camera, points, renderer, scene } from '@/pages/canvas/core';
-
-// 创建场景
-
-// 创建渲染器
-// const renderer = new THREE.WebGLRenderer();
-// renderer.setSize(window.innerWidth, window.innerHeight);
-// document.body.appendChild(renderer.domElement);
-
-// export const controls = new OrbitControls(camera, renderer.domElement);
-// controls.update();
 
 /**
  * add points start
@@ -66,7 +54,7 @@ scene.add(testMesh2);
 /**
  *  计算所有点位以及贝塞尔曲线 start
  */
-handleCalculateConfigList(scene);
+handleCalculateConfigList();
 // eslint-disable-next-line
 console.log('ConfigList', ConfigList);
 
