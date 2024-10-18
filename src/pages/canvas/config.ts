@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { CatmullRomCurve3, Euler, Group, MathUtils, Mesh, Scene, Vector3 } from 'three';
+import { AnimationMixer, CatmullRomCurve3, Euler, Group, MathUtils, Mesh, Scene, Vector3 } from 'three';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
 // @ts-ignore
 import ship from './../../assets/ship.fbx?url';
@@ -13,7 +13,8 @@ import panda from './../../assets/panda.fbx?url';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 // @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { scene } from '@/pages/canvas/core';
+import { AnimationFrameSubject, camera, clock, renderer, scene, SwitchSubject } from '@/pages/canvas/core';
+import { takeUntil } from 'rxjs';
 
 //
 export interface Config {
@@ -27,10 +28,13 @@ export interface Config {
   pointVectorList: Vector3[];
   pointVertices: number[];
   toNextCurves: CatmullRomCurve3[];
+  onSwitchOut?: (params: { fromConfig: Config; toConfig: Config }) => Promise<void>;
+  onSwitchIn?: (params: { fromConfig: Config; toConfig: Config }) => Promise<void>;
+  actions?: any[]; // 动画
 }
 
 const daqingConfig: Config = {
-  name: 'pumpjack',
+  name: 'daqing',
   position: new Vector3(-1000, 0, 0),
   scale: new Vector3(2, 2, 2),
   rotation: new Euler(0, MathUtils.degToRad(190), 0),
@@ -65,7 +69,7 @@ const daqingConfig: Config = {
 };
 
 const dalianConfig: Config = {
-  name: 'ship',
+  name: 'dalian',
   position: new Vector3(1000, 0, 0),
   scale: new Vector3(0.05, 0.05, 0.05),
   rotation: new Euler(0, 0, 0),
@@ -97,7 +101,7 @@ const dalianConfig: Config = {
 };
 
 const qingdaoConfig: Config = {
-  name: 'bridge',
+  name: 'qingdao',
   position: new Vector3(-1100, 200, 0),
   scale: new Vector3(24, 2.5, 95.4),
   rotation: new Euler(0, MathUtils.degToRad(160), 0),
@@ -129,7 +133,7 @@ const qingdaoConfig: Config = {
 };
 
 const chengduConfig: Config = {
-  name: 'bridge',
+  name: 'chengdu',
   position: new Vector3(1000, 0, 0),
   scale: new Vector3(6, 6, 6),
   rotation: new Euler(0, MathUtils.degToRad(-60), 0),
@@ -158,6 +162,30 @@ const chengduConfig: Config = {
 
     config.pointVectorList = getVectorListFromMesh({ mesh });
     config.pointVertices = getVerticesFromVectors(config.pointVectorList);
+
+    const mixer = new THREE.AnimationMixer(model);
+    model.mixer = mixer;
+  },
+  onSwitchIn: (params) => {
+    const { animations } = params.toConfig.model;
+    // @ts-ignore
+    const mixer = params.toConfig.model.mixer as AnimationMixer;
+
+    const action = mixer.clipAction(animations[0]);
+    action.play();
+
+    AnimationFrameSubject.pipe(takeUntil(SwitchSubject)).subscribe({
+      next: () => {
+        const delta = clock.getDelta();
+        mixer.update(delta);
+        renderer.render(scene, camera);
+      },
+      complete: () => {
+        mixer.stopAllAction();
+      },
+    });
+
+    return Promise.resolve();
   },
   pointVectorList: [],
   pointVertices: [],

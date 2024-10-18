@@ -10,6 +10,8 @@ camera.position.set(0, 480, 1000);
 
 camera.rotation.y = THREE.MathUtils.degToRad(10);
 
+export const SwitchSubject = new Subject();
+
 export const AnimationFrameSubject = new Subject();
 
 export const points = new THREE.Points(

@@ -4,7 +4,7 @@ import { MeshBasicMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, points, renderer, scene } from '@/pages/canvas/core';
+import { AnimationFrameSubject, camera, points, renderer, scene, SwitchSubject } from '@/pages/canvas/core';
 import { SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/canvas/constants';
 
 interface Options {
@@ -19,12 +19,17 @@ interface Options {
  * 仅支持上一个下一个，不能跨
  */
 export const switchModal = async (opts: Options) => {
+  SwitchSubject.next(undefined);
+
   const { fromIndex, toIndex } = opts;
 
   const fromConfig = ConfigList[fromIndex];
   const toConfig = ConfigList[toIndex];
 
-  // // 创建target网格
+  if (fromConfig.onSwitchOut) {
+    await fromConfig.onSwitchOut({ fromConfig, toConfig });
+  }
+
   /**
    * 生成沙子 start
    */
@@ -63,6 +68,10 @@ export const switchModal = async (opts: Options) => {
   // (toMesh.material as MeshBasicMaterial).opacity = 1;
 
   points.geometry.setAttribute('position', new THREE.Float32BufferAttribute([], 3));
+
+  if (toConfig.onSwitchIn) {
+    await toConfig.onSwitchIn({ fromConfig, toConfig });
+  }
 };
 
 const sandsFly = async (params: { fromIndex: number; toIndex: number; fromConfig: Config; toConfig: Config }) => {
