@@ -1,13 +1,14 @@
 import * as THREE from 'three';
-import { CatmullRomCurve3, Euler, MathUtils, Mesh, Scene, Vector3 } from 'three';
-import { createRandomVerticalPosition, getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
+import { CatmullRomCurve3, Euler, Group, MathUtils, Mesh, Scene, Vector3 } from 'three';
+import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
 // @ts-ignore
 import ship from './../../assets/ship.fbx?url';
 // @ts-ignore
 import pumpjack from './../../assets/pumpjack.obj?url';
 // @ts-ignore
-// import football from './../../assets/football.fbx?url';
 import bridge from './../../assets/bridge.fbx?url';
+// @ts-ignore
+import panda from './../../assets/panda.fbx?url';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 // @ts-ignore
@@ -20,19 +21,19 @@ export interface Config {
   position: Vector3;
   scale: Vector3;
   rotation: Euler;
+  model: Group;
   mesh: Mesh;
-  loadModal: (config: Config) => Promise<Mesh>;
+  loadModal: (config: Config) => Promise<void>;
   pointVectorList: Vector3[];
   pointVertices: number[];
   toNextCurves: CatmullRomCurve3[];
-  // toNextDistance: number;
 }
 
-const pumpjackConfig: Config = {
+const daqingConfig: Config = {
   name: 'pumpjack',
   position: new Vector3(-1000, 0, 0),
   scale: new Vector3(2, 2, 2),
-  rotation: new Euler(0, 3.2, 0),
+  rotation: new Euler(0, MathUtils.degToRad(190), 0),
   // @ts-ignore
   mesh: undefined,
   loadModal: async (config: Config) => {
@@ -42,6 +43,9 @@ const pumpjackConfig: Config = {
     const model = await loader.loadAsync(pumpjack);
     const mesh = model.children[0];
 
+    config.model = model;
+    config.mesh = mesh;
+
     mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
 
     mesh.position.set(position.x, position.y, position.z);
@@ -50,13 +54,17 @@ const pumpjackConfig: Config = {
 
     scene.add(mesh);
 
-    return mesh;
+    config.model = model;
+
+    config.pointVectorList = getVectorListFromMesh({ mesh });
+    config.pointVertices = getVerticesFromVectors(config.pointVectorList);
   },
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
 };
-const shipConfig: Config = {
+
+const dalianConfig: Config = {
   name: 'ship',
   position: new Vector3(1000, 0, 0),
   scale: new Vector3(0.05, 0.05, 0.05),
@@ -67,9 +75,12 @@ const shipConfig: Config = {
     const { position, scale, rotation } = config;
 
     const loader = new FBXLoader();
-    const shipModel = await loader.loadAsync(ship);
+    const model = await loader.loadAsync(ship);
+    const mesh = model.children[1].children[0] as Mesh;
 
-    const mesh = shipModel.children[1].children[0] as Mesh;
+    config.model = model;
+    config.mesh = mesh;
+
     mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
     mesh.position.set(position.x, position.y, position.z);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
@@ -77,14 +88,15 @@ const shipConfig: Config = {
 
     scene.add(mesh);
 
-    return mesh;
+    config.pointVectorList = getVectorListFromMesh({ mesh });
+    config.pointVertices = getVerticesFromVectors(config.pointVectorList);
   },
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
 };
 
-const bridgeConfig: Config = {
+const qingdaoConfig: Config = {
   name: 'bridge',
   position: new Vector3(-1100, 200, 0),
   scale: new Vector3(24, 2.5, 95.4),
@@ -97,6 +109,10 @@ const bridgeConfig: Config = {
     const loader = new FBXLoader();
     const model = await loader.loadAsync(bridge);
     const mesh = model.children[0];
+
+    config.model = model;
+    config.mesh = mesh;
+
     mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
     mesh.position.set(position.x, position.y, position.z);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
@@ -104,30 +120,54 @@ const bridgeConfig: Config = {
 
     scene.add(mesh);
 
-    return mesh;
-
-    // return model.children.filter((_mesh: Mesh) => {
-    //   // 黑名单，有些小细节不要了
-    //   const blackList: string[] = ['Cylinder006', 'Cylinder007', 'Cylinder008', 'Cylinder009', 'Line006', 'Line007'];
-    //   return !blackList.includes(_mesh.name);
-    // });
+    config.pointVectorList = getVectorListFromMesh({ mesh });
+    config.pointVertices = getVerticesFromVectors(config.pointVectorList);
   },
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
 };
 
-export const ConfigList: Config[] = [pumpjackConfig, shipConfig, bridgeConfig];
+const chengduConfig: Config = {
+  name: 'bridge',
+  position: new Vector3(1000, 0, 0),
+  scale: new Vector3(6, 6, 6),
+  rotation: new Euler(0, 0, 0),
+  // @ts-ignore
+  mesh: undefined,
+  loadModal: async (config: Config) => {
+    const { position, scale, rotation } = config;
+
+    const loader = new FBXLoader();
+    const model = await loader.loadAsync(panda);
+    const mesh = model.children[0];
+
+    config.model = model;
+    config.mesh = mesh;
+
+    mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
+    mesh.position.set(position.x, position.y, position.z);
+    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
+    mesh.scale.set(scale.x, scale.y, scale.z);
+
+    model.position.set(position.x, position.y, position.z);
+    model.rotation.set(rotation.x, rotation.y, rotation.z);
+    model.scale.set(scale.x, scale.y, scale.z);
+
+    scene.add(model);
+
+    config.pointVectorList = getVectorListFromMesh({ mesh });
+    config.pointVertices = getVerticesFromVectors(config.pointVectorList);
+  },
+  pointVectorList: [],
+  pointVertices: [],
+  toNextCurves: [],
+};
+
+export const ConfigList: Config[] = [daqingConfig, dalianConfig, qingdaoConfig, chengduConfig];
 
 // handleCalculateConfigList通过计算补全配置
 export const handleCalculateConfigList = (_scene: Scene) => {
-  // 率先计算所有点位
-  ConfigList.forEach((_config) => {
-    // debugger;
-    _config.pointVectorList = getVectorListFromMesh({ mesh: _config.mesh });
-    _config.pointVertices = getVerticesFromVectors(_config.pointVectorList);
-  });
-
   // 率先计算所有曲线
   ConfigList.forEach((fromConfig, i) => {
     const toConfig: Config | undefined = ConfigList[i + 1];
@@ -139,18 +179,12 @@ export const handleCalculateConfigList = (_scene: Scene) => {
     // 确定多个坐标作为曲线的V1
     const curveMidPointList: Vector3[] = [];
 
-    const lineVector = new THREE.Vector3().subVectors(toConfig.position, fromConfig.position);
+    // const lineVector = new THREE.Vector3().subVectors(toConfig.position, fromConfig.position);
 
     // 确定点位
     Array(60)
       .fill(null)
       .forEach(() => {
-        // const newMidPoint = createRandomVerticalPosition(
-        //   new Vector3((Math.random() - 0.5) * 1000, 480, 0),
-        //   lineVector,
-        //   500
-        // );
-
         const newMidPoint = new Vector3(
           (Math.random() - 0.5) * 1000,
           (Math.random() - 0.5) * 1000 + 480,

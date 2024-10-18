@@ -38,14 +38,11 @@ scene.add(points);
 
 await Promise.all(
   ConfigList.map(async (_config, _index) => {
-    const _mesh = await _config.loadModal(_config);
-
-    _config.mesh = _mesh;
+    await _config.loadModal(_config);
 
     if (_index !== 0) {
-      (_mesh.material as MeshBasicMaterial).opacity = 0;
+      (_config.mesh.material as MeshBasicMaterial).opacity = 0;
     }
-    // scene.add(_mesh);
   })
 );
 
@@ -70,8 +67,8 @@ scene.add(testMesh2);
  *  计算所有点位以及贝塞尔曲线 start
  */
 handleCalculateConfigList(scene);
-
-console.log(ConfigList);
+// eslint-disable-next-line
+console.log('ConfigList', ConfigList);
 
 // points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(ConfigList[0].pointVertices, 3));
 

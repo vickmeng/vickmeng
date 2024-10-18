@@ -33,6 +33,7 @@ export const switchModal = async (opts: Options) => {
   /**
    * 网格消失
    */
+
   // 直接干掉比缓动效果反倒好一些
   const fromMesh = fromConfig.mesh;
 
