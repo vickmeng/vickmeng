@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { AnimationMixer, CatmullRomCurve3, Euler, Group, MathUtils, Mesh, Vector3 } from 'three';
+import { CatmullRomCurve3, Euler, Group, MathUtils, Mesh, Vector3 } from 'three';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
 // @ts-ignore
 import ship from './../../assets/ship.fbx?url';
@@ -8,17 +8,12 @@ import pumpjack from './../../assets/pumpjack.obj?url';
 // @ts-ignore
 import bridge from './../../assets/bridge.fbx?url';
 // @ts-ignore
-import panda from './../../assets/panda.fbx?url';
-
-// @ts-ignore
 import mark from './../../assets/mark.fbx?url';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 // @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { AnimationFrameSubject, camera, clock, renderer, scene, SwitchSubject } from '@/pages/canvas/core';
-import { takeUntil } from 'rxjs';
-import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
+import { scene } from '@/pages/canvas/core';
 
 //
 export interface Config {
