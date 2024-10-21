@@ -9,12 +9,16 @@ import pumpjack from './../../assets/pumpjack.obj?url';
 import bridge from './../../assets/bridge.fbx?url';
 // @ts-ignore
 import panda from './../../assets/panda.fbx?url';
+
+// @ts-ignore
+import mark from './../../assets/mark.fbx?url';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 // @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { AnimationFrameSubject, camera, clock, renderer, scene, SwitchSubject } from '@/pages/canvas/core';
 import { takeUntil } from 'rxjs';
+import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 
 //
 export interface Config {
@@ -68,8 +72,8 @@ const daqingConfig: Config = {
   toNextCurves: [],
 };
 
-const dalianConfig: Config = {
-  name: 'dalian',
+const qingdaoConfig: Config = {
+  name: 'qingdao',
   position: new Vector3(1000, 0, 0),
   scale: new Vector3(0.05, 0.05, 0.05),
   rotation: new Euler(0, 0, 0),
@@ -100,8 +104,8 @@ const dalianConfig: Config = {
   toNextCurves: [],
 };
 
-const qingdaoConfig: Config = {
-  name: 'qingdao',
+const dalianConfig: Config = {
+  name: 'dalian',
   position: new Vector3(-1100, 200, 0),
   scale: new Vector3(24, 2.5, 95.4),
   rotation: new Euler(0, MathUtils.degToRad(160), 0),
@@ -134,16 +138,16 @@ const qingdaoConfig: Config = {
 
 const chengduConfig: Config = {
   name: 'chengdu',
-  position: new Vector3(1000, 0, 0),
-  scale: new Vector3(6, 6, 6),
-  rotation: new Euler(0, MathUtils.degToRad(-60), 0),
+  position: new Vector3(1000, 450, 0),
+  scale: new Vector3(1, 1, 1).multiplyScalar(150),
+  rotation: new Euler(MathUtils.degToRad(-90), 0, MathUtils.degToRad(145)),
   // @ts-ignore
   mesh: undefined,
   loadModal: async (config: Config) => {
     const { position, scale, rotation } = config;
 
     const loader = new FBXLoader();
-    const model = await loader.loadAsync(panda);
+    const model = await loader.loadAsync(mark);
     const mesh = model.children[0];
 
     config.model = model;
@@ -154,44 +158,48 @@ const chengduConfig: Config = {
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
     mesh.scale.set(scale.x, scale.y, scale.z);
 
-    model.position.set(position.x, position.y, position.z);
-    model.rotation.set(rotation.x, rotation.y, rotation.z);
-    model.scale.set(scale.x, scale.y, scale.z);
+    // model.position.set(position.x, position.y, position.z);
+    // model.rotation.set(rotation.x, rotation.y, rotation.z);
+    // model.scale.set(scale.x, scale.y, scale.z);
 
-    scene.add(model);
+    scene.add(mesh);
+
+    // const transformControls = new TransformControls(camera, renderer.domElement);
+    // scene.add(transformControls);
+    // transformControls.attach(mesh);
 
     config.pointVectorList = getVectorListFromMesh({ mesh });
     config.pointVertices = getVerticesFromVectors(config.pointVectorList);
 
-    model.mixer = new THREE.AnimationMixer(model);
+    // model.mixer = new THREE.AnimationMixer(model);
   },
-  onSwitchIn: (params) => {
-    const { animations } = params.toConfig.model;
-    // @ts-ignore
-    const mixer = params.toConfig.model.mixer as AnimationMixer;
-
-    const action = mixer.clipAction(animations[0]);
-    action.play();
-
-    AnimationFrameSubject.pipe(takeUntil(SwitchSubject)).subscribe({
-      next: () => {
-        const delta = clock.getDelta();
-        mixer.update(delta);
-        renderer.render(scene, camera);
-      },
-      complete: () => {
-        mixer.stopAllAction();
-      },
-    });
-
-    return Promise.resolve();
-  },
+  // onSwitchIn: (params) => {
+  //   const { animations } = params.toConfig.model;
+  //   // @ts-ignore
+  //   const mixer = params.toConfig.model.mixer as AnimationMixer;
+  //
+  //   const action = mixer.clipAction(animations[0]);
+  //   action.play();
+  //
+  //   AnimationFrameSubject.pipe(takeUntil(SwitchSubject)).subscribe({
+  //     next: () => {
+  //       const delta = clock.getDelta();
+  //       mixer.update(delta);
+  //       renderer.render(scene, camera);
+  //     },
+  //     complete: () => {
+  //       mixer.stopAllAction();
+  //     },
+  //   });
+  //
+  //   return Promise.resolve();
+  // },
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
 };
 
-export const ConfigList: Config[] = [daqingConfig, dalianConfig, qingdaoConfig, chengduConfig];
+export const ConfigList: Config[] = [daqingConfig, qingdaoConfig, dalianConfig, chengduConfig];
 
 // handleCalculateConfigList通过计算补全配置
 export const handleCalculateConfigList = () => {
