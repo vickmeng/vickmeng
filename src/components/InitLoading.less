@@ -1,0 +1,34 @@
+.initLoading {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: #2a2a2a;
+  color: white;
+
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: opacity 2s ease-in-out;
+
+
+  &.loading-finished {
+    animation: fadeOut 1s ease-in-out forwards;
+  }
+
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}

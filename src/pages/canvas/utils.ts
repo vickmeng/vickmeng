@@ -39,6 +39,7 @@ export function getVectorListFromMesh(params: Params) {
 
       // 向下取整 每个点生成这么多个插值
       // const interpolateAmount = Math.floor(SANDS_COUNT / positionAttribute.count) - 1;
+      console.log(positionAttribute.count);
 
       for (let i = 0; i < positionAttribute.count; i++) {
         const localPosition = new THREE.Vector3().fromBufferAttribute(positionAttribute, i);
@@ -94,4 +95,12 @@ export const createRandomVerticalPosition = (point: Vector3, lineVector: Vector3
   const perpendicularVector = new THREE.Vector3().crossVectors(lineVector, assistVector).normalize();
 
   return new THREE.Vector3().addVectors(point, perpendicularVector.multiplyScalar(scalar));
+};
+
+export const delay = async (time: number) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(undefined);
+    }, time);
+  });
 };

@@ -5,6 +5,8 @@ import * as THREE from 'three';
 import { MeshBasicMaterial, SphereGeometry } from 'three';
 import { ConfigList, handleCalculateConfigList } from './config';
 import { AnimationFrameSubject, camera, points, renderer, scene } from '@/pages/canvas/core';
+import { initLoadingProgressStore } from '@/stores';
+import { delay } from '@/pages/canvas/utils';
 
 /**
  * add points start
@@ -12,6 +14,9 @@ import { AnimationFrameSubject, camera, points, renderer, scene } from '@/pages/
  */
 
 scene.add(points);
+
+initLoadingProgressStore.progress = 10;
+initLoadingProgressStore.message = '完成基础场景初始化,开始模型加载';
 /**
  * add points end
  */
@@ -34,18 +39,23 @@ await Promise.all(
   })
 );
 
-// 这只是个标记
-const testMesh = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-testMesh.position.set(0, 0, 0);
-scene.add(testMesh);
+initLoadingProgressStore.progress = 70;
+initLoadingProgressStore.message = '完成模型加载,开始数据计算';
 
-const testMesh1 = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-testMesh1.position.set(-1000, 0, 0);
-scene.add(testMesh1);
+await delay(100);
 
-const testMesh2 = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-testMesh2.position.set(1000, 0, 0);
-scene.add(testMesh2);
+// // 这只是个标记
+// const testMesh = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+// testMesh.position.set(0, 0, 0);
+// scene.add(testMesh);
+//
+// const testMesh1 = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+// testMesh1.position.set(-1000, 0, 0);
+// scene.add(testMesh1);
+//
+// const testMesh2 = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+// testMesh2.position.set(1000, 0, 0);
+// scene.add(testMesh2);
 
 /**
  * 一次创建所有场景 end
@@ -58,7 +68,8 @@ handleCalculateConfigList();
 // eslint-disable-next-line
 console.log('ConfigList', ConfigList);
 
-// points.geometry.setAttribute('position', new THREE.Float32BufferAttribute(ConfigList[0].pointVertices, 3));
+initLoadingProgressStore.progress = 100;
+initLoadingProgressStore.message = '完成初始化即将进入应用';
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;

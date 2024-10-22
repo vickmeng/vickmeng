@@ -26,6 +26,9 @@ dependencies:
   umi:
     specifier: ^4.3.24
     version: 4.3.24(@babel/core@7.25.7)(@types/react@18.3.11)(eslint@8.57.1)(prettier@2.8.8)(react-dom@18.3.1)(react@18.3.1)(stylelint@14.16.1)(typescript@5.6.3)(webpack@5.95.0)
+  valtio:
+    specifier: 2.1.0
+    version: 2.1.0(@types/react@18.3.11)(react@18.3.1)
 
 devDependencies:
   '@types/react':
@@ -7354,6 +7357,10 @@ packages:
       ipaddr.js: 1.9.1
     dev: false
 
+  /proxy-compare@3.0.0:
+    resolution: {integrity: sha512-y44MCkgtZUCT9tZGuE278fB7PWVf7fRYy0vbRXAts2o5F0EfC4fIQrvQQGBJo1WJbFcVLXzApOscyJuZqHQc1w==}
+    dev: false
+
   /prr@1.0.1:
     resolution: {integrity: sha1-0/wRS6BplaRexok/SEzrHXj19HY=}
     requiresBuild: true
@@ -8763,6 +8770,23 @@ packages:
     dependencies:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
+    dev: false
+
+  /valtio@2.1.0(@types/react@18.3.11)(react@18.3.1):
+    resolution: {integrity: sha512-UryxkWilm5huamW8vNAvj7KLodPgSN5EVWcetwzcy8pVyc27tQ+RqSRmJ0zx/Cq219O7yqaNl12GcCSujoLDUw==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      react: '>=18.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      '@types/react': 18.3.11
+      proxy-compare: 3.0.0
+      react: 18.3.1
     dev: false
 
   /vary@1.1.2:
