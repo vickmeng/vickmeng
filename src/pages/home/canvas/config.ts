@@ -1,9 +1,9 @@
 import { CatmullRomCurve3, Vector3 } from 'three';
-import { Config } from '@/pages/canvas/types';
-import { daqingConfig } from '@/pages/canvas/daqing';
-import { qingdaoConfig } from '@/pages/canvas/qingdao';
-import { dalianConfig } from '@/pages/canvas/dalian';
-import { chengduConfig } from '@/pages/canvas/chengdu';
+import { Config } from '@/pages/home/canvas/types';
+import { daqingConfig } from '@/pages/home/canvas/daqing';
+import { qingdaoConfig } from '@/pages/home/canvas/qingdao';
+import { dalianConfig } from '@/pages/home/canvas/dalian';
+import { chengduConfig } from '@/pages/home/canvas/chengdu';
 
 //
 

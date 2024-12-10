@@ -1,12 +1,12 @@
-import { ConfigList } from '@/pages/canvas/config';
+import { ConfigList } from '@/pages/home/canvas/config';
 import * as THREE from 'three';
 import { Color, MeshBasicMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, points, scene, SwitchSubject } from '@/pages/canvas/core';
-import { SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/canvas/constants';
-import { Config } from '@/pages/canvas/types';
+import { AnimationFrameSubject, camera, points, scene, SwitchSubject } from '@/pages/home/canvas/core';
+import { SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
+import { Config } from '@/pages/home/canvas/types';
 
 interface Options {
   fromIndex: number;

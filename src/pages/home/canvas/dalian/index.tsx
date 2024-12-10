@@ -1,17 +1,17 @@
-import { Config } from '@/pages/canvas/types';
+import { Config } from '@/pages/home/canvas/types';
 import * as THREE from 'three';
 import { Color, Euler, MathUtils, Vector3 } from 'three';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import { scene } from '@/pages/canvas/core';
-import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
+import { scene } from '@/pages/home/canvas/core';
+import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils';
 // @ts-ignore
-import bridge from '../../../assets/bridge.fbx?url';
+import bridge from '../../../../assets/bridge.fbx?url';
 
 export const dalianConfig: Config = {
   name: 'dalian',
-  preColor: new Color(0xaf375a),
-  backColor: new Color(0x60c794),
+  preColor: new Color(0x54d5e8),
+  backColor: new Color(0x5e2d94),
   position: new Vector3(-1100, 200, 0),
   scale: new Vector3(24, 2.5, 95.4),
   rotation: new Euler(0, MathUtils.degToRad(160), 0),

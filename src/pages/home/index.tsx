@@ -1,6 +1,6 @@
-import { switchModal } from '@/pages/canvas/switchModal';
+import { switchModal } from '@/pages/home/canvas/switchModal';
 import { useEffect, useState } from 'react';
-import { ConfigList } from '@/pages/canvas/config';
+import { ConfigList } from '@/pages/home/canvas/config';
 import InitLoading from '@/components/InitLoading';
 
 export default function HomePage() {
@@ -11,7 +11,7 @@ export default function HomePage() {
   const hasNext = currentIndex < ConfigList.length - 1;
 
   useEffect(() => {
-    import('./canvas/init');
+    import('@/pages/home/canvas/init');
   }, []);
 
   return (

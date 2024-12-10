@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Subject } from 'rxjs';
-import { ConfigList } from '@/pages/canvas/config';
+import { ConfigList } from '@/pages/home/canvas/config';
 
 export const scene = new THREE.Scene();
 export const clock = new THREE.Clock();

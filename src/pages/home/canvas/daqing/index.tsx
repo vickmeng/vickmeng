@@ -2,12 +2,12 @@ import * as THREE from 'three';
 import { Color, Euler, MathUtils, Mesh, Vector3 } from 'three';
 // @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { scene } from '@/pages/canvas/core';
-import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
+import { scene } from '@/pages/home/canvas/core';
+import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils';
 
 // @ts-ignore
-import pumpjack from '../../../assets/pumpjack.obj?url';
-import { Config } from '@/pages/canvas/types';
+import pumpjack from '../../../../assets/pumpjack.obj?url';
+import { Config } from '@/pages/home/canvas/types';
 
 export const daqingConfig: Config = {
   name: 'daqing',

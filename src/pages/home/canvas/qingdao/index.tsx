@@ -1,28 +1,28 @@
-import { Config } from '@/pages/canvas/types';
-import * as THREE from 'three';
-import { Color, Euler, MathUtils, Vector3 } from 'three';
+import { Config } from '@/pages/home/canvas/types';
+import { Color, Euler, Mesh, Vector3 } from 'three';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import { scene } from '@/pages/canvas/core';
-import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
+import * as THREE from 'three';
+import { scene } from '@/pages/home/canvas/core';
+import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils';
 // @ts-ignore
-import mark from '../../../assets/mark.fbx?url';
+import ship from '../../../../assets/ship.fbx?url';
 
-export const chengduConfig: Config = {
-  name: 'chengdu',
-  preColor: new Color(0x54d5e8),
-  backColor: new Color(0x5e2d94),
-  position: new Vector3(1000, 450, 0),
-  scale: new Vector3(1, 1, 1).multiplyScalar(150),
-  rotation: new Euler(MathUtils.degToRad(-90), 0, MathUtils.degToRad(145)),
+export const qingdaoConfig: Config = {
+  name: 'qingdao',
+  preColor: new Color(0xe1dfd8),
+  backColor: new Color(0xd34752),
+  position: new Vector3(1000, 0, 0),
+  scale: new Vector3(0.05, 0.05, 0.05),
+  rotation: new Euler(0, 0, 0),
   // @ts-ignore
   mesh: undefined,
   loadModal: async (config: Config) => {
     const { position, scale, rotation } = config;
 
     const loader = new FBXLoader();
-    const model = await loader.loadAsync(mark);
-    const mesh = model.children[0];
+    const model = await loader.loadAsync(ship);
+    const mesh = model.children[1].children[0] as Mesh;
 
     const edges = new THREE.EdgesGeometry(mesh.geometry, 1);
     const line = new THREE.LineSegments(edges);
@@ -49,7 +49,6 @@ export const chengduConfig: Config = {
     config.pointVectorList = getVectorListFromMesh({ mesh });
     config.pointVertices = getVerticesFromVectors(config.pointVectorList);
   },
-
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
