@@ -7,6 +7,7 @@ import { scene } from '@/pages/canvas/core';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
 // @ts-ignore
 import bridge from '../../../assets/bridge.fbx?url';
+import { MODEL_COLOR } from '@/pages/canvas/constants';
 
 export const dalianConfig: Config = {
   name: 'dalian',
@@ -25,7 +26,7 @@ export const dalianConfig: Config = {
     config.model = model;
     config.mesh = mesh;
 
-    mesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, wireframe: true });
+    mesh.material = new THREE.MeshBasicMaterial({ color: MODEL_COLOR, transparent: true, wireframe: true });
     mesh.position.set(position.x, position.y, position.z);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
     mesh.scale.set(scale.x, scale.y, scale.z);

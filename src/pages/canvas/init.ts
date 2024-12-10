@@ -1,8 +1,4 @@
-/**
- *  计算所有点位以及贝塞尔曲线 end
- */
-import * as THREE from 'three';
-import { MeshBasicMaterial, SphereGeometry } from 'three';
+import { MeshBasicMaterial } from 'three';
 import { ConfigList, handleCalculateConfigList } from './config';
 import { AnimationFrameSubject, camera, points, renderer, scene } from '@/pages/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
