@@ -58,7 +58,7 @@ export const switchModal = async (opts: Options) => {
    */
   await Promise.all([
     sandsFly({ fromIndex, toIndex, fromConfig, toConfig }),
-    changeSceneBackGround({ fromIndex, toIndex, fromConfig, toConfig }),
+    changeColor({ fromIndex, toIndex, fromConfig, toConfig }),
     cameraRoll({ fromIndex }),
     showModal({ toConfig }),
   ]);
@@ -170,12 +170,7 @@ const cameraRoll = async (params: { fromIndex: number }) => {
   await lastValueFrom(animate$);
 };
 
-const changeSceneBackGround = async (params: {
-  fromIndex: number;
-  toIndex: number;
-  fromConfig: Config;
-  toConfig: Config;
-}) => {
+const changeColor = async (params: { fromIndex: number; toIndex: number; fromConfig: Config; toConfig: Config }) => {
   const { fromConfig, toConfig } = params;
   const animateFinish = new Subject();
 
@@ -192,6 +187,11 @@ const changeSceneBackGround = async (params: {
       newBackgroundColor.lerpColors(fromConfig.backColor, toConfig.backColor, alphaParams.alpha);
 
       scene.background = newBackgroundColor;
+
+      const newPreColor = new Color();
+      newPreColor.lerpColors(fromConfig.preColor, toConfig.preColor, alphaParams.alpha);
+
+      points.material.color = newPreColor;
     })
     .onComplete(() => {
       animateFinish.next(undefined);
