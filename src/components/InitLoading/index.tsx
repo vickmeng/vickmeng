@@ -1,4 +1,4 @@
-import './InitLoading.less';
+import './index.less';
 import { useEffect, useMemo } from 'react';
 import { useSnapshot } from 'valtio/react';
 import { initLoadingProgressStore } from '@/stores';
