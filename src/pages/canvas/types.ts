@@ -1,4 +1,4 @@
-import { CatmullRomCurve3, Euler, Group, Mesh, Vector3 } from 'three';
+import { CatmullRomCurve3, Color, Euler, Group, LineSegments, Mesh, Vector3 } from 'three';
 
 export interface Config {
   name: string;
@@ -7,6 +7,7 @@ export interface Config {
   rotation: Euler;
   model: Group;
   mesh: Mesh;
+  line: LineSegments;
   loadModal: (config: Config) => Promise<void>;
   pointVectorList: Vector3[];
   pointVertices: number[];
@@ -14,4 +15,6 @@ export interface Config {
   onSwitchOut?: (params: { fromConfig: Config; toConfig: Config }) => Promise<void>;
   onSwitchIn?: (params: { fromConfig: Config; toConfig: Config }) => Promise<void>;
   actions?: any[]; // 动画
+  preColor: Color;
+  backColor: Color;
 }

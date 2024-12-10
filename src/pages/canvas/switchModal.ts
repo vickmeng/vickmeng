@@ -1,10 +1,10 @@
 import { ConfigList } from '@/pages/canvas/config';
 import * as THREE from 'three';
-import { MeshBasicMaterial } from 'three';
+import { Color, MeshBasicMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, points, SwitchSubject } from '@/pages/canvas/core';
+import { AnimationFrameSubject, camera, points, scene, SwitchSubject } from '@/pages/canvas/core';
 import { SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/canvas/constants';
 import { Config } from '@/pages/canvas/types';
 
@@ -46,9 +46,9 @@ export const switchModal = async (opts: Options) => {
    */
 
   // 直接干掉比缓动效果反倒好一些
-  const fromMesh = fromConfig.mesh;
+  const fromLine = fromConfig.line;
 
-  (fromMesh.material as MeshBasicMaterial).opacity = 0;
+  (fromLine.material as MeshBasicMaterial).opacity = 0;
   /**
    * 网格消失 出现
    */
@@ -58,6 +58,7 @@ export const switchModal = async (opts: Options) => {
    */
   await Promise.all([
     sandsFly({ fromIndex, toIndex, fromConfig, toConfig }),
+    changeSceneBackGround({ fromIndex, toIndex, fromConfig, toConfig }),
     cameraRoll({ fromIndex }),
     showModal({ toConfig }),
   ]);
@@ -169,6 +170,45 @@ const cameraRoll = async (params: { fromIndex: number }) => {
   await lastValueFrom(animate$);
 };
 
+const changeSceneBackGround = async (params: {
+  fromIndex: number;
+  toIndex: number;
+  fromConfig: Config;
+  toConfig: Config;
+}) => {
+  const { fromConfig, toConfig } = params;
+  const animateFinish = new Subject();
+
+  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
+
+  const alphaParams = { alpha: 0 };
+
+  const tween = new Tween(alphaParams)
+    .to({ alpha: 1 }, 5000)
+    .easing(Easing.Cubic.Out)
+    .onUpdate(() => {
+      const newBackgroundColor = new Color();
+
+      newBackgroundColor.lerpColors(fromConfig.backColor, toConfig.backColor, alphaParams.alpha);
+
+      scene.background = newBackgroundColor;
+    })
+    .onComplete(() => {
+      animateFinish.next(undefined);
+    })
+    .start(); // Start the tween immediately.;
+
+  animate$.subscribe({
+    next: () => {
+      tween.update();
+    },
+    complete: () => {
+      tween.stop();
+    },
+  });
+  await lastValueFrom(animate$);
+};
+
 const showModal = async (params: { toConfig: Config }) => {
   const { toConfig } = params;
 
@@ -178,13 +218,13 @@ const showModal = async (params: { toConfig: Config }) => {
 
   const opacityParams = { opacity: 0 };
 
-  const toMesh = toConfig.mesh;
+  const toLine = toConfig.line;
 
   const tween = new Tween(opacityParams)
     .delay(3000)
     .to({ opacity: 1 }, 2000)
     .onUpdate(() => {
-      (toMesh.material as MeshBasicMaterial).opacity = opacityParams.opacity;
+      (toLine.material as MeshBasicMaterial).opacity = opacityParams.opacity;
     })
     .onComplete(() => {
       animateFinish.next(undefined);

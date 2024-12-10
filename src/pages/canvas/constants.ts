@@ -3,6 +3,3 @@ export const SANDS_COUNT = 5000;
 
 // 沙子分批飞行 批次
 export const SANDS_FLY_BATCH_COUNT = 100; // 一共100个批次
-
-// 色彩
-export const MODEL_COLOR = 0xf0f0f0;

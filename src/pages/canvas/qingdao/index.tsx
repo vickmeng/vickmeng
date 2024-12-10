@@ -1,5 +1,5 @@
 import { Config } from '@/pages/canvas/types';
-import { Euler, Mesh, Vector3 } from 'three';
+import { Color, Euler, Mesh, Vector3 } from 'three';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import * as THREE from 'three';
@@ -7,10 +7,11 @@ import { scene } from '@/pages/canvas/core';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/canvas/utils';
 // @ts-ignore
 import ship from '../../../assets/ship.fbx?url';
-import { MODEL_COLOR } from '@/pages/canvas/constants';
 
 export const qingdaoConfig: Config = {
   name: 'qingdao',
+  preColor: new Color(0xe1dfd8),
+  backColor: new Color(0xd34752),
   position: new Vector3(1000, 0, 0),
   scale: new Vector3(0.05, 0.05, 0.05),
   rotation: new Euler(0, 0, 0),
@@ -23,15 +24,27 @@ export const qingdaoConfig: Config = {
     const model = await loader.loadAsync(ship);
     const mesh = model.children[1].children[0] as Mesh;
 
-    config.model = model;
-    config.mesh = mesh;
+    const edges = new THREE.EdgesGeometry(mesh.geometry, 1);
+    const line = new THREE.LineSegments(edges);
+    line.material = new THREE.LineBasicMaterial({
+      color: config.preColor,
+      depthTest: true,
+      transparent: true,
+    });
 
-    mesh.material = new THREE.MeshBasicMaterial({ color: MODEL_COLOR, transparent: true, wireframe: true });
+    line.position.set(position.x, position.y, position.z);
+    line.rotation.set(rotation.x, rotation.y, rotation.z);
+    line.scale.set(scale.x, scale.y, scale.z);
+
+    scene.add(line);
+
     mesh.position.set(position.x, position.y, position.z);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
     mesh.scale.set(scale.x, scale.y, scale.z);
 
-    scene.add(mesh);
+    config.line = line;
+    config.model = model;
+    config.mesh = mesh;
 
     config.pointVectorList = getVectorListFromMesh({ mesh });
     config.pointVertices = getVerticesFromVectors(config.pointVectorList);

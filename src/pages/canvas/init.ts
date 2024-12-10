@@ -8,7 +8,7 @@ import { delay } from '@/pages/canvas/utils';
  * add points start
  * 暂时不显示点
  */
-
+scene.background = ConfigList[0].backColor;
 scene.add(points);
 
 initLoadingProgressStore.progress = 10;
@@ -30,7 +30,7 @@ await Promise.all(
     await _config.loadModal(_config);
 
     if (_index !== 0) {
-      (_config.mesh.material as MeshBasicMaterial).opacity = 0;
+      (_config.line.material as MeshBasicMaterial).opacity = 0;
     }
   })
 );

@@ -4,7 +4,6 @@ import { daqingConfig } from '@/pages/canvas/daqing';
 import { qingdaoConfig } from '@/pages/canvas/qingdao';
 import { dalianConfig } from '@/pages/canvas/dalian';
 import { chengduConfig } from '@/pages/canvas/chengdu';
-import { initLoadingProgressStore } from '@/stores';
 
 //
 
