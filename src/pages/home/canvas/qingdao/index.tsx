@@ -1,5 +1,5 @@
 import { Config } from '@/pages/home/canvas/types';
-import { Color, Euler, Mesh, Vector3 } from 'three';
+import { Color, Euler, MathUtils, Mesh, Vector3 } from 'three';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import * as THREE from 'three';
@@ -7,14 +7,15 @@ import { scene } from '@/pages/home/canvas/core';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils';
 // @ts-ignore
 import ship from '../../../../assets/ship.fbx?url';
+import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 
 export const qingdaoConfig: Config = {
   name: 'qingdao',
   preColor: new Color(0xe1dfd8),
   backColor: new Color(0xd34752),
-  position: new Vector3(1000, 0, 0),
-  scale: new Vector3(0.05, 0.05, 0.05),
-  rotation: new Euler(0, 0, 0),
+  position: new Vector3(MODEL_POSITION_X, 0, 0),
+  scale: new Vector3(0.015, 0.015, 0.015),
+  rotation: new Euler(0, MathUtils.degToRad(100), 0),
   // @ts-ignore
   mesh: undefined,
   loadModal: async (config: Config) => {

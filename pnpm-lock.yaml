@@ -14,6 +14,9 @@ dependencies:
   '@types/three':
     specifier: 0.169.0
     version: 0.169.0
+  cannon-es:
+    specifier: 0.20.0
+    version: 0.20.0
   lodash:
     specifier: 4.17.21
     version: 4.17.21
@@ -3278,6 +3281,10 @@ packages:
 
   /caniuse-lite@1.0.30001667:
     resolution: {integrity: sha512-7LTwJjcRkzKFmtqGsibMeuXmvFDfZq/nzIjnmgCGzKKRVzjD72selLDK1oPF/Oxzmt4fNcPvTDvGqSDG4tCALw==}
+    dev: false
+
+  /cannon-es@0.20.0:
+    resolution: {integrity: sha512-eZhWTZIkFOnMAJOgfXJa9+b3kVlvG+FX4mdkpePev/w/rP5V8NRquGyEozcjPfEoXUlb+p7d9SUcmDSn14prOA==}
     dev: false
 
   /chalk@2.4.2:

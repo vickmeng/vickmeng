@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import car from './car.jpg';
 // 创建场景
 const scene = new THREE.Scene();
 
@@ -17,56 +16,30 @@ document.body.appendChild(renderer.domElement);
 
 const material = new THREE.MeshBasicMaterial({
   color: '#0de8c9',
+  wireframe: true,
 });
 
-material.onBeforeCompile = function (shader) {
-  shader.vertexShader = shader.vertexShader.replace(
-    'void main() {',
-    `
-    varying vec3 vPosition;//顶点位置插值后的坐标
-    void main(){
-      // 顶点位置坐标模型矩阵变换后，进行插值计算
-      vPosition = position;
-      // vPosition = vec3(modelMatrix * vec4( position, 1.0 ));
+const planeGeometry = new THREE.PlaneGeometry(100, 100, 10, 10);
 
-    `
-  );
+// const geometry = new THREE.BufferGeometry();
+// // 定义平面的顶点坐标，这里构建一个简单的矩形平面
+// const vertices = new Float32Array([
+//   -1,
+//   -1,
+//   0, // 左下角顶点
+//   1,
+//   -1,
+//   0, // 右下角顶点
+//   1,
+//   1,
+//   0, // 右上角顶点
+//   -1,
+//   1,
+//   0, // 左上角顶点
+// ]);
+// geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
-  shader.fragmentShader = shader.fragmentShader.replace(
-    'void main() {',
-    `
-    uniform float y; //变化的y控制光带高度
-    float w = 10.0;//光带宽度一半
-    varying vec3 vPosition;//顶点位置插值后的坐标
-    void main(){
-    `
-  );
-
-  shader.fragmentShader = shader.fragmentShader.replace(
-    '#include <dithering_fragment>',
-    `
-    #include <dithering_fragment>
-         // y随着时间改变光带位置也会改变
-        if(vPosition.y >= y && vPosition.y < y + w ){
-          float per = (vPosition.y-y)/w;//范围0~1
-          gl_FragColor.rgb = mix( vec3(1.0,1.0,0.0),gl_FragColor.rgb, per);
-        }
-        
-        if(vPosition.y < y && vPosition.y > y - w ){
-          float per = (y-vPosition.y)/w;//范围0~1
-          gl_FragColor.rgb = mix( vec3(1.0,1.0,0.0),gl_FragColor.rgb, per);
-        }
-        
-    `
-  );
-  shader.uniforms.y = { value: 0 };
-
-  mesh.shader = shader;
-};
-
-const geometry = new THREE.BoxGeometry(40, 100, 100);
-
-const mesh = new THREE.Mesh(geometry, material); // 点模型对象
+const mesh = new THREE.Mesh(planeGeometry, material); // 点模型对象
 
 mesh.rotateZ(Math.PI / 6);
 // mesh.position.y += 0;

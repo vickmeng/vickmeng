@@ -5,7 +5,7 @@ import { Color, MeshBasicMaterial } from 'three';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { AnimationFrameSubject, camera, points, scene, SwitchSubject } from '@/pages/home/canvas/core';
-import { SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
+import { CAMERA_ROTATION_Y, SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
 import { Config } from '@/pages/home/canvas/types';
 
 interface Options {
@@ -146,10 +146,10 @@ const cameraRoll = async (params: { fromIndex: number }) => {
 
   const leftToRight = params.fromIndex % 2 === 0;
 
-  const moveParams = { deg: leftToRight ? 10 : -10 };
+  const moveParams = { deg: leftToRight ? -CAMERA_ROTATION_Y : CAMERA_ROTATION_Y };
 
   const tween = new Tween(moveParams)
-    .to({ deg: leftToRight ? -10 : 10 }, 4000)
+    .to({ deg: leftToRight ? CAMERA_ROTATION_Y : -CAMERA_ROTATION_Y }, 4000)
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
       camera.rotation.y = THREE.MathUtils.degToRad(moveParams.deg);

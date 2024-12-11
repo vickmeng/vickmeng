@@ -27,9 +27,9 @@ export const handleCalculateConfigList = () => {
       .fill(null)
       .forEach(() => {
         const newMidPoint = new Vector3(
-          (Math.random() - 0.5) * 1000,
-          (Math.random() - 0.5) * 1000 + 480,
-          (Math.random() - 0.5) * 1000
+          (Math.random() - 0.5) * 300,
+          (Math.random() - 0.5) * 300 + 180,
+          (Math.random() - 0.5) * 300
         );
 
         curveMidPointList.push(newMidPoint); // 由1/3位置附近随意点位作为V1

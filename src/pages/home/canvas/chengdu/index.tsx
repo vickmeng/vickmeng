@@ -7,14 +7,15 @@ import { scene } from '@/pages/home/canvas/core';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils';
 // @ts-ignore
 import mark from '../../../../assets/mark.fbx?url';
+import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 
 export const chengduConfig: Config = {
   name: 'chengdu',
   preColor: new Color(0xaf375a),
   backColor: new Color(0x60c794),
-  position: new Vector3(1000, 450, 0),
-  scale: new Vector3(1, 1, 1).multiplyScalar(150),
-  rotation: new Euler(MathUtils.degToRad(-90), 0, MathUtils.degToRad(145)),
+  position: new Vector3(MODEL_POSITION_X, 180, 0),
+  scale: new Vector3(1, 1, 1).multiplyScalar(50),
+  rotation: new Euler(MathUtils.degToRad(-90), 0, MathUtils.degToRad(-20)),
   // @ts-ignore
   mesh: undefined,
   loadModal: async (config: Config) => {

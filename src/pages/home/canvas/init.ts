@@ -11,6 +11,8 @@ import { delay } from '@/pages/home/canvas/utils';
 scene.background = ConfigList[0].backColor;
 scene.add(points);
 
+// scene.add(backgroundMesh);
+
 initLoadingProgressStore.progress = 10;
 initLoadingProgressStore.message = '完成基础场景初始化,开始模型加载';
 /**

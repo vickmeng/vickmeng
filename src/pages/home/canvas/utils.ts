@@ -39,7 +39,6 @@ export function getVectorListFromMesh(params: Params) {
 
       // 向下取整 每个点生成这么多个插值
       // const interpolateAmount = Math.floor(SANDS_COUNT / positionAttribute.count) - 1;
-      console.log(positionAttribute.count);
 
       for (let i = 0; i < positionAttribute.count; i++) {
         const localPosition = new THREE.Vector3().fromBufferAttribute(positionAttribute, i);
