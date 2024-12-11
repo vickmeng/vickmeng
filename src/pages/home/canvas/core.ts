@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { Subject } from 'rxjs';
 import { CAMERA_ROTATION_Y } from '@/pages/home/canvas/constants';
 import { Color } from 'three';
+import { randomBackgroundGeometry } from '@/pages/home/canvas/utils/randomBackgroundGeometry';
 
 export const scene = new THREE.Scene();
 export const clock = new THREE.Clock();
@@ -28,21 +29,23 @@ const TestBox = new THREE.Mesh(
 
 scene.add(TestBox);
 
-const planeGeometry = new THREE.PlaneGeometry(
-  window.innerWidth * 1.2,
-  window.innerHeight,
-  window.innerWidth / 15,
-  window.innerHeight / 15
-);
+const PlaneGeometry = new THREE.PlaneGeometry(100, 100, 1, 1);
 
-// const;
+const originVertices = PlaneGeometry.getAttribute('position').array as Float32Array;
+
+const originPoints = []; // 没三个值为一个点，分成组
+for (let i = 0; i < originVertices.length; i += 3) {
+  const group = [originVertices[i], originVertices[i + 1], originVertices[i + 2]];
+  originPoints.push(group);
+}
+
+// randomBackgroundGeometry();
 
 export const backgroundMesh = new THREE.Mesh(
-  planeGeometry,
+  randomBackgroundGeometry(),
   new THREE.MeshBasicMaterial({
-    // color: '#1e1a25',
     color: new Color(0x1e1a25),
-
+    // color: new Color(0xff0000),
     // wireframe: true,
   })
 );

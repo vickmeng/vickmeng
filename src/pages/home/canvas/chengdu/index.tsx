@@ -4,7 +4,7 @@ import { Color, Euler, MathUtils, Vector3 } from 'three';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { scene } from '@/pages/home/canvas/core';
-import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils';
+import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils/utils';
 // @ts-ignore
 import mark from '../../../../assets/mark.fbx?url';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';

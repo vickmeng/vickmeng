@@ -3,7 +3,7 @@ import { Color, Euler, MathUtils, Mesh, Vector3 } from 'three';
 // @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { scene } from '@/pages/home/canvas/core';
-import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils';
+import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils/utils';
 
 // @ts-ignore
 import pumpjack from '../../../../assets/pumpjack.obj?url';

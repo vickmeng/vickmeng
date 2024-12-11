@@ -2,7 +2,7 @@ import { MeshBasicMaterial } from 'three';
 import { ConfigList, handleCalculateConfigList } from './config';
 import { AnimationFrameSubject, camera, points, renderer, scene } from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
-import { delay } from '@/pages/home/canvas/utils';
+import { delay } from '@/pages/home/canvas/utils/utils';
 
 /**
  * add points start
