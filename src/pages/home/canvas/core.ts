@@ -23,7 +23,7 @@ const TestBox = new THREE.Mesh(
     color: '#0de8c9',
   })
 );
-// TestBox.position.y = -100;
+
 scene.add(TestBox);
 
 const planeGeometry = new THREE.PlaneGeometry(8000, 8000, 10, 10);
@@ -36,6 +36,8 @@ export const backgroundMesh = new THREE.Mesh(
 );
 backgroundMesh.position.z = -1500;
 
-export const renderer = new THREE.WebGLRenderer();
+export const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
