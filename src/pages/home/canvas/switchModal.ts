@@ -182,12 +182,6 @@ const changeColor = async (params: { fromIndex: number; toIndex: number; fromCon
     .to({ alpha: 1 }, 5000)
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
-      const newBackgroundColor = new Color();
-
-      newBackgroundColor.lerpColors(fromConfig.backColor, toConfig.backColor, alphaParams.alpha);
-
-      scene.background = newBackgroundColor;
-
       const newPreColor = new Color();
       newPreColor.lerpColors(fromConfig.preColor, toConfig.preColor, alphaParams.alpha);
 

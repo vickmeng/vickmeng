@@ -11,8 +11,7 @@ import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 
 export const dalianConfig: Config = {
   name: 'dalian',
-  preColor: new Color(0x54d5e8),
-  backColor: new Color(0x5e2d94),
+  preColor: new Color(0xf2dd0b),
   position: new Vector3(-MODEL_POSITION_X, 200, 0),
   scale: new Vector3(9.6, 1, 38).multiplyScalar(0.7),
   rotation: new Euler(MathUtils.degToRad(12), MathUtils.degToRad(310), 0),

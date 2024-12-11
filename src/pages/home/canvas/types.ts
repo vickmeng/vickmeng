@@ -15,6 +15,5 @@ export interface Config {
   onSwitchOut?: (params: { fromConfig: Config; toConfig: Config }) => Promise<void>;
   onSwitchIn?: (params: { fromConfig: Config; toConfig: Config }) => Promise<void>;
   actions?: any[]; // 动画
-  preColor: Color;
-  backColor: Color;
+  preColor: Color; // 前景色 决定字体等
 }

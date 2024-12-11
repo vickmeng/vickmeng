@@ -8,8 +8,6 @@ import { delay } from '@/pages/home/canvas/utils';
  * add points start
  * 暂时不显示点
  */
-scene.background = ConfigList[0].backColor;
-scene.add(points);
 
 // scene.add(backgroundMesh);
 

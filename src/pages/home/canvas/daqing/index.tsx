@@ -13,7 +13,7 @@ import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 export const daqingConfig: Config = {
   name: 'daqing',
   preColor: new Color(0x6be6e0),
-  backColor: new Color(0x1e1a25),
+
   position: new Vector3(-MODEL_POSITION_X, 0, 0),
   scale: new Vector3(0.9, 0.9, 0.9),
   rotation: new Euler(0, MathUtils.degToRad(220), 0),
