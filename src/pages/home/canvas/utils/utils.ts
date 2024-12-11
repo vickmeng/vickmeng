@@ -43,14 +43,6 @@ export function getVectorListFromMesh(params: Params) {
       for (let i = 0; i < positionAttribute.count; i++) {
         const localPosition = new THREE.Vector3().fromBufferAttribute(positionAttribute, i);
         const worldPosition = localPosition.clone().applyMatrix4(matrix);
-        // 随机差值 让点位更多些
-        // const interpolateVectorList: Vector3[] = Array(interpolateAmount)
-        //   .fill(null)
-        //   .map(() => {
-        //     return worldPosition.clone();
-        //   });
-
-        // vectors.push(worldPosition, ...interpolateVectorList);
 
         vectors.push(worldPosition);
       }

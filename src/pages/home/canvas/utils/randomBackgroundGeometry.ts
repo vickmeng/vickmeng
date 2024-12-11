@@ -24,7 +24,7 @@ export const randomBackgroundGeometry = () => {
       const vX = (x / widthSegments) * width - width / 2;
       positions[index] = vX + (Math.random() - 0.5) * 10;
       positions[index + 1] = vY + (Math.random() - 0.5) * 10;
-      positions[index + 2] = (Math.random() - 0.5) * 10;
+      positions[index + 2] = (Math.random() - 0.5) * 15;
       index += 3;
     }
   }
@@ -46,6 +46,8 @@ export const randomBackgroundGeometry = () => {
   }
   const indexAttribute = new THREE.BufferAttribute(new Uint16Array(indices), 1);
   geometry.setIndex(indexAttribute);
+
+  geometry.computeVertexNormals();
 
   return geometry;
 };

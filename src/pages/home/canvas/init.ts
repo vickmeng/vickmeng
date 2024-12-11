@@ -1,6 +1,6 @@
 import { MeshBasicMaterial } from 'three';
 import { ConfigList, handleCalculateConfigList } from './config';
-import { AnimationFrameSubject, camera, points, renderer, scene } from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, camera, renderer, scene } from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
 import { delay } from '@/pages/home/canvas/utils/utils';
 
@@ -76,7 +76,6 @@ window.addEventListener('resize', onWindowResize);
 
 AnimationFrameSubject.asObservable().subscribe(() => {
   renderer.render(scene, camera);
-
   // controls.update();
   requestIdleCallback(() => {
     AnimationFrameSubject.next(undefined);
