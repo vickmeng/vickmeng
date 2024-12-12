@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import { Color } from 'three';
 import { Subject } from 'rxjs';
 import { CAMERA_ROTATION_Y } from '@/pages/home/canvas/constants';
-import { createBackground } from '@/pages/home/canvas/utils/createBackground';
+import { createBackground } from '@/pages/test/createBackground';
 import { GUI } from 'dat.gui';
-import createBackGroundShaderMaterial from '@/pages/home/canvas/utils/createBackGroundShaderMaterial';
+import createBackGroundShaderMaterial from '@/pages/test/createBackGroundShaderMaterial';
 
 export const SwitchSubject = new Subject();
 
@@ -66,13 +66,13 @@ scene.add(points);
  * 测试end
  */
 
-export const backgroundMesh = createBackground({ camera });
-
-backgroundMesh.position.set(0, 180, -300);
-backgroundMesh.castShadow = true;
-backgroundMesh.receiveShadow = true;
-
-scene.add(backgroundMesh);
+// export const backgroundMesh = createBackground({ camera });
+//
+// backgroundMesh.position.set(0, 180, -300);
+// backgroundMesh.castShadow = true;
+// backgroundMesh.receiveShadow = true;
+//
+// scene.add(backgroundMesh);
 
 export const renderer = new THREE.WebGLRenderer({
   antialias: true,

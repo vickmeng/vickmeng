@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Camera, Mesh, MeshBasicMaterial, Vector3 } from 'three';
-import { getTriangleMidPoint } from '@/pages/home/canvas/utils/getTriangleMidPoint';
+import { getTriangleMidPoint } from '@/pages/test/getTriangleMidPoint';
 
 export const createBackground = (params: { camera: Camera }) => {
   const { camera } = params;

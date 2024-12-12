@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { createBackground } from '@/pages/home/canvas/utils/createBackground';
+import { createBackground } from '@/pages/test/createBackground';
 
 // 创建场景
 const scene = new THREE.Scene();
