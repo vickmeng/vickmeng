@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { Camera, Mesh, MeshBasicMaterial } from 'three';
+import { Camera, Mesh, MeshBasicMaterial, Vector3 } from 'three';
+import { getTriangleMidPoint } from '@/pages/home/canvas/utils/getTriangleMidPoint';
 
 export const createBackground = (params: { camera: Camera }) => {
   const { camera } = params;
@@ -80,11 +81,16 @@ export const createBackground = (params: { camera: Camera }) => {
       positions[index3 * 3 + 1],
       positions[index3 * 3 + 2],
     ]);
+    const midPoint = getTriangleMidPoint(vertices);
+
     _geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+
     const _material = new THREE.MeshBasicMaterial({ color: 0x1e1a25, depthWrite: false });
 
     const _chip = new THREE.Mesh(_geometry, _material);
     _chip.name = 'bgChip';
+    // @ts-ignore
+    _chip.midPoint = midPoint;
 
     backgroundMeshChips.push(_chip);
   }
@@ -114,14 +120,14 @@ export const createBackground = (params: { camera: Camera }) => {
     const intersects = raycaster.intersectObject(group);
     const bgChipIntersect = intersects.find((intersect) => intersect.object.name === 'bgChip');
 
-    console.log(bgChipIntersect);
-
-    // bgChipIntersect.
-
-    // if (bgChipIntersect) {
-    //   const _chipmesh = bgChipIntersect.object as Mesh;
-    //   (_chipmesh.material as MeshBasicMaterial).color.set(0xff0000);
-    // }
+    backgroundMeshChips.forEach((chip) => {
+      // @ts-ignore
+      if (bgChipIntersect?.point && bgChipIntersect.point.distanceTo(chip.midPoint as Vector3) < 13) {
+        (chip.material as MeshBasicMaterial).color.set(0x24202d);
+      } else {
+        (chip.material as MeshBasicMaterial).color.set(0x1e1a25);
+      }
+    });
   });
 
   /**
