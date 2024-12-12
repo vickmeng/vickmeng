@@ -14,12 +14,13 @@ camera.position.z = 400;
 
 // 创建渲染器
 const renderer = new THREE.WebGLRenderer({
-  antialias: true,
+  // antialias: true,
+  // anti
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const bg = createBackground();
+const bg = createBackground({ camera });
 
 scene.add(bg);
 

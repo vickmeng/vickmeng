@@ -1,11 +1,13 @@
 import * as THREE from 'three';
+import { Camera, Mesh, MeshBasicMaterial } from 'three';
 
-export const createBackground = () => {
+export const createBackground = (params: { camera: Camera }) => {
+  const { camera } = params;
   // 创建BufferGeometry对象
-  const geometry = new THREE.BufferGeometry();
+  const wireframeGeometry = new THREE.BufferGeometry();
 
   // 设置平面的宽度、高度以及分段数，可根据实际需求调整参数
-  const width = window.innerWidth;
+  const width = window.innerWidth * 1.2;
   const height = window.innerHeight;
   const widthSegments = Math.floor(window.innerWidth / 18);
   const heightSegments = Math.floor(window.innerHeight / 18);
@@ -32,7 +34,7 @@ export const createBackground = () => {
   }
 
   // 将顶点位置数据设置到BufferGeometry中
-  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  wireframeGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
 
   // 设置面的索引数据（用于定义如何将顶点连接成面）
   const indices = [];
@@ -47,25 +49,84 @@ export const createBackground = () => {
     }
   }
   const indexAttribute = new THREE.BufferAttribute(new Uint16Array(indices), 1);
-  geometry.setIndex(indexAttribute);
-  geometry.computeVertexNormals();
-
-  const bgMaterial = new THREE.MeshBasicMaterial({
-    color: 0x1e1a25,
-  });
-
-  const bgPlaneMesh = new THREE.Mesh(geometry, bgMaterial); // 点模型对象
+  wireframeGeometry.setIndex(indexAttribute);
 
   const wireframeMaterial = new THREE.MeshBasicMaterial({
     color: 0x312a3c,
+    // color: 0xf2f2f2,
     wireframe: true,
   });
 
-  const bgWireframeMesh = new THREE.Mesh(geometry.clone(), wireframeMaterial);
+  const bgWireframeMesh = new THREE.Mesh(wireframeGeometry, wireframeMaterial);
+
+  const backgroundGroup = new THREE.Group();
+
+  const backgroundMeshChips: Mesh[] = [];
+  for (let i = 0; i < indices.length / 3; i++) {
+    const _geometry = new THREE.BufferGeometry();
+
+    const index1 = indices[i * 3];
+    const index2 = indices[i * 3 + 1];
+    const index3 = indices[i * 3 + 2];
+
+    const vertices = new Float32Array([
+      positions[index1 * 3],
+      positions[index1 * 3 + 1],
+      positions[index1 * 3 + 2],
+      positions[index2 * 3],
+      positions[index2 * 3 + 1],
+      positions[index2 * 3 + 2],
+      positions[index3 * 3],
+      positions[index3 * 3 + 1],
+      positions[index3 * 3 + 2],
+    ]);
+    _geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    const _material = new THREE.MeshBasicMaterial({ color: 0x1e1a25, depthWrite: false });
+
+    const _chip = new THREE.Mesh(_geometry, _material);
+    _chip.name = 'bgChip';
+
+    backgroundMeshChips.push(_chip);
+  }
+
+  backgroundGroup.add(...backgroundMeshChips);
 
   const group = new THREE.Group();
-  group.add(bgPlaneMesh);
+
+  bgWireframeMesh.position.z = 1;
+
+  group.add(backgroundGroup);
   group.add(bgWireframeMesh);
+
+  /**
+   *
+   */
+
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+
+  document.addEventListener('mousemove', (event) => {
+    // 将鼠标坐标归一化到 - 1到1的范围
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+
+    const intersects = raycaster.intersectObject(group);
+    const bgChipIntersect = intersects.find((intersect) => intersect.object.name === 'bgChip');
+
+    console.log(bgChipIntersect);
+
+    // bgChipIntersect.
+
+    // if (bgChipIntersect) {
+    //   const _chipmesh = bgChipIntersect.object as Mesh;
+    //   (_chipmesh.material as MeshBasicMaterial).color.set(0xff0000);
+    // }
+  });
+
+  /**
+   *
+   */
 
   return group;
 };

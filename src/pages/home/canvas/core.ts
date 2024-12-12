@@ -66,16 +66,7 @@ scene.add(points);
  * 测试end
  */
 
-export const backgroundMesh = new THREE.Mesh(
-  createBackground(),
-  createBackGroundShaderMaterial()
-  // new THREE.PlaneGeometry(500, 500),
-  // new THREE.MeshBasicMaterial({
-  //   color: new Color(0x1e1a25),
-  //   // color: new Color(0xffffff),
-  //   wireframe: true,
-  // })
-);
+export const backgroundMesh = createBackground({ camera });
 
 backgroundMesh.position.set(0, 180, -300);
 backgroundMesh.castShadow = true;
