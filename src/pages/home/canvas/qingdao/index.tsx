@@ -11,7 +11,7 @@ import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 
 export const qingdaoConfig: Config = {
   name: 'qingdao',
-  preColor: new Color(0xe1dfd8),
+  preColor: new Color(0xaf375a),
 
   position: new Vector3(MODEL_POSITION_X, 0, 0),
   scale: new Vector3(0.015, 0.015, 0.015),

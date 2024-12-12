@@ -11,7 +11,7 @@ import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 
 export const chengduConfig: Config = {
   name: 'chengdu',
-  preColor: new Color(0xaf375a),
+  preColor: new Color(0x55da99),
 
   position: new Vector3(MODEL_POSITION_X, 180, 0),
   scale: new Vector3(1, 1, 1).multiplyScalar(50),

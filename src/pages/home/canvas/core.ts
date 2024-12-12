@@ -2,8 +2,9 @@ import * as THREE from 'three';
 import { Color } from 'three';
 import { Subject } from 'rxjs';
 import { CAMERA_ROTATION_Y } from '@/pages/home/canvas/constants';
-import { randomBackgroundGeometry } from '@/pages/home/canvas/utils/randomBackgroundGeometry';
+import { createBackground } from '@/pages/home/canvas/utils/createBackground';
 import { GUI } from 'dat.gui';
+import createBackGroundShaderMaterial from '@/pages/home/canvas/utils/createBackGroundShaderMaterial';
 
 export const SwitchSubject = new Subject();
 
@@ -66,13 +67,14 @@ scene.add(points);
  */
 
 export const backgroundMesh = new THREE.Mesh(
-  randomBackgroundGeometry(),
+  createBackground(),
+  createBackGroundShaderMaterial()
   // new THREE.PlaneGeometry(500, 500),
-  new THREE.MeshBasicMaterial({
-    color: new Color(0x1e1a25),
-    // color: new Color(0xffffff),
-    wireframe: true,
-  })
+  // new THREE.MeshBasicMaterial({
+  //   color: new Color(0x1e1a25),
+  //   // color: new Color(0xffffff),
+  //   wireframe: true,
+  // })
 );
 
 backgroundMesh.position.set(0, 180, -300);

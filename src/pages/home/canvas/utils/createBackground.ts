@@ -1,14 +1,14 @@
 import * as THREE from 'three';
 
-export const randomBackgroundGeometry = () => {
+export const createBackground = () => {
   // 创建BufferGeometry对象
   const geometry = new THREE.BufferGeometry();
 
   // 设置平面的宽度、高度以及分段数，可根据实际需求调整参数
-  const width = window.innerWidth * 1.2;
+  const width = window.innerWidth;
   const height = window.innerHeight;
-  const widthSegments = Math.floor(window.innerWidth / 25);
-  const heightSegments = Math.floor(window.innerHeight / 25);
+  const widthSegments = Math.floor(window.innerWidth / 18);
+  const heightSegments = Math.floor(window.innerHeight / 18);
 
   // 计算顶点数量，每个分段点都是一个顶点，再加1是因为包含边界点
   const numVertices = (widthSegments + 1) * (heightSegments + 1);
@@ -24,7 +24,9 @@ export const randomBackgroundGeometry = () => {
       const vX = (x / widthSegments) * width - width / 2;
       positions[index] = vX + (Math.random() - 0.5) * 10;
       positions[index + 1] = vY + (Math.random() - 0.5) * 10;
-      positions[index + 2] = (Math.random() - 0.5) * 15;
+      // positions[index + 2] = (Math.random() - 0.5) * 10;
+      positions[index + 2] = 0;
+
       index += 3;
     }
   }
@@ -46,8 +48,24 @@ export const randomBackgroundGeometry = () => {
   }
   const indexAttribute = new THREE.BufferAttribute(new Uint16Array(indices), 1);
   geometry.setIndex(indexAttribute);
-
   geometry.computeVertexNormals();
 
-  return geometry;
+  const bgMaterial = new THREE.MeshBasicMaterial({
+    color: 0x1e1a25,
+  });
+
+  const bgPlaneMesh = new THREE.Mesh(geometry, bgMaterial); // 点模型对象
+
+  const wireframeMaterial = new THREE.MeshBasicMaterial({
+    color: 0x312a3c,
+    wireframe: true,
+  });
+
+  const bgWireframeMesh = new THREE.Mesh(geometry.clone(), wireframeMaterial);
+
+  const group = new THREE.Group();
+  group.add(bgPlaneMesh);
+  group.add(bgWireframeMesh);
+
+  return group;
 };
