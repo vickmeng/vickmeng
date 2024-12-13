@@ -3,7 +3,6 @@ import { Color } from 'three';
 import { Subject } from 'rxjs';
 import { CAMERA_ROTATION_Y, SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
 import { createEarth } from '@/pages/home/canvas/createEarth';
-import { GUI } from 'dat.gui';
 
 export const SwitchSubject = new Subject();
 
@@ -12,7 +11,7 @@ export const AnimationFrameSubject = new Subject();
 export const scene = new THREE.Scene();
 scene.background = new Color(SCENE_BACKGROUND_COLOR);
 
-// export const clock = new THREE.Clock();
+export const clock = new THREE.Clock();
 
 // 创建环境光
 // const ambientLight = new THREE.AmbientLight(0xffffff);

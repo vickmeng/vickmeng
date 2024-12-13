@@ -15,7 +15,6 @@ export const dalianConfig: Config = {
 
   earthRotation: new Euler(0.67, 2.1, 0),
 
-  faceDirection: new Vector3(-0.41347794739648674, 0.6313444875610068, -0.6560793587997704),
   cityPosition: new Vector3(-206.73897369824337, 315.6722437805034, -328.0396793998852),
 
   modelPosition: new Vector3(-MODEL_POSITION_X, 200, 0),

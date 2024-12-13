@@ -14,9 +14,7 @@ export const daqingConfig: Config = {
   name: 'daqing',
   preColor: new Color(0x6be6e0),
 
-  earthRotation: new Euler(0.74, 2.03, 0),
-
-  faceDirection: new Vector3(-0.44628119992903736, 0.7059822104496696, -0.5499292764697084),
+  earthRotation: new Euler(0.74, 1.96, 0),
 
   cityPosition: new Vector3(-223.14059996451869, 352.99110522483477, -274.9646382348542),
 
