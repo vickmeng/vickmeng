@@ -4,8 +4,8 @@ import { Color, MeshBasicMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, points, scene, SwitchSubject } from '@/pages/home/canvas/core';
-import { CAMERA_ROTATION_Y, SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
+import { AnimationFrameSubject, camera, earthGroup, points, scene, SwitchSubject } from '@/pages/home/canvas/core';
+import { CAMERA_ROTATION_Y, EARTH_POSITION_X, SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
 import { Config } from '@/pages/home/canvas/types';
 
 interface Options {
@@ -60,6 +60,7 @@ export const switchModal = async (opts: Options) => {
     sandsFly({ fromIndex, toIndex, fromConfig, toConfig }),
     changeColor({ fromIndex, toIndex, fromConfig, toConfig }),
     cameraRoll({ fromIndex }),
+    earthMove({ fromIndex }),
     showModal({ toConfig }),
   ]);
   /**
@@ -234,5 +235,37 @@ const showModal = async (params: { toConfig: Config }) => {
     },
   });
 
+  await lastValueFrom(animate$);
+};
+
+const earthMove = async (params: { fromIndex: number }) => {
+  const animateFinish = new Subject();
+
+  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
+
+  const leftToRight = params.fromIndex % 2 === 0;
+
+  const moveParams = { x: leftToRight ? EARTH_POSITION_X : -EARTH_POSITION_X };
+
+  const tween = new Tween(moveParams)
+    .to({ x: leftToRight ? -EARTH_POSITION_X : EARTH_POSITION_X }, 4000)
+    .easing(Easing.Cubic.Out)
+    .onUpdate(() => {
+      // earthGroup..y = THREE.MathUtils.degToRad(moveParams.deg);
+      earthGroup.position.x = moveParams.x;
+    })
+    .onComplete(() => {
+      animateFinish.next(undefined);
+    })
+    .start(); // Start the tween immediately.
+
+  animate$.subscribe({
+    next: () => {
+      tween.update();
+    },
+    complete: () => {
+      tween.stop();
+    },
+  });
   await lastValueFrom(animate$);
 };

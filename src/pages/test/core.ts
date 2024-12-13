@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 import { Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { createBackground } from '@/pages/test/createBackground';
+import { SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
 
 // 创建场景
 const scene = new THREE.Scene();
 
-scene.background = new Color(0xf2f2f2);
+// scene.background = new Color(SCENE_BACKGROUND_COLOR);
+scene.background = new Color(0xff0000);
 
 // 创建相机
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
@@ -19,10 +20,6 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-
-const bg = createBackground({ camera });
-
-scene.add(bg);
 
 // 创建环境光
 const ambientLight = new THREE.AmbientLight(0x404040);

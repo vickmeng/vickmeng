@@ -1,16 +1,17 @@
 import * as THREE from 'three';
-import { Color } from 'three';
 import { Subject } from 'rxjs';
-import { CAMERA_ROTATION_Y } from '@/pages/home/canvas/constants';
-import { createBackground } from '@/pages/test/createBackground';
+import { CAMERA_ROTATION_Y, SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
+import { createEarth } from '@/pages/home/canvas/createEarth';
+import { Color, MathUtils, Mesh } from 'three';
 import { GUI } from 'dat.gui';
-import createBackGroundShaderMaterial from '@/pages/test/createBackGroundShaderMaterial';
 
 export const SwitchSubject = new Subject();
 
 export const AnimationFrameSubject = new Subject();
 
 export const scene = new THREE.Scene();
+scene.background = new Color(SCENE_BACKGROUND_COLOR);
+
 // export const clock = new THREE.Clock();
 
 // 创建环境光
@@ -45,6 +46,12 @@ camera.rotation.y = THREE.MathUtils.degToRad(-CAMERA_ROTATION_Y);
 
 export const points = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ size: 1 }));
 scene.add(points);
+
+export const earthGroup = await createEarth();
+scene.add(earthGroup);
+
+// const earth: Mesh = earthGroup.children[0];
+
 /**
  *测试
  */
@@ -83,19 +90,14 @@ renderer.shadowMap.enabled = true;
 
 document.body.appendChild(renderer.domElement);
 
-// const gui = new GUI();
-// // 为立方体的x、y、z位置添加控制器
-// // const cubePosition = { x: 0, y: 0, z: 0 };
-// gui.add(directionalLight.position, 'x', -500, 500).onChange((value) => {
-//   directionalLight.position.x = value;
-// });
-// gui.add(directionalLight.position, 'y', -500, 500).onChange((value) => {
-//   directionalLight.position.y = value;
-// });
-// gui.add(directionalLight.position, 'z', -500, 500).onChange((value) => {
-//   directionalLight.position.z = value;
-// });
-//
-// gui.add(directionalLight, 'intensity', 0, 1).onChange((value) => {
-//   directionalLight.intensity = value;
-// });
+export const gui = new GUI();
+
+gui.add(earthGroup.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
+  earthGroup.rotation.x = value;
+});
+gui.add(earthGroup.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
+  earthGroup.rotation.y = value;
+});
+gui.add(earthGroup.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
+  earthGroup.rotation.z = value;
+});
