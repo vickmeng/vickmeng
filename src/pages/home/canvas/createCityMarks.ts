@@ -1,5 +1,5 @@
 import { ConfigList } from '@/pages/home/canvas/config';
-import { CircleGeometry, Color, Mesh, ShaderMaterial } from 'three';
+import { CircleGeometry, Mesh, ShaderMaterial } from 'three';
 
 export const createCityMarks = () => {
   return ConfigList.map((config) => {
@@ -8,7 +8,6 @@ export const createCityMarks = () => {
     const material = new ShaderMaterial({
       transparent: true,
       uniforms: {
-        opacity: { value: 1 },
         color: {
           value: ConfigList[0].preColor,
         },
@@ -22,12 +21,11 @@ export const createCityMarks = () => {
     `,
       fragmentShader: `
       uniform vec3 color;
-      uniform float opacity;
      
       varying vec2 vUv;  
       void main() {
         float radius = length(vUv - 0.5); // uv坐标到中心的距离
-        float alpha = smoothstep(0.2, 0.8, radius) * opacity;
+        float alpha = smoothstep(0.2, 0.8, radius);
         gl_FragColor = vec4(color, alpha);
       }
     `,

@@ -1,10 +1,10 @@
 import { ConfigList } from '@/pages/home/canvas/config';
 import * as THREE from 'three';
-import { Color, MeshBasicMaterial } from 'three';
+import { Color, Mesh, MeshBasicMaterial, ShaderMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, earthGroup, points, scene, SwitchSubject } from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, camera, earthGroup, points, SwitchSubject } from '@/pages/home/canvas/core';
 import { CAMERA_ROTATION_Y, EARTH_POSITION_X, SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
 import { Config } from '@/pages/home/canvas/types';
 
@@ -171,7 +171,10 @@ const cameraRoll = async (params: { fromIndex: number }) => {
   });
   await lastValueFrom(animate$);
 };
-
+/**
+ * 各种颜色都在这处理了
+ *
+ */
 const changeColor = async (params: { fromIndex: number; toIndex: number; fromConfig: Config; toConfig: Config }) => {
   const { fromConfig, toConfig } = params;
   const animateFinish = new Subject();
@@ -188,11 +191,18 @@ const changeColor = async (params: { fromIndex: number; toIndex: number; fromCon
       newPreColor.lerpColors(fromConfig.preColor, toConfig.preColor, alphaParams.alpha);
 
       points.material.color = newPreColor;
+
+      earthGroup.children.forEach((child) => {
+        if (child.name === 'cityMark') {
+          const cityMark = child as Mesh;
+          (cityMark.material as ShaderMaterial).uniforms.color.value = newPreColor;
+        }
+      });
     })
     .onComplete(() => {
       animateFinish.next(undefined);
     })
-    .start(); // Start the tween immediately.;
+    .start();
 
   animate$.subscribe({
     next: () => {
@@ -286,8 +296,6 @@ const earthRoute = async (params: { fromIndex: number; toIndex: number; fromConf
   const diffX = toRotation.x - formRotation.x;
   const diffY = toRotation.y - formRotation.y;
   const diffZ = toRotation.z - formRotation.z;
-
-  console.log(formRotation, toRotation, diffX, diffY, diffZ);
 
   const tween = new Tween(routeParams)
     .to({ t: 1 }, 4000)

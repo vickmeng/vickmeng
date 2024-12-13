@@ -26,9 +26,9 @@ export const createEarth = async (): Promise<Group> => {
         // 通过几何体的UV坐标从颜色贴图获取像素值
         vec4 texColor;
         texColor = texture2D(map, vUv);
-        gl_FragColor = texColor; 
-        // float gray = 0.299 * texColor.r + 0.587 * texColor.g + 0.114 * texColor.b;
-        // gl_FragColor = vec4(gray , gray , gray + 0.01 , 1); 
+        // gl_FragColor = texColor; 
+        float gray = 0.299 * texColor.r + 0.587 * texColor.g + 0.114 * texColor.b;
+        gl_FragColor = vec4(gray , gray , gray + 0.015 , 1); 
     }
     `;
 
