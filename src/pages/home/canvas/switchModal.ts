@@ -61,6 +61,7 @@ export const switchModal = async (opts: Options) => {
     changeColor({ fromIndex, toIndex, fromConfig, toConfig }),
     cameraRoll({ fromIndex }),
     earthMove({ fromIndex }),
+    earthRoute({ fromIndex, toIndex, fromConfig, toConfig }),
     showModal({ toConfig }),
   ]);
   /**
@@ -253,6 +254,50 @@ const earthMove = async (params: { fromIndex: number }) => {
     .onUpdate(() => {
       // earthGroup..y = THREE.MathUtils.degToRad(moveParams.deg);
       earthGroup.position.x = moveParams.x;
+    })
+    .onComplete(() => {
+      animateFinish.next(undefined);
+    })
+    .start(); // Start the tween immediately.
+
+  animate$.subscribe({
+    next: () => {
+      tween.update();
+    },
+    complete: () => {
+      tween.stop();
+    },
+  });
+  await lastValueFrom(animate$);
+};
+
+const earthRoute = async (params: { fromIndex: number; toIndex: number; fromConfig: Config; toConfig: Config }) => {
+  const { fromConfig, toConfig } = params;
+
+  const animateFinish = new Subject();
+
+  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
+
+  const routeParams = { t: 0 };
+
+  const formRotation = fromConfig.earthRotation;
+  const toRotation = toConfig.earthRotation;
+
+  const diffX = toRotation.x - formRotation.x;
+  const diffY = toRotation.y - formRotation.y;
+  const diffZ = toRotation.z - formRotation.z;
+
+  console.log(formRotation, toRotation, diffX, diffY, diffZ);
+
+  const tween = new Tween(routeParams)
+    .to({ t: 1 }, 4000)
+    .easing(Easing.Cubic.Out)
+    .onUpdate(() => {
+      const newX = formRotation.x + routeParams.t * diffX;
+      const newY = formRotation.y + routeParams.t * diffY;
+      const newZ = formRotation.z + routeParams.t * diffZ;
+
+      earthGroup.rotation.set(newX, newY, newZ);
     })
     .onComplete(() => {
       animateFinish.next(undefined);

@@ -12,7 +12,7 @@ import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 export const qingdaoConfig: Config = {
   name: 'qingdao',
   preColor: new Color(0xaf375a),
-  earthRotation: new Euler(0.54, 2.23, 0),
+  earthRotation: new Euler(0.46, 3.05, 0),
   // -0.4202885919006659, y: 0.5941152755925063, z: -0.6858458564617824
   faceDirection: new Vector3(-0.4202885919006659, 0.5941152755925063, -0.6858458564617824),
   cityPosition: new Vector3(-210.14429595033295, 297.0576377962532, -342.9229282308912),

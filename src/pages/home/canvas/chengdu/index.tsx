@@ -13,7 +13,7 @@ export const chengduConfig: Config = {
   name: 'chengdu',
   preColor: new Color(0x55da99),
 
-  earthRotation: new Euler(0.4, 2.51, 0),
+  earthRotation: new Euler(0.4, 3.26, 0),
 
   faceDirection: new Vector3(-0.2212816897507219, 0.5130871570187165, -0.8293226049514846),
   cityPosition: new Vector3(-110.64084487536095, 256.54357850935827, -414.6613024757423),
