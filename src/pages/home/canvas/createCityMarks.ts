@@ -10,6 +10,8 @@ export const createCityMarks = () => {
     const mesh = new Mesh(geometry, material);
 
     mesh.position.set(config.cityPosition.x, config.cityPosition.y, config.cityPosition.z);
+
+    mesh.name = 'cityMark';
     return mesh;
   });
 };
