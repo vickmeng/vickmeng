@@ -12,14 +12,18 @@ import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 export const qingdaoConfig: Config = {
   name: 'qingdao',
   preColor: new Color(0xaf375a),
+  earthRotation: new Euler(0.54, 2.23, 0),
+  // -0.4202885919006659, y: 0.5941152755925063, z: -0.6858458564617824
+  faceDirection: new Vector3(-0.4202885919006659, 0.5941152755925063, -0.6858458564617824),
+  cityPosition: new Vector3(-210.14429595033295, 297.0576377962532, -342.9229282308912),
 
-  position: new Vector3(MODEL_POSITION_X, 0, 0),
-  scale: new Vector3(0.015, 0.015, 0.015),
-  rotation: new Euler(0, MathUtils.degToRad(100), 0),
+  modelPosition: new Vector3(MODEL_POSITION_X, 0, 0),
+  modelScale: new Vector3(0.015, 0.015, 0.015),
+  modelRotation: new Euler(0, MathUtils.degToRad(100), 0),
   // @ts-ignore
   mesh: undefined,
-  loadModal: async (config: Config) => {
-    const { position, scale, rotation } = config;
+  loadModel: async (config: Config) => {
+    const { modelPosition, modelScale, modelRotation } = config;
 
     const loader = new FBXLoader();
     const model = await loader.loadAsync(ship);
@@ -33,15 +37,15 @@ export const qingdaoConfig: Config = {
       transparent: true,
     });
 
-    line.position.set(position.x, position.y, position.z);
-    line.rotation.set(rotation.x, rotation.y, rotation.z);
-    line.scale.set(scale.x, scale.y, scale.z);
+    line.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+    line.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
+    line.scale.set(modelScale.x, modelScale.y, modelScale.z);
 
     scene.add(line);
 
-    mesh.position.set(position.x, position.y, position.z);
-    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
-    mesh.scale.set(scale.x, scale.y, scale.z);
+    mesh.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+    mesh.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
+    mesh.scale.set(modelScale.x, modelScale.y, modelScale.z);
 
     config.line = line;
     config.model = model;

@@ -1,8 +1,8 @@
 import * as THREE from 'three';
+import { Color } from 'three';
 import { Subject } from 'rxjs';
 import { CAMERA_ROTATION_Y, SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
 import { createEarth } from '@/pages/home/canvas/createEarth';
-import { Color, MathUtils, Mesh } from 'three';
 import { GUI } from 'dat.gui';
 
 export const SwitchSubject = new Subject();
@@ -39,7 +39,7 @@ scene.background = new Color(SCENE_BACKGROUND_COLOR);
 // directionalLight.shadow.far = 5000;
 
 // 创建相机
-export const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+export const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000);
 camera.position.set(0, 180, 500);
 
 camera.rotation.y = THREE.MathUtils.degToRad(-CAMERA_ROTATION_Y);
@@ -48,6 +48,7 @@ export const points = new THREE.Points(new THREE.BufferGeometry(), new THREE.Poi
 scene.add(points);
 
 export const earthGroup = await createEarth();
+
 scene.add(earthGroup);
 
 // const earth: Mesh = earthGroup.children[0];
@@ -89,15 +90,3 @@ renderer.shadowMap.enabled = true;
 // renderer.shadowMap.type = THREE.PCFShadowMap;
 
 document.body.appendChild(renderer.domElement);
-
-export const gui = new GUI();
-
-gui.add(earthGroup.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  earthGroup.rotation.x = value;
-});
-gui.add(earthGroup.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  earthGroup.rotation.y = value;
-});
-gui.add(earthGroup.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  earthGroup.rotation.z = value;
-});

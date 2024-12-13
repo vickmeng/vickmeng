@@ -13,13 +13,18 @@ export const chengduConfig: Config = {
   name: 'chengdu',
   preColor: new Color(0x55da99),
 
-  position: new Vector3(MODEL_POSITION_X, 180, 0),
-  scale: new Vector3(1, 1, 1).multiplyScalar(50),
-  rotation: new Euler(MathUtils.degToRad(-90), 0, MathUtils.degToRad(-20)),
+  earthRotation: new Euler(0.4, 2.51, 0),
+
+  faceDirection: new Vector3(-0.2212816897507219, 0.5130871570187165, -0.8293226049514846),
+  cityPosition: new Vector3(-110.64084487536095, 256.54357850935827, -414.6613024757423),
+
+  modelPosition: new Vector3(MODEL_POSITION_X, 180, 0),
+  modelScale: new Vector3(1, 1, 1).multiplyScalar(50),
+  modelRotation: new Euler(MathUtils.degToRad(-90), 0, MathUtils.degToRad(-20)),
   // @ts-ignore
   mesh: undefined,
-  loadModal: async (config: Config) => {
-    const { position, scale, rotation } = config;
+  loadModel: async (config: Config) => {
+    const { modelPosition, modelScale, modelRotation } = config;
 
     const loader = new FBXLoader();
     const model = await loader.loadAsync(mark);
@@ -33,15 +38,15 @@ export const chengduConfig: Config = {
       transparent: true,
     });
 
-    line.position.set(position.x, position.y, position.z);
-    line.rotation.set(rotation.x, rotation.y, rotation.z);
-    line.scale.set(scale.x, scale.y, scale.z);
+    line.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+    line.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
+    line.scale.set(modelScale.x, modelScale.y, modelScale.z);
 
     scene.add(line);
 
-    mesh.position.set(position.x, position.y, position.z);
-    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
-    mesh.scale.set(scale.x, scale.y, scale.z);
+    mesh.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+    mesh.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
+    mesh.scale.set(modelScale.x, modelScale.y, modelScale.z);
 
     config.line = line;
     config.model = model;

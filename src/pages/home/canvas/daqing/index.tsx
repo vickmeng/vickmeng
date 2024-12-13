@@ -14,13 +14,19 @@ export const daqingConfig: Config = {
   name: 'daqing',
   preColor: new Color(0x6be6e0),
 
-  position: new Vector3(-MODEL_POSITION_X, 0, 0),
-  scale: new Vector3(0.9, 0.9, 0.9),
-  rotation: new Euler(0, MathUtils.degToRad(220), 0),
+  earthRotation: new Euler(0.74, 2.03, 0),
+
+  faceDirection: new Vector3(-0.44628119992903736, 0.7059822104496696, -0.5499292764697084),
+
+  cityPosition: new Vector3(-223.14059996451869, 352.99110522483477, -274.9646382348542),
+
+  modelPosition: new Vector3(-MODEL_POSITION_X, 0, 0),
+  modelScale: new Vector3(0.9, 0.9, 0.9),
+  modelRotation: new Euler(0, MathUtils.degToRad(220), 0),
   // @ts-ignore
   mesh: undefined,
-  loadModal: async (config: Config) => {
-    const { position, scale, rotation } = config;
+  loadModel: async (config: Config) => {
+    const { modelPosition, modelScale, modelRotation } = config;
 
     const loader = new OBJLoader();
     const model = await loader.loadAsync(pumpjack);
@@ -34,15 +40,15 @@ export const daqingConfig: Config = {
       transparent: true,
     });
 
-    line.position.set(position.x, position.y, position.z);
-    line.rotation.set(rotation.x, rotation.y, rotation.z);
-    line.scale.set(scale.x, scale.y, scale.z);
+    line.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+    line.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
+    line.scale.set(modelScale.x, modelScale.y, modelScale.z);
 
     scene.add(line);
 
-    mesh.position.set(position.x, position.y, position.z);
-    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
-    mesh.scale.set(scale.x, scale.y, scale.z);
+    mesh.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+    mesh.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
+    mesh.scale.set(modelScale.x, modelScale.y, modelScale.z);
 
     config.line = line;
     config.mesh = mesh;

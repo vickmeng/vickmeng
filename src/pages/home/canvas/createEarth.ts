@@ -2,11 +2,12 @@ import EarthImg from '@/assets/earthNight.jpg';
 import * as THREE from 'three';
 import { Group, Mesh, TextureLoader } from 'three';
 import { EARTH_POSITION_X } from '@/pages/home/canvas/constants';
+import { ConfigList } from '@/pages/home/canvas/config';
 
 export const createEarth = async (): Promise<Group> => {
   const texture = await new TextureLoader().load(EarthImg);
 
-  const sphereGeometry = new THREE.SphereGeometry(500, 32, 32);
+  const sphereGeometry = new THREE.SphereGeometry(500, 1000, 1000);
 
   const vertexShader = `
     // attribute vec2 uv;//默认提供,不用自己写
@@ -38,6 +39,8 @@ export const createEarth = async (): Promise<Group> => {
     },
     vertexShader,
     fragmentShader,
+    // wireframe: true,
+    // transparent: true,
   });
 
   const earth = new Mesh(sphereGeometry, material);
@@ -48,9 +51,6 @@ export const createEarth = async (): Promise<Group> => {
   earthGroup.position.z = -500;
   earthGroup.position.y = 180;
 
-  earthGroup.rotation.set(0.74, 2.03, 0);
-
   earthGroup.add(earth);
-
   return earthGroup;
 };
