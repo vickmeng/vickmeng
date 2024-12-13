@@ -25,7 +25,7 @@ export const createCityMarks = () => {
       varying vec2 vUv;  
       void main() {
         float radius = length(vUv - 0.5); // uv坐标到中心的距离
-        float alpha = smoothstep(0.2, 0.8, radius);
+        float alpha = smoothstep(0.1, 0.8, radius);
         gl_FragColor = vec4(color, alpha);
       }
     `,
