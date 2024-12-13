@@ -2,7 +2,6 @@ import EarthImg from '@/assets/earthNight.jpg';
 import * as THREE from 'three';
 import { Group, Mesh, TextureLoader } from 'three';
 import { EARTH_POSITION_X } from '@/pages/home/canvas/constants';
-import { ConfigList } from '@/pages/home/canvas/config';
 
 export const createEarth = async (): Promise<Group> => {
   const texture = await new TextureLoader().load(EarthImg);
@@ -39,8 +38,6 @@ export const createEarth = async (): Promise<Group> => {
     },
     vertexShader,
     fragmentShader,
-    // wireframe: true,
-    // transparent: true,
   });
 
   const earth = new Mesh(sphereGeometry, material);

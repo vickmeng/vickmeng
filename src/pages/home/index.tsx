@@ -2,9 +2,13 @@ import { switchModal } from '@/pages/home/canvas/switchModal';
 import { useEffect, useState } from 'react';
 import { ConfigList } from '@/pages/home/canvas/config';
 import InitLoading from '@/components/InitLoading';
+import { useSnapshot } from 'valtio/react';
+import { currentIndexStore } from '@/pages/home/store';
 
 export default function HomePage() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const { currentIndex } = useSnapshot(currentIndexStore);
+
+  // const [currentIndex, setCurrentIndex] = useState(0);
   const [switching, setSwitching] = useState(false);
 
   const hasPre = currentIndex > 0;
@@ -27,8 +31,7 @@ export default function HomePage() {
               setSwitching(true);
               await switchModal({ fromIndex: currentIndex, toIndex });
               setSwitching(false);
-
-              setCurrentIndex(toIndex);
+              currentIndexStore.currentIndex = toIndex;
             }}
           >
             上上上上上上
@@ -42,7 +45,7 @@ export default function HomePage() {
               setSwitching(true);
               await switchModal({ fromIndex: currentIndex, toIndex });
               setSwitching(false);
-              setCurrentIndex(toIndex);
+              currentIndexStore.currentIndex = toIndex;
             }}
           >
             下下下下下下

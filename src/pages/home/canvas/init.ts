@@ -1,11 +1,12 @@
 import * as THREE from 'three';
-import { Euler, Mesh, MeshBasicMaterial } from 'three';
+import { MeshBasicMaterial } from 'three';
 import { ConfigList, handleCalculateConfigList } from './config';
 import { AnimationFrameSubject, camera, clock, earthGroup, renderer, scene } from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
 import { delay } from '@/pages/home/canvas/utils/utils';
 import { createCityMarks } from '@/pages/home/canvas/createCityMarks';
 import { GUI } from 'dat.gui';
+import { currentIndexStore } from '@/pages/home/store';
 
 const firstConfig = ConfigList[0];
 
@@ -123,16 +124,21 @@ requestIdleCallback(() => {
 // 这个动画永远不停
 AnimationFrameSubject.subscribe(() => {
   const delta = clock.getDelta();
-
-  if (cityMarks[0].scale.x > 1) {
+  // 当前城市大一点
+  if (cityMarks[currentIndexStore.currentIndex].scale.x > 2) {
     cityMarks.forEach((_cityMark) => {
       _cityMark.scale.x = 0;
       _cityMark.scale.y = 0;
     });
   } else {
-    cityMarks.forEach((_cityMark) => {
-      _cityMark.scale.x += delta * 0.8;
-      _cityMark.scale.y += delta * 0.8;
+    cityMarks.forEach((_cityMark, index) => {
+      if (currentIndexStore.currentIndex === index) {
+        _cityMark.scale.x += delta * 1.2;
+        _cityMark.scale.y += delta * 1.2;
+      } else {
+        _cityMark.scale.x += delta * 0.3;
+        _cityMark.scale.y += delta * 0.3;
+      }
     });
   }
 
