@@ -33,7 +33,6 @@ export const chengduConfig: Config = {
     const line = new THREE.LineSegments(edges);
     line.material = new THREE.LineBasicMaterial({
       color: config.preColor,
-      depthTest: true,
       transparent: true,
     });
 
