@@ -1,4 +1,4 @@
-import { Config } from '@/pages/home/canvas/types';
+import { CityConfig } from '@/pages/home/canvas/types';
 import * as THREE from 'three';
 import { Color, Euler, MathUtils, Vector3 } from 'three';
 // @ts-ignore
@@ -9,7 +9,7 @@ import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canv
 import mark from '../../../../assets/mark.fbx?url';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 
-export const chengduConfig: Config = {
+export const chengduConfig: CityConfig = {
   name: 'chengdu',
   preColor: new Color(0x55da99),
 
@@ -22,7 +22,7 @@ export const chengduConfig: Config = {
   modelRotation: new Euler(MathUtils.degToRad(-90), 0, MathUtils.degToRad(-20)),
   // @ts-ignore
   mesh: undefined,
-  loadModel: async (config: Config) => {
+  loadModel: async (config: CityConfig) => {
     const { modelPosition, modelScale, modelRotation } = config;
 
     const loader = new FBXLoader();

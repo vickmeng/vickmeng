@@ -7,10 +7,10 @@ import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canv
 
 // @ts-ignore
 import pumpjack from '../../../../assets/pumpjack.obj?url';
-import { Config } from '@/pages/home/canvas/types';
+import { CityConfig } from '@/pages/home/canvas/types';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 
-export const daqingConfig: Config = {
+export const daqingConfig: CityConfig = {
   name: 'daqing',
   preColor: new Color(0x6be6e0),
 
@@ -23,7 +23,7 @@ export const daqingConfig: Config = {
   modelRotation: new Euler(0, MathUtils.degToRad(220), 0),
   // @ts-ignore
   mesh: undefined,
-  loadModel: async (config: Config) => {
+  loadModel: async (config: CityConfig) => {
     const { modelPosition, modelScale, modelRotation } = config;
 
     const loader = new OBJLoader();

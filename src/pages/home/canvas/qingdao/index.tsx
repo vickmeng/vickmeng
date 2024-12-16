@@ -1,4 +1,4 @@
-import { Config } from '@/pages/home/canvas/types';
+import { CityConfig } from '@/pages/home/canvas/types';
 import { Color, Euler, MathUtils, Mesh, Vector3 } from 'three';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
@@ -9,7 +9,7 @@ import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canv
 import ship from '../../../../assets/ship.fbx?url';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 
-export const qingdaoConfig: Config = {
+export const qingdaoConfig: CityConfig = {
   name: 'qingdao',
   preColor: new Color(0xaf375a),
   earthRotation: new Euler(0.46, 3.05, 0),
@@ -21,7 +21,7 @@ export const qingdaoConfig: Config = {
   modelRotation: new Euler(0, MathUtils.degToRad(100), 0),
   // @ts-ignore
   mesh: undefined,
-  loadModel: async (config: Config) => {
+  loadModel: async (config: CityConfig) => {
     const { modelPosition, modelScale, modelRotation } = config;
 
     const loader = new FBXLoader();

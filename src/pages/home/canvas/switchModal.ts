@@ -1,4 +1,3 @@
-import { ConfigList } from '@/pages/home/canvas/config';
 import * as THREE from 'three';
 import { Color, Mesh, MeshBasicMaterial, ShaderMaterial } from 'three';
 
@@ -6,7 +5,8 @@ import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { AnimationFrameSubject, camera, earthGroup, points, SwitchSubject } from '@/pages/home/canvas/core';
 import { CAMERA_ROTATION_Y, EARTH_POSITION_X, SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
-import { Config } from '@/pages/home/canvas/types';
+import { CityConfig } from '@/pages/home/canvas/types';
+import { CityConfigList } from '@/pages/home/canvas/cityConfig';
 
 interface Options {
   fromIndex: number;
@@ -24,8 +24,8 @@ export const switchModal = async (opts: Options) => {
 
   const { fromIndex, toIndex } = opts;
 
-  const fromConfig = ConfigList[fromIndex];
-  const toConfig = ConfigList[toIndex];
+  const fromConfig = CityConfigList[fromIndex];
+  const toConfig = CityConfigList[toIndex];
 
   if (fromConfig.onSwitchOut) {
     await fromConfig.onSwitchOut({ fromConfig, toConfig });
@@ -63,6 +63,7 @@ export const switchModal = async (opts: Options) => {
     earthMove({ fromIndex }),
     earthRoute({ fromIndex, toIndex, fromConfig, toConfig }),
     showModal({ toConfig }),
+    flyLine({ fromIndex, toIndex, fromConfig, toConfig }),
   ]);
   /**
    * sandsFly end
@@ -78,7 +79,12 @@ export const switchModal = async (opts: Options) => {
   }
 };
 
-const sandsFly = async (params: { fromIndex: number; toIndex: number; fromConfig: Config; toConfig: Config }) => {
+const sandsFly = async (params: {
+  fromIndex: number;
+  toIndex: number;
+  fromConfig: CityConfig;
+  toConfig: CityConfig;
+}) => {
   const { fromConfig, toConfig, fromIndex, toIndex } = params;
 
   const toNext = fromIndex < toIndex;
@@ -175,7 +181,12 @@ const cameraRoll = async (params: { fromIndex: number }) => {
  * 各种颜色都在这处理了
  *
  */
-const changeColor = async (params: { fromIndex: number; toIndex: number; fromConfig: Config; toConfig: Config }) => {
+const changeColor = async (params: {
+  fromIndex: number;
+  toIndex: number;
+  fromConfig: CityConfig;
+  toConfig: CityConfig;
+}) => {
   const { fromConfig, toConfig } = params;
   const animateFinish = new Subject();
 
@@ -193,9 +204,18 @@ const changeColor = async (params: { fromIndex: number; toIndex: number; fromCon
       points.material.color = newPreColor;
 
       earthGroup.children.forEach((child) => {
-        if (child.name === 'cityMark') {
+        if (child.name === 'cityHighLight') {
           const cityMark = child as Mesh;
           (cityMark.material as ShaderMaterial).uniforms.color.value = newPreColor;
+        }
+        if (child.name === 'cityPoint') {
+          const cityMark = child as Mesh;
+          (cityMark.material as MeshBasicMaterial).color = newPreColor;
+        }
+
+        if (child.name === 'flyLine') {
+          const flyLine = child as Mesh;
+          (flyLine.material as ShaderMaterial).uniforms.color.value = newPreColor;
         }
       });
     })
@@ -215,7 +235,7 @@ const changeColor = async (params: { fromIndex: number; toIndex: number; fromCon
   await lastValueFrom(animate$);
 };
 
-const showModal = async (params: { toConfig: Config }) => {
+const showModal = async (params: { toConfig: CityConfig }) => {
   const { toConfig } = params;
 
   const animateFinish = new Subject();
@@ -281,7 +301,12 @@ const earthMove = async (params: { fromIndex: number }) => {
   await lastValueFrom(animate$);
 };
 
-const earthRoute = async (params: { fromIndex: number; toIndex: number; fromConfig: Config; toConfig: Config }) => {
+const earthRoute = async (params: {
+  fromIndex: number;
+  toIndex: number;
+  fromConfig: CityConfig;
+  toConfig: CityConfig;
+}) => {
   const { fromConfig, toConfig } = params;
 
   const animateFinish = new Subject();
@@ -320,5 +345,53 @@ const earthRoute = async (params: { fromIndex: number; toIndex: number; fromConf
       tween.stop();
     },
   });
+  await lastValueFrom(animate$);
+};
+
+const flyLine = async (params: {
+  fromIndex: number;
+  toIndex: number;
+  fromConfig: CityConfig;
+  toConfig: CityConfig;
+}) => {
+  const { fromConfig, toConfig, fromIndex, toIndex } = params;
+  const animateFinish = new Subject();
+
+  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
+
+  const toNext = params.toIndex > params.fromIndex;
+
+  const flyLines = earthGroup.children.filter((child) => {
+    return child.name === (toNext ? 'toNextFlyLine' : 'toPreFlyLine');
+  });
+  const activeFlyLine = flyLines[toNext ? fromIndex : toIndex] as Mesh;
+  activeFlyLine.visible = true;
+  const material = activeFlyLine.material as ShaderMaterial;
+
+  const flyParams = { t: 0 };
+
+  const tween = new Tween(flyParams)
+    .to({ t: 1 }, 2000)
+    .onUpdate(() => {
+      const newPreColor = new Color();
+      newPreColor.lerpColors(fromConfig.preColor, toConfig.preColor, flyParams.t);
+      material.uniforms.color.value = newPreColor;
+      material.uniforms.x.value = flyParams.t;
+    })
+    .onComplete(() => {
+      activeFlyLine.visible = false;
+      animateFinish.next(undefined);
+    })
+    .start();
+
+  animate$.subscribe({
+    next: () => {
+      tween.update();
+    },
+    complete: () => {
+      tween.stop();
+    },
+  });
+
   await lastValueFrom(animate$);
 };

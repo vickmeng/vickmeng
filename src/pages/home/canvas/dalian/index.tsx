@@ -1,4 +1,4 @@
-import { Config } from '@/pages/home/canvas/types';
+import { CityConfig } from '@/pages/home/canvas/types';
 import * as THREE from 'three';
 import { Color, Euler, MathUtils, Vector3 } from 'three';
 // @ts-ignore
@@ -9,7 +9,7 @@ import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canv
 import bridge from '../../../../assets/bridge.fbx?url';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 
-export const dalianConfig: Config = {
+export const dalianConfig: CityConfig = {
   name: 'dalian',
   preColor: new Color(0xf2dd0b),
 
@@ -22,7 +22,7 @@ export const dalianConfig: Config = {
   modelRotation: new Euler(MathUtils.degToRad(12), MathUtils.degToRad(310), 0),
   // @ts-ignore
   mesh: undefined,
-  loadModel: async (config: Config) => {
+  loadModel: async (config: CityConfig) => {
     const { modelPosition, modelScale, modelRotation } = config;
 
     const loader = new FBXLoader();

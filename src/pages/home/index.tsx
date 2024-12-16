@@ -1,9 +1,11 @@
 import { switchModal } from '@/pages/home/canvas/switchModal';
 import { useEffect, useState } from 'react';
-import { ConfigList } from '@/pages/home/canvas/config';
+
 import InitLoading from '@/components/InitLoading';
 import { useSnapshot } from 'valtio/react';
 import { currentIndexStore } from '@/pages/home/store';
+import { init } from '@/pages/home/canvas/init';
+import { CityConfigList } from '@/pages/home/canvas/cityConfig';
 
 export default function HomePage() {
   const { currentIndex } = useSnapshot(currentIndexStore);
@@ -12,10 +14,10 @@ export default function HomePage() {
   const [switching, setSwitching] = useState(false);
 
   const hasPre = currentIndex > 0;
-  const hasNext = currentIndex < ConfigList.length - 1;
+  const hasNext = currentIndex < CityConfigList.length - 1;
 
   useEffect(() => {
-    import('@/pages/home/canvas/init');
+    init();
   }, []);
 
   return (
