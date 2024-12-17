@@ -11,7 +11,7 @@ import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 
 export const qingdaoConfig: CityConfig = {
   name: 'qingdao',
-  preColor: new Color(0xaf375a),
+  preColor: new Color(0xff7493),
   earthRotation: new Euler(0.46, 3.05, 0),
 
   cityPosition: new Vector3(-210.14429595033295, 297.0576377962532, -342.9229282308912),

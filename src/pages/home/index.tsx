@@ -1,7 +1,7 @@
 import { switchModal } from '@/pages/home/canvas/switchModal';
 import { useEffect, useState } from 'react';
 
-import InitLoading from '@/components/InitLoading';
+import InitLoading from 'src/pages/home/InitLoading';
 import { useSnapshot } from 'valtio/react';
 import { currentIndexStore } from '@/pages/home/store';
 import { init } from '@/pages/home/canvas/init';
