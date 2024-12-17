@@ -1,16 +1,16 @@
 import { switchModal } from '@/pages/home/canvas/switchModal';
 import { useEffect, useState } from 'react';
 
-import InitLoading from 'src/pages/home/InitLoading';
+import InitLoading from './InitLoading';
 import { useSnapshot } from 'valtio/react';
 import { currentIndexStore } from '@/pages/home/store';
 import { init } from '@/pages/home/canvas/init';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
+import Indicator from '@/pages/home/Indicator';
 
 export default function HomePage() {
   const { currentIndex } = useSnapshot(currentIndexStore);
 
-  // const [currentIndex, setCurrentIndex] = useState(0);
   const [switching, setSwitching] = useState(false);
 
   const hasPre = currentIndex > 0;
@@ -20,40 +20,50 @@ export default function HomePage() {
     init();
   }, []);
 
+  useEffect(() => {
+    const cb = async (e: KeyboardEvent) => {
+      if (switching) {
+        return;
+      }
+
+      if (e.key === 'd') {
+        // 前进
+        if (!hasNext) {
+          return;
+        }
+
+        const toIndex = currentIndex + 1;
+        setSwitching(true);
+        await switchModal({ fromIndex: currentIndex, toIndex });
+        setSwitching(false);
+        currentIndexStore.currentIndex = toIndex;
+      } else if (e.key === 'a') {
+        // 后退
+        if (!hasPre) {
+          return;
+        }
+
+        const toIndex = currentIndex - 1;
+        setSwitching(true);
+        await switchModal({ fromIndex: currentIndex, toIndex });
+        setSwitching(false);
+        currentIndexStore.currentIndex = toIndex;
+      } else if (e.key === 'Escape') {
+        // 退出;
+      }
+    };
+
+    document.body.addEventListener('keydown', cb);
+
+    return () => {
+      document.body.removeEventListener('keydown', cb);
+    };
+  }, [switching, setSwitching, currentIndex, hasNext, hasPre]);
+
   return (
     <>
       <InitLoading />
-      <div style={{ position: 'fixed', top: 0, left: 0 }}>
-        {hasPre && (
-          <button
-            disabled={switching}
-            onClick={async () => {
-              const toIndex = currentIndex - 1;
-
-              setSwitching(true);
-              await switchModal({ fromIndex: currentIndex, toIndex });
-              setSwitching(false);
-              currentIndexStore.currentIndex = toIndex;
-            }}
-          >
-            上上上上上上
-          </button>
-        )}
-        {hasNext && (
-          <button
-            disabled={switching}
-            onClick={async () => {
-              const toIndex = currentIndex + 1;
-              setSwitching(true);
-              await switchModal({ fromIndex: currentIndex, toIndex });
-              setSwitching(false);
-              currentIndexStore.currentIndex = toIndex;
-            }}
-          >
-            下下下下下下
-          </button>
-        )}
-      </div>
+      {!switching && <Indicator />}
     </>
   );
 }
