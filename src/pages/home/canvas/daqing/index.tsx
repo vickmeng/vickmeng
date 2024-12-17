@@ -13,7 +13,7 @@ import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 export const daqingConfig: CityConfig = {
   name: 'daqing',
   preColor: new Color(0x6be6e0),
-
+  UIThemeColor: '#6be6e0',
   earthRotation: new Euler(0.74, 1.96, 0),
 
   cityPosition: new Vector3(-223.14059996451869, 352.99110522483477, -274.9646382348542),

@@ -4,7 +4,7 @@ import { CityConfigList, handleCalculateConfigList } from './cityConfig';
 import { AnimationFrameSubject, camera, clock, earthGroup, renderer, scene } from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
 import { delay } from '@/pages/home/canvas/utils/utils';
-import { GUI } from 'dat.gui';
+// import { GUI } from 'dat.gui';
 import { currentIndexStore } from '@/pages/home/store';
 
 export const init = async () => {
@@ -178,17 +178,17 @@ export const init = async () => {
   /**
    * 调试点击 end
    */
-  const gui = new GUI();
-
-  gui.add(earthGroup.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
-    earthGroup.rotation.x = value;
-  });
-  gui.add(earthGroup.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
-    earthGroup.rotation.y = value;
-  });
-  gui.add(earthGroup.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
-    earthGroup.rotation.z = value;
-  });
+  // const gui = new GUI();
+  //
+  // gui.add(earthGroup.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
+  //   earthGroup.rotation.x = value;
+  // });
+  // gui.add(earthGroup.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
+  //   earthGroup.rotation.y = value;
+  // });
+  // gui.add(earthGroup.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
+  //   earthGroup.rotation.z = value;
+  // });
 
   // console.log(earthGroup.children);
   //

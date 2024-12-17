@@ -12,6 +12,7 @@ import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 export const chengduConfig: CityConfig = {
   name: 'chengdu',
   preColor: new Color(0x55da99),
+  UIThemeColor: '#55da99',
 
   earthRotation: new Euler(0.4, 3.26, 0),
 

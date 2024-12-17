@@ -21,6 +21,12 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    const root = document.documentElement;
+
+    root.style.setProperty('--theme-primary-color', CityConfigList[currentIndex].UIThemeColor);
+  }, [currentIndex]);
+
+  useEffect(() => {
     const cb = async (e: KeyboardEvent) => {
       if (switching) {
         return;

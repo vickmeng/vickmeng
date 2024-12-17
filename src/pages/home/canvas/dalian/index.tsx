@@ -12,6 +12,7 @@ import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 export const dalianConfig: CityConfig = {
   name: 'dalian',
   preColor: new Color(0xf2dd0b),
+  UIThemeColor: '#f2dd0b',
 
   earthRotation: new Euler(0.67, 2.1, 0),
 
