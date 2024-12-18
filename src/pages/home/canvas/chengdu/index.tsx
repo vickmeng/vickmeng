@@ -8,6 +8,7 @@ import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canv
 // @ts-ignore
 import mark from '../../../../assets/mark.fbx?url';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
+import Card from '@/pages/home/Card';
 
 export const chengduConfig: CityConfig = {
   name: 'chengdu',
@@ -58,4 +59,38 @@ export const chengduConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
+  desc: (
+    <Card title={'成都'} side={'left'}>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+    </Card>
+  ),
 };

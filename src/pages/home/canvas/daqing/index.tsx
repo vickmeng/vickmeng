@@ -9,6 +9,7 @@ import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canv
 import pumpjack from '../../../../assets/pumpjack.obj?url';
 import { CityConfig } from '@/pages/home/canvas/types';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
+import Card from '@/pages/home/Card';
 
 export const daqingConfig: CityConfig = {
   name: 'daqing',
@@ -57,4 +58,38 @@ export const daqingConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
+  desc: (
+    <Card title={'大庆'} side={'right'}>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+    </Card>
+  ),
 };

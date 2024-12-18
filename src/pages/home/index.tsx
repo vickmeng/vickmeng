@@ -1,5 +1,5 @@
 import { switchModal } from '@/pages/home/canvas/switchModal';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import InitLoading from './InitLoading';
 import { useSnapshot } from 'valtio/react';
@@ -7,7 +7,7 @@ import { currentIndexStore } from '@/pages/home/store';
 import { init } from '@/pages/home/canvas/init';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
 import Indicator from '@/pages/home/Indicator';
-
+import './index.less';
 export default function HomePage() {
   const { currentIndex } = useSnapshot(currentIndexStore);
 
@@ -19,6 +19,10 @@ export default function HomePage() {
   useEffect(() => {
     init();
   }, []);
+
+  const desc = useMemo(() => {
+    return CityConfigList[currentIndex].desc;
+  }, [currentIndex]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -67,9 +71,11 @@ export default function HomePage() {
   }, [switching, setSwitching, currentIndex, hasNext, hasPre]);
 
   return (
-    <>
+    <div id={'timeline-page'}>
       <InitLoading />
       {!switching && <Indicator />}
-    </>
+
+      {!switching && <>{desc}</>}
+    </div>
   );
 }

@@ -1,0 +1,100 @@
+@keyframes showTitle {
+  from {
+    clip-path: polygon(0 0, 0% 0%, 0% 100%, 0 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes showContent {
+  0% {
+    width: 0;
+    height: 8px;
+  }
+  50% {
+    width: auto;
+    height: 8px;
+  }
+  100% {
+    width: auto;
+    height: calc(100% - 40px);
+  }
+}
+
+
+.card {
+  position: fixed;
+  width: 50vw;
+
+  top: 32px;
+  bottom: 40px;
+
+  &.left {
+    left: 40px;
+  }
+
+  &.right {
+    right: 40px;
+
+  }
+
+  &__title {
+    color:white;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 156px;
+
+    animation: showTitle 150ms ease forwards;
+
+
+    &__content {
+      box-sizing: border-box;
+      height: 32px;
+      width: 140px;
+      background:var(--theme-primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 4px;
+    }
+
+    &__arrow {
+      height: 32px;
+      width: 16px;
+      background:var(--theme-primary-color);
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+    }
+  }
+
+
+  &__content {
+    height: calc(100% - 40px);
+    overflow-y: auto;
+    animation: showContent 300ms ease forwards;
+
+    background: rgba( 255, 255, 255, 0.25 );
+    //box-shadow: 0 8px 8px 0 var(--theme-primary-color);
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+    border-top: 4px solid var(--theme-primary-color);
+
+
+
+    &::-webkit-scrollbar {
+      width: 5px;  /* 设置滚动条的宽度 */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #6a6a6a;    /* 设置滚动条滑块的颜色 */
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(57, 57, 57, 0.2); /* 设置滚动条轨道的颜色 */
+    }
+
+  }
+}
+
+

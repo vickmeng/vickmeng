@@ -32,5 +32,6 @@ export const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 // renderer.shadowMap.type = THREE.PCFShadowMap;
+// console.log('document.querySelector', document.querySelector('#timeline-page'));
 
-document.body.appendChild(renderer.domElement);
+// document.body.appendChild(renderer.domElement);

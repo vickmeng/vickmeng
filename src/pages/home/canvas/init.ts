@@ -10,6 +10,8 @@ import { currentIndexStore } from '@/pages/home/store';
 export const init = async () => {
   const firstConfig = CityConfigList[0];
 
+  document.querySelector('#timeline-page')!.appendChild(renderer.domElement);
+
   /**
    * add points start
    * 暂时不显示点

@@ -8,6 +8,7 @@ import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canv
 // @ts-ignore
 import bridge from '../../../../assets/bridge.fbx?url';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
+import Card from '@/pages/home/Card';
 
 export const dalianConfig: CityConfig = {
   name: 'dalian',
@@ -57,4 +58,38 @@ export const dalianConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
+  desc: (
+    <Card title={'大连'} side={'right'}>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+    </Card>
+  ),
 };

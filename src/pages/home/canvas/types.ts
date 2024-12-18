@@ -1,4 +1,5 @@
 import { CatmullRomCurve3, Color, Euler, Group, LineSegments, Mesh, Vector3 } from 'three';
+import { ReactNode } from 'react';
 
 export interface CityConfig {
   name: string;
@@ -19,6 +20,9 @@ export interface CityConfig {
   UIThemeColor: string; // 和preColor是一样的用于css，preColor的three.js的对象我懒得改了
   cityPosition: Vector3;
   earthRotation: Euler;
+
+  desc: ReactNode;
+
   // markQuaternion
   // faceDirection: Vector3;
 }

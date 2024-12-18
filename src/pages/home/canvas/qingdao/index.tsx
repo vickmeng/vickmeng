@@ -8,6 +8,7 @@ import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canv
 // @ts-ignore
 import ship from '../../../../assets/ship.fbx?url';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
+import Card from '@/pages/home/Card';
 
 export const qingdaoConfig: CityConfig = {
   name: 'qingdao',
@@ -55,4 +56,38 @@ export const qingdaoConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
+  desc: (
+    <Card title={'青岛'} side={'left'}>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+    </Card>
+  ),
 };
