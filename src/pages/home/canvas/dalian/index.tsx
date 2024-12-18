@@ -59,7 +59,7 @@ export const dalianConfig: CityConfig = {
   pointVertices: [],
   toNextCurves: [],
   desc: (
-    <Card title={'大连'} side={'right'}>
+    <Card title={'开始工作！！'} side={'right'}>
       <p>1</p>
       <p>1</p>
       <p>1</p>

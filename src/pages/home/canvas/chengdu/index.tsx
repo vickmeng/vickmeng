@@ -60,7 +60,7 @@ export const chengduConfig: CityConfig = {
   pointVertices: [],
   toNextCurves: [],
   desc: (
-    <Card title={'成都'} side={'left'}>
+    <Card title={'南下定居'} side={'left'}>
       <p>1</p>
       <p>1</p>
       <p>1</p>

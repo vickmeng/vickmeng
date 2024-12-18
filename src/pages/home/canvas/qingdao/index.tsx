@@ -57,7 +57,7 @@ export const qingdaoConfig: CityConfig = {
   pointVertices: [],
   toNextCurves: [],
   desc: (
-    <Card title={'青岛'} side={'left'}>
+    <Card title={'上大学'} side={'left'}>
       <p>1</p>
       <p>1</p>
       <p>1</p>

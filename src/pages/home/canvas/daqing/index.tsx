@@ -59,7 +59,7 @@ export const daqingConfig: CityConfig = {
   pointVertices: [],
   toNextCurves: [],
   desc: (
-    <Card title={'大庆'} side={'right'}>
+    <Card title={'人生前20年'} side={'right'}>
       <p>1</p>
       <p>1</p>
       <p>1</p>
