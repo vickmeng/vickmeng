@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Color, Euler, Group, MathUtils, Mesh, Vector3 } from 'three';
+import { Color, Euler, Group, MathUtils, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 // @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { AnimationFrameSubject, scene } from '@/pages/home/canvas/core';
@@ -10,7 +10,9 @@ import pumpjack from '../../../../assets/pumpjack.obj?url';
 import { CityConfig } from '@/pages/home/canvas/types';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 import { Text } from 'troika-three-text';
-import ThreeMeshUI from 'three-mesh-ui';
+
+import font from '../../../../assets/朱雀仿宋.ttf?url';
+import { GUI } from 'dat.gui';
 
 export const daqingConfig: CityConfig = {
   name: 'daqing',
@@ -61,10 +63,51 @@ export const daqingConfig: CityConfig = {
   toNextCurves: [],
   getDesc: async () => {
     const group = new Group();
-    group.position.set(0, 180, 0);
-    group.position.y = 180;
+
+    const myText = new Text();
+    myText.text =
+      '我生在油城的大庆。\n\n' +
+      '这座工业化堡垒，被寒冷的朔风刻上了粗粝的岁月之痕，处处散发着冷峻硬朗的气息。钢铁的架构、高耸的烟囱以及巨大的工程车，构成了城市的主调，每一寸空气都弥漫着一种对精细的天然拒斥力。\n' +
+      '每个人都像是抽油机一样，被无形的力量驱动着，在既定轨道上不停歇地运转。\n' +
+      '我曾想过，如今成为一名前端开发者，是否算是对年少时留白的创造性的一种弥补？';
+
+    myText.fontSize = 2.3;
+
+    myText.maxWidth = 60;
+    myText.lineHeight = 1.2;
+    myText.font = font;
+    myText.overflowWrap = 'break-word';
+
+    myText.material = new MeshBasicMaterial({ color: new Color(0xffffff) });
+
+    group.add(myText);
+    group.position.set(21, 194, 400);
+    group.rotation.set(0, 5.84, 0);
 
     group.name = 'decs';
+
+    AnimationFrameSubject.subscribe(() => {
+      myText.sync();
+    });
+
+    const gui = new GUI();
+
+    gui.add(group.position, 'x', -100, 100, 1).onChange((value) => {
+      group.position.x = value;
+    });
+    gui.add(group.position, 'y', 100, 400, 1).onChange((value) => {
+      group.position.y = value;
+    });
+
+    gui.add(group.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
+      group.rotation.x = value;
+    });
+    gui.add(group.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
+      group.rotation.y = value;
+    });
+    gui.add(group.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
+      group.rotation.z = value;
+    });
     return group;
   },
 };

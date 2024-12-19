@@ -6,9 +6,6 @@ import { initLoadingProgressStore } from '@/stores';
 // import { GUI } from 'dat.gui';
 import { currentIndexStore } from '@/pages/home/store';
 import ThreeMeshUI from 'three-mesh-ui';
-import { GUI } from 'dat.gui';
-import FontJSON from '@/assets/Roboto-msdf.json';
-import FontImage from '@/assets/Roboto-msdf.png';
 
 export const init = async () => {
   const firstConfig = CityConfigList[0];
@@ -191,48 +188,17 @@ export const init = async () => {
    * 调试点击 end
    */
 
-  const container = new ThreeMeshUI.Block({
-    width: 40,
-    height: 10,
-    padding: 10,
-    justifyContent: 'center',
-    textAlign: 'left',
-    fontFamily: FontJSON,
-    fontTexture: FontImage,
-    // fontFamily: FontJSON,
-    // fontTexture: FontImage,
-    // interLine: 0,
-  });
+  // const gui = new GUI();
 
-  container.position.set(0, 180, 400);
-
-  scene.add(container);
-  container.add(
-    new ThreeMeshUI.Text({
-      // content: 'This library supports line-break-friendly-characters,',
-      content: 'This library supports line break friendly characters',
-      fontSize: 2,
-      color: 0x00ff00,
-    }),
-
-    new ThreeMeshUI.Text({
-      content: ' As well as multi font size lines with consistent vertical spacing',
-      fontSize: 2,
-      color: 0x000000,
-    })
-  );
-
-  const gui = new GUI();
-
-  gui.add(container.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
-    container.rotation.x = value;
-  });
-  gui.add(container.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
-    container.rotation.y = value;
-  });
-  gui.add(container.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
-    container.rotation.z = value;
-  });
+  // gui.add(container.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
+  //   container.rotation.x = value;
+  // });
+  // gui.add(container.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
+  //   container.rotation.y = value;
+  // });
+  // gui.add(container.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
+  //   container.rotation.z = value;
+  // });
 
   // console.log(earthGroup.children);
   //
