@@ -1,15 +1,16 @@
 import * as THREE from 'three';
-import { Color, Euler, MathUtils, Mesh, Vector3 } from 'three';
+import { Color, Euler, Group, MathUtils, Mesh, Vector3 } from 'three';
 // @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { scene } from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, scene } from '@/pages/home/canvas/core';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils/utils';
 
 // @ts-ignore
 import pumpjack from '../../../../assets/pumpjack.obj?url';
 import { CityConfig } from '@/pages/home/canvas/types';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
-import Card from '@/pages/home/Card';
+import { Text } from 'troika-three-text';
+import ThreeMeshUI from 'three-mesh-ui';
 
 export const daqingConfig: CityConfig = {
   name: 'daqing',
@@ -58,38 +59,12 @@ export const daqingConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
-  desc: (
-    <Card title={'人生前20年'} side={'right'}>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-    </Card>
-  ),
+  getDesc: async () => {
+    const group = new Group();
+    group.position.set(0, 180, 0);
+    group.position.y = 180;
+
+    group.name = 'decs';
+    return group;
+  },
 };

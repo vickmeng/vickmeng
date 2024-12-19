@@ -20,10 +20,6 @@ export default function HomePage() {
     init();
   }, []);
 
-  const desc = useMemo(() => {
-    return CityConfigList[currentIndex].desc;
-  }, [currentIndex]);
-
   useEffect(() => {
     const root = document.documentElement;
 
@@ -74,8 +70,6 @@ export default function HomePage() {
     <div id={'timeline-page'}>
       <InitLoading />
       {!switching && <Indicator />}
-
-      {!switching && <>{desc}</>}
     </div>
   );
 }

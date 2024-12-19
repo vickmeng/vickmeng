@@ -1,14 +1,13 @@
 import { CityConfig } from '@/pages/home/canvas/types';
+import * as THREE from 'three';
 import { Color, Euler, MathUtils, Mesh, Vector3 } from 'three';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import * as THREE from 'three';
 import { scene } from '@/pages/home/canvas/core';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils/utils';
 // @ts-ignore
 import ship from '../../../../assets/ship.fbx?url';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
-import Card from '@/pages/home/Card';
 
 export const qingdaoConfig: CityConfig = {
   name: 'qingdao',
@@ -56,38 +55,4 @@ export const qingdaoConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
-  desc: (
-    <Card title={'上大学'} side={'left'}>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-    </Card>
-  ),
 };

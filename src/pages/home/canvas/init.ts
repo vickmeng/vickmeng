@@ -3,9 +3,12 @@ import { MeshBasicMaterial } from 'three';
 import { CityConfigList, handleCalculateConfigList } from './cityConfig';
 import { AnimationFrameSubject, camera, clock, earthGroup, renderer, scene } from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
-import { delay } from '@/pages/home/canvas/utils/utils';
 // import { GUI } from 'dat.gui';
 import { currentIndexStore } from '@/pages/home/store';
+import ThreeMeshUI from 'three-mesh-ui';
+import { GUI } from 'dat.gui';
+import FontJSON from '@/assets/Roboto-msdf.json';
+import FontImage from '@/assets/Roboto-msdf.png';
 
 export const init = async () => {
   const firstConfig = CityConfigList[0];
@@ -36,7 +39,11 @@ export const init = async () => {
    */
 
   /**
-   * 创建第一个场景 end
+   * 初始化第一个desc start
+   */
+
+  /**
+   * 初始化第一个desc end
    */
 
   /**
@@ -56,7 +63,8 @@ export const init = async () => {
   initLoadingProgressStore.progress = 70;
   initLoadingProgressStore.message = '完成模型加载,开始数据计算';
 
-  await delay(100);
+  const desc = await firstConfig.getDesc();
+  scene.add(desc);
 
   // // 这只是个标记
   // const testMesh = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
@@ -94,6 +102,8 @@ export const init = async () => {
 
   AnimationFrameSubject.asObservable().subscribe(() => {
     renderer.render(scene, camera);
+    ThreeMeshUI.update();
+
     // controls.update();
     requestIdleCallback(() => {
       AnimationFrameSubject.next(undefined);
@@ -180,17 +190,49 @@ export const init = async () => {
   /**
    * 调试点击 end
    */
-  // const gui = new GUI();
-  //
-  // gui.add(earthGroup.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  //   earthGroup.rotation.x = value;
-  // });
-  // gui.add(earthGroup.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  //   earthGroup.rotation.y = value;
-  // });
-  // gui.add(earthGroup.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  //   earthGroup.rotation.z = value;
-  // });
+
+  const container = new ThreeMeshUI.Block({
+    width: 40,
+    height: 10,
+    padding: 10,
+    justifyContent: 'center',
+    textAlign: 'left',
+    fontFamily: FontJSON,
+    fontTexture: FontImage,
+    // fontFamily: FontJSON,
+    // fontTexture: FontImage,
+    // interLine: 0,
+  });
+
+  container.position.set(0, 180, 400);
+
+  scene.add(container);
+  container.add(
+    new ThreeMeshUI.Text({
+      // content: 'This library supports line-break-friendly-characters,',
+      content: 'This library supports line break friendly characters',
+      fontSize: 2,
+      color: 0x00ff00,
+    }),
+
+    new ThreeMeshUI.Text({
+      content: ' As well as multi font size lines with consistent vertical spacing',
+      fontSize: 2,
+      color: 0x000000,
+    })
+  );
+
+  const gui = new GUI();
+
+  gui.add(container.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
+    container.rotation.x = value;
+  });
+  gui.add(container.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
+    container.rotation.y = value;
+  });
+  gui.add(container.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
+    container.rotation.z = value;
+  });
 
   // console.log(earthGroup.children);
   //

@@ -6,7 +6,7 @@ interface CardProps {
   children: ReactNode;
   side: 'left' | 'right';
 }
-
+// 没用了
 const CardTitle = (props: { children: ReactNode }) => {
   return (
     <h3 className={'card__title'}>

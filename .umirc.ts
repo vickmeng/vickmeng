@@ -6,4 +6,8 @@ export default defineConfig({
     { path: "/test", component: "test" },
   ],
   npmClient: 'pnpm',
+  alias: {
+    // 配置别名指向three库所在的实际路径，方便后续使用更简洁的路径写法
+    '@three': 'node_modules/three',
+  },
 });
