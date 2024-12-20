@@ -1,22 +1,44 @@
 import './index.less';
+import { useSnapshot } from 'valtio/react';
+import { currentIndexStore } from '@/pages/home/store';
+import { CityConfigList } from '@/pages/home/canvas/cityConfig';
 
-const Indicator = () => {
+const Indicator = (props: { toPre: () => Promise<void>; toNext: () => Promise<void> }) => {
+  const { currentIndex } = useSnapshot(currentIndexStore);
+
+  const hasPre = currentIndex > 0;
+  const hasNext = currentIndex < CityConfigList.length - 1;
+
   return (
     <div className={'indicator'}>
-      <div className={'indicator-item'}>
-        <div className={'indicator-item__icon'}>a</div>
-        上一页
-      </div>
+      {hasPre && (
+        <button
+          className={'indicator-item'}
+          onClick={() => {
+            props.toPre();
+          }}
+        >
+          <span className={'indicator-item__icon'}>a</span>
+          <span className={'indicator-item__content'}>上一页</span>
+        </button>
+      )}
 
-      <div className={'indicator-item'}>
-        <div className={'indicator-item__icon'}>b</div>
-        下一页
-      </div>
+      {hasNext && (
+        <button
+          className={'indicator-item'}
+          onClick={() => {
+            props.toNext();
+          }}
+        >
+          <span className={'indicator-item__icon'}>b</span>
+          <span className={'indicator-item__content'}>下一页</span>
+        </button>
+      )}
 
-      <div className={'indicator-item'}>
-        <div className={'indicator-item__icon'}>esc</div>
-        退出
-      </div>
+      <button className={'indicator-item'}>
+        <span className={'indicator-item__icon'}>esc</span>
+        <span className={'indicator-item__content'}>退出</span>
+      </button>
     </div>
   );
 };
