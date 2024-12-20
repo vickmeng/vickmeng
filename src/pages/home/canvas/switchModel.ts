@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import { Color, Mesh, MeshBasicMaterial, PointsMaterial, ShaderMaterial } from 'three';
+import { Color, Group, Mesh, MeshBasicMaterial, PointsMaterial, ShaderMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, earthGroup, points } from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, camera, earthGroup, points, scene } from '@/pages/home/canvas/core';
 import { CAMERA_ROTATION_Y, EARTH_POSITION_X, SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
 import { CityConfig } from '@/pages/home/canvas/types';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
@@ -56,9 +56,18 @@ export const switchModel = async (opts: Options) => {
    */
 
   /**
-   * 动画 start
+   * 移除desc start
+   */
+  const desc = scene.children.find((child) => child.name === 'desc') as Group;
+  scene.remove(desc);
+
+  /**
+   * 移除desc end
    */
 
+  /**
+   * 动画 start
+   */
   await Promise.all([
     switchProcess({ fromIndex, toIndex, fromConfig, toConfig }),
     sandsFly({ fromIndex, toIndex, fromConfig, toConfig }),
@@ -73,6 +82,7 @@ export const switchModel = async (opts: Options) => {
   /**
    * 动画 end
    */
+  scene.add(toConfig.getDesc());
 
   points.geometry.setAttribute('position', new THREE.Float32BufferAttribute([], 3));
 
@@ -154,10 +164,10 @@ const cameraRoll = async (params: { fromIndex: number }) => {
 
   const leftToRight = params.fromIndex % 2 === 0;
 
-  const moveParams = { deg: leftToRight ? -CAMERA_ROTATION_Y : CAMERA_ROTATION_Y };
+  const moveParams = { deg: leftToRight ? CAMERA_ROTATION_Y : -CAMERA_ROTATION_Y };
 
   const tween = new Tween(moveParams)
-    .to({ deg: leftToRight ? CAMERA_ROTATION_Y : -CAMERA_ROTATION_Y }, 4000)
+    .to({ deg: leftToRight ? -CAMERA_ROTATION_Y : CAMERA_ROTATION_Y }, 4000)
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
       camera.rotation.y = THREE.MathUtils.degToRad(moveParams.deg);

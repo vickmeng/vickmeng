@@ -21,8 +21,8 @@ export const chengduConfig: CityConfig = {
   cityPosition: new Vector3(-110.64084487536095, 256.54357850935827, -414.6613024757423),
 
   modelPosition: new Vector3(MODEL_POSITION_X, 180, 0),
-  modelScale: new Vector3(1, 1, 1).multiplyScalar(50),
-  modelRotation: new Euler(MathUtils.degToRad(-90), 0, MathUtils.degToRad(-20)),
+  modelScale: new Vector3(1, 1, 1).multiplyScalar(60),
+  modelRotation: new Euler(MathUtils.degToRad(-90), 0, MathUtils.degToRad(-40)),
   // @ts-ignore
   mesh: undefined,
   loadModel: async (config: CityConfig) => {
@@ -60,10 +60,12 @@ export const chengduConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
-  getDesc: async () => {
+  getDesc: () => {
     const group = new Group();
     const myText = new Text();
     group.add(myText);
+    group.name = 'desc';
+
     return group;
   },
 };

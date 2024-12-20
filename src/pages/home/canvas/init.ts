@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { MeshBasicMaterial } from 'three';
+import { MeshBasicMaterial, SphereGeometry } from 'three';
 import { CityConfigList, handleCalculateConfigList } from './cityConfig';
 import { AnimationFrameSubject, camera, clock, earthGroup, renderer, scene } from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
@@ -60,13 +60,13 @@ export const init = async () => {
   initLoadingProgressStore.progress = 70;
   initLoadingProgressStore.message = '完成模型加载,开始数据计算';
 
-  const desc = await firstConfig.getDesc();
+  const desc = firstConfig.getDesc();
   scene.add(desc);
 
-  // // 这只是个标记
-  // const testMesh = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-  // testMesh.position.set(0, 0, 0);
-  // scene.add(testMesh);
+  // 这只是个标记
+  const testMesh = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+  testMesh.position.set(0, 0, 0);
+  scene.add(testMesh);
   //
   // const testMesh1 = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
   // testMesh1.position.set(-1000, 0, 0);

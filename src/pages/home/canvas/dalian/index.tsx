@@ -21,8 +21,8 @@ export const dalianConfig: CityConfig = {
   cityPosition: new Vector3(-206.73897369824337, 315.6722437805034, -328.0396793998852),
 
   modelPosition: new Vector3(-MODEL_POSITION_X, 200, 0),
-  modelScale: new Vector3(9.6, 1, 38).multiplyScalar(0.7),
-  modelRotation: new Euler(MathUtils.degToRad(12), MathUtils.degToRad(310), 0),
+  modelScale: new Vector3(9.6, 1, 38).multiplyScalar(0.8),
+  modelRotation: new Euler(MathUtils.degToRad(12), MathUtils.degToRad(320), 0),
   // @ts-ignore
   mesh: undefined,
   loadModel: async (config: CityConfig) => {
@@ -59,10 +59,11 @@ export const dalianConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
-  getDesc: async () => {
+  getDesc: () => {
     const group = new Group();
     const myText = new Text();
     group.add(myText);
+    group.name = 'desc';
     return group;
   },
 };

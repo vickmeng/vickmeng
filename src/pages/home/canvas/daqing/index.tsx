@@ -14,7 +14,6 @@ import { Text } from 'troika-three-text';
 
 // @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
-import { GUI } from 'dat.gui';
 
 export const daqingConfig: CityConfig = {
   name: 'daqing',
@@ -25,8 +24,8 @@ export const daqingConfig: CityConfig = {
   cityPosition: new Vector3(-223.14059996451869, 352.99110522483477, -274.9646382348542),
 
   modelPosition: new Vector3(-MODEL_POSITION_X, 0, 0),
-  modelScale: new Vector3(0.9, 0.9, 0.9),
-  modelRotation: new Euler(0, MathUtils.degToRad(220), 0),
+  modelScale: new Vector3(1, 1, 1).multiplyScalar(1),
+  modelRotation: new Euler(0, MathUtils.degToRad(240), 0),
   // @ts-ignore
   mesh: undefined,
   loadModel: async (config: CityConfig) => {
@@ -63,7 +62,7 @@ export const daqingConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
-  getDesc: async () => {
+  getDesc: () => {
     const group = new Group();
 
     const myText = new Text();
@@ -85,25 +84,8 @@ export const daqingConfig: CityConfig = {
     group.position.set(21, 194, 400);
     group.rotation.set(0, 5.84, 0);
 
-    group.name = 'decs';
-    const gui = new GUI();
+    group.name = 'desc';
 
-    gui.add(group.position, 'x', -100, 100, 1).onChange((value) => {
-      group.position.x = value;
-    });
-    gui.add(group.position, 'y', 100, 400, 1).onChange((value) => {
-      group.position.y = value;
-    });
-
-    gui.add(group.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
-      group.rotation.x = value;
-    });
-    gui.add(group.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
-      group.rotation.y = value;
-    });
-    gui.add(group.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
-      group.rotation.z = value;
-    });
     return group;
   },
 };

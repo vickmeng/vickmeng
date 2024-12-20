@@ -16,7 +16,7 @@ export interface CityConfig {
   UIThemeColor: string; // 和preColor是一样的用于css，preColor的three.js的对象我懒得改了
   cityPosition: Vector3;
   earthRotation: Euler;
-  getDesc: () => Promise<Group>;
+  getDesc: () => Group;
   // markQuaternion
   // faceDirection: Vector3;
 }

@@ -8,10 +8,10 @@ export const SANDS_FLY_BATCH_COUNT = 100; // 一共100个批次
 export const CAMERA_ROTATION_Y = 10;
 
 // 模型距离远点距离X
-export const MODEL_POSITION_X = 150;
+export const MODEL_POSITION_X = 350;
 
 // 模型距离远点距离X
-export const EARTH_POSITION_X = 400;
+export const EARTH_POSITION_X = 200;
 
 // 0x1e1a25 背景色
 
