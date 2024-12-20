@@ -1,12 +1,13 @@
 import * as THREE from 'three';
-import { Color, Mesh, MeshBasicMaterial, ShaderMaterial } from 'three';
+import { Color, Mesh, MeshBasicMaterial, PointsMaterial, ShaderMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, earthGroup, points, SwitchSubject } from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, camera, earthGroup, points } from '@/pages/home/canvas/core';
 import { CAMERA_ROTATION_Y, EARTH_POSITION_X, SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
 import { CityConfig } from '@/pages/home/canvas/types';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
+import { switchModelProcessStore } from '@/pages/home/store';
 
 interface Options {
   fromIndex: number;
@@ -19,18 +20,11 @@ interface Options {
  * 切换模型
  * 仅支持上一个下一个，不能跨
  */
-export const switchModal = async (opts: Options) => {
-  SwitchSubject.next(undefined);
-
+export const switchModel = async (opts: Options) => {
   const { fromIndex, toIndex } = opts;
 
   const fromConfig = CityConfigList[fromIndex];
   const toConfig = CityConfigList[toIndex];
-
-  if (fromConfig.onSwitchOut) {
-    await fromConfig.onSwitchOut({ fromConfig, toConfig });
-  }
-
   /**
    * 生成沙子 start
    */
@@ -54,9 +48,19 @@ export const switchModal = async (opts: Options) => {
    */
 
   /**
-   * 沙子飞 start
+   * 沙子出现 start
    */
+  (points.material as PointsMaterial).opacity = 1;
+  /**
+   * 沙子出现 end
+   */
+
+  /**
+   * 动画 start
+   */
+
   await Promise.all([
+    switchProcess({ fromIndex, toIndex, fromConfig, toConfig }),
     sandsFly({ fromIndex, toIndex, fromConfig, toConfig }),
     changeColor({ fromIndex, toIndex, fromConfig, toConfig }),
     cameraRoll({ fromIndex }),
@@ -64,19 +68,15 @@ export const switchModal = async (opts: Options) => {
     earthRoute({ fromIndex, toIndex, fromConfig, toConfig }),
     showModal({ toConfig }),
     flyLine({ fromIndex, toIndex, fromConfig, toConfig }),
+    hideSands(),
   ]);
   /**
-   * sandsFly end
+   * 动画 end
    */
-  // const toMesh = toConfig.mesh;
-
-  // (toMesh.material as MeshBasicMaterial).opacity = 1;
 
   points.geometry.setAttribute('position', new THREE.Float32BufferAttribute([], 3));
 
-  if (toConfig.onSwitchIn) {
-    await toConfig.onSwitchIn({ fromConfig, toConfig });
-  }
+  switchModelProcessStore.process = null;
 };
 
 const sandsFly = async (params: {
@@ -105,7 +105,7 @@ const sandsFly = async (params: {
       const moveParams = { t: toNext ? 0 : 1 };
 
       const tween = new Tween(moveParams)
-        .to({ t: toNext ? 1 : 0 }, 3000 + currentIndex * 20)
+        .to({ t: toNext ? 1 : 0 }, 2000 + currentIndex * 20)
         .easing(Easing.Cubic.Out)
         .onUpdate(() => {
           const _t = moveParams.t;
@@ -195,7 +195,7 @@ const changeColor = async (params: {
   const alphaParams = { alpha: 0 };
 
   const tween = new Tween(alphaParams)
-    .to({ alpha: 1 }, 5000)
+    .to({ alpha: 1 }, 4000)
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
       const newPreColor = new Color();
@@ -248,9 +248,39 @@ const showModal = async (params: { toConfig: CityConfig }) => {
 
   const tween = new Tween(opacityParams)
     .delay(3000)
-    .to({ opacity: 1 }, 2000)
+    .to({ opacity: 1 }, 1000)
     .onUpdate(() => {
       (toLine.material as MeshBasicMaterial).opacity = opacityParams.opacity;
+    })
+    .onComplete(() => {
+      animateFinish.next(undefined);
+    })
+    .start(); // Start the tween immediately.
+
+  animate$.subscribe({
+    next: () => {
+      tween.update();
+    },
+    complete: () => {
+      tween.stop();
+    },
+  });
+
+  await lastValueFrom(animate$);
+};
+
+const hideSands = async () => {
+  const animateFinish = new Subject();
+
+  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
+
+  const opacityParams = { opacity: 1 };
+
+  const tween = new Tween(opacityParams)
+    .delay(3000)
+    .to({ opacity: 0 }, 1000)
+    .onUpdate(() => {
+      (points.material as PointsMaterial).opacity = opacityParams.opacity;
     })
     .onComplete(() => {
       animateFinish.next(undefined);
@@ -393,5 +423,47 @@ const flyLine = async (params: {
     },
   });
 
+  await lastValueFrom(animate$);
+};
+
+/**
+ * switchProcess
+ * 🐧换动画的进度
+ */
+const switchProcess = async (params: {
+  fromIndex: number;
+  toIndex: number;
+  fromConfig: CityConfig;
+  toConfig: CityConfig;
+}) => {
+  const { fromIndex, toIndex } = params;
+
+  const animateFinish = new Subject();
+
+  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
+
+  const routeParams = { t: 0 };
+  const tween = new Tween(routeParams)
+    .to({ t: 100 }, 4000)
+    .onUpdate(() => {
+      switchModelProcessStore.process = {
+        value: routeParams.t,
+        fromIndex,
+        toIndex,
+      };
+    })
+    .onComplete(() => {
+      animateFinish.next(undefined);
+    })
+    .start(); // Start the tween immediately.
+
+  animate$.subscribe({
+    next: () => {
+      tween.update();
+    },
+    complete: () => {
+      tween.stop();
+    },
+  });
   await lastValueFrom(animate$);
 };

@@ -4,7 +4,7 @@ import { CityConfigList, handleCalculateConfigList } from './cityConfig';
 import { AnimationFrameSubject, camera, clock, earthGroup, renderer, scene } from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
 // import { GUI } from 'dat.gui';
-import { currentIndexStore } from '@/pages/home/store';
+import { currentIndexStore, switchModelProcessStore } from '@/pages/home/store';
 import ThreeMeshUI from 'three-mesh-ui';
 
 export const init = async () => {
@@ -81,7 +81,7 @@ export const init = async () => {
    */
 
   /**
-   *  计算所有点位以及贝塞尔曲线 start
+   *  计算所有点位以及曲线 start
    */
   handleCalculateConfigList();
   // eslint-disable-next-line
@@ -115,15 +115,17 @@ export const init = async () => {
   AnimationFrameSubject.subscribe(() => {
     const delta = clock.getDelta();
 
+    const activeIndex = switchModelProcessStore.process?.toIndex ?? currentIndexStore.currentIndex;
+
     // 当前城市大一点
-    if (cityHighLights[currentIndexStore.currentIndex].scale.x > 2) {
+    if (cityHighLights[activeIndex].scale.x > 2) {
       cityHighLights.forEach((_cityMark) => {
         _cityMark.scale.x = 0;
         _cityMark.scale.y = 0;
       });
     } else {
       cityHighLights.forEach((_cityMark, index) => {
-        if (currentIndexStore.currentIndex === index) {
+        if (index === activeIndex) {
           _cityMark.scale.x += delta * 1.2;
           _cityMark.scale.y += delta * 1.2;
         } else {

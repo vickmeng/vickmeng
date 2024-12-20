@@ -4,8 +4,6 @@ import { Subject } from 'rxjs';
 import { CAMERA_ROTATION_Y, SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
 import { createEarth } from '@/pages/home/canvas/createEarth';
 
-export const SwitchSubject = new Subject();
-
 export const AnimationFrameSubject = new Subject();
 
 export const scene = new THREE.Scene();
@@ -19,7 +17,10 @@ camera.position.set(0, 180, 500);
 
 camera.rotation.y = THREE.MathUtils.degToRad(-CAMERA_ROTATION_Y);
 
-export const points = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ size: 1 }));
+export const points = new THREE.Points(
+  new THREE.BufferGeometry(),
+  new THREE.PointsMaterial({ size: 1, transparent: true })
+);
 scene.add(points);
 
 export const earthGroup = await createEarth();

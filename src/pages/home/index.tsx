@@ -1,4 +1,4 @@
-import { switchModal } from '@/pages/home/canvas/switchModal';
+import { switchModel } from '@/pages/home/canvas/switchModel';
 import { useEffect, useMemo, useState } from 'react';
 
 import InitLoading from './InitLoading';
@@ -40,7 +40,7 @@ export default function HomePage() {
 
         const toIndex = currentIndex + 1;
         setSwitching(true);
-        await switchModal({ fromIndex: currentIndex, toIndex });
+        await switchModel({ fromIndex: currentIndex, toIndex });
         setSwitching(false);
         currentIndexStore.currentIndex = toIndex;
       } else if (e.key === 'a') {
@@ -51,7 +51,7 @@ export default function HomePage() {
 
         const toIndex = currentIndex - 1;
         setSwitching(true);
-        await switchModal({ fromIndex: currentIndex, toIndex });
+        await switchModel({ fromIndex: currentIndex, toIndex });
         setSwitching(false);
         currentIndexStore.currentIndex = toIndex;
       } else if (e.key === 'Escape') {

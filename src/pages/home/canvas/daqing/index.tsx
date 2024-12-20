@@ -74,7 +74,6 @@ export const daqingConfig: CityConfig = {
       '我曾想过，如今成为一名前端开发者，是否是试图填补那段创造力留白的岁月？';
 
     myText.fontSize = 2.3;
-
     myText.maxWidth = 60;
     myText.lineHeight = 1.2;
     myText.font = font;

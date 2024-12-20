@@ -1,6 +1,6 @@
 import { CityConfig } from '@/pages/home/canvas/types';
 import * as THREE from 'three';
-import { Color, Euler, MathUtils, Mesh, Vector3 } from 'three';
+import { Color, Euler, Group, MathUtils, Mesh, Vector3 } from 'three';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { scene } from '@/pages/home/canvas/core';
@@ -8,6 +8,8 @@ import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canv
 // @ts-ignore
 import ship from '../../../../assets/ship.fbx?url';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
+// @ts-ignore
+import { Text } from 'troika-three-text';
 
 export const qingdaoConfig: CityConfig = {
   name: 'qingdao',
@@ -55,4 +57,10 @@ export const qingdaoConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
+  getDesc: async () => {
+    const group = new Group();
+    const myText = new Text();
+    group.add(myText);
+    return group;
+  },
 };
