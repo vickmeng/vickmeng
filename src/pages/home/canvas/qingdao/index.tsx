@@ -62,13 +62,17 @@ export const qingdaoConfig: CityConfig = {
   toNextCurves: [],
   getDesc: () => {
     const group = new Group();
+
     const myText = new Text();
 
     myText.text =
-      '我生在油城的大庆。\n\n' +
-      '这座工业化堡垒，被寒冷的朔风刻上了粗粝硬朗的气息。钢铁的架构、高耸的烟囱以及巨大的工程车，构成了城市的主调，每一寸空气都弥漫着一种对精细的天然拒斥。\n' +
-      '每个人都像是抽油机一样，被无形的力量驱动着，在既定轨道上运转，想象力在枯燥的劳作中渐渐枯萎。\n\n' +
-      '我曾想过，如今成为一名前端开发者，是否是试图填补那段创造力留白的岁月？';
+      '于青岛读大学前几年，我大多时光都倾注在了艺术上，压根没和编程产生半点联系。\n' +
+      '直到大四，有个室友去软件公司实习，写了俩月Java，就回来嚷嚷着要学前端。\n\n' +
+      '“啥是前端？”\n\n' +
+      '“给你本书自己看吧。”\n\n' +
+      '我和代码的缘分就这样开始了。\n' +
+      '我毕业前的实习岗位并非程序员，而是在一家大连的培训机构当咨询客服。' +
+      '我意外发现那些毕业学员的水平甚至还不及我，于是乎自己也开启了程序员的职业生涯，不禁感叹命运的奇妙';
 
     myText.fontSize = 2.3;
     myText.maxWidth = 60;
@@ -76,9 +80,9 @@ export const qingdaoConfig: CityConfig = {
     myText.font = font;
     myText.overflowWrap = 'break-word';
 
-    group.position.set(-21, 194, 400);
+    group.position.set(-38, 200, 400);
 
-    group.rotation.set(0, 5.84, 0);
+    group.rotation.set(0, 2 * Math.PI * 0.01, 0);
 
     group.add(myText);
     group.name = 'desc';
@@ -101,6 +105,7 @@ export const qingdaoConfig: CityConfig = {
     // gui.add(group.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
     //   group.rotation.z = value;
     // });
+
     return group;
   },
 };

@@ -14,6 +14,7 @@ import { Text } from 'troika-three-text';
 
 // @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
+import { GUI } from 'dat.gui';
 
 export const daqingConfig: CityConfig = {
   name: 'daqing',
@@ -81,8 +82,8 @@ export const daqingConfig: CityConfig = {
     myText.material = new MeshBasicMaterial({ color: new Color(0xffffff) });
 
     group.add(myText);
-    group.position.set(21, 194, 400);
-    group.rotation.set(0, 5.84, 0);
+    group.position.set(-18, 194, 400);
+    group.rotation.set(0, 2 * Math.PI * 0.99, 0);
 
     group.name = 'desc';
 
