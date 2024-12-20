@@ -5,12 +5,12 @@ const Indicator = () => {
     <div className={'indicator'}>
       <div className={'indicator-item'}>
         <div className={'indicator-item__icon'}>a</div>
-        前进
+        上一页
       </div>
 
       <div className={'indicator-item'}>
         <div className={'indicator-item__icon'}>b</div>
-        后退
+        下一页
       </div>
 
       <div className={'indicator-item'}>

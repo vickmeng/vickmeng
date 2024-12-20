@@ -2,15 +2,17 @@ import * as THREE from 'three';
 import { Color, Euler, Group, MathUtils, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 // @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { AnimationFrameSubject, scene } from '@/pages/home/canvas/core';
+import { scene } from '@/pages/home/canvas/core';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils/utils';
 
 // @ts-ignore
 import pumpjack from '../../../../assets/pumpjack.obj?url';
 import { CityConfig } from '@/pages/home/canvas/types';
 import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
+// @ts-ignore
 import { Text } from 'troika-three-text';
 
+// @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
 import { GUI } from 'dat.gui';
 
@@ -67,9 +69,9 @@ export const daqingConfig: CityConfig = {
     const myText = new Text();
     myText.text =
       '我生在油城的大庆。\n\n' +
-      '这座工业化堡垒，被寒冷的朔风刻上了粗粝的岁月之痕，处处散发着冷峻硬朗的气息。钢铁的架构、高耸的烟囱以及巨大的工程车，构成了城市的主调，每一寸空气都弥漫着一种对精细的天然拒斥力。\n' +
-      '每个人都像是抽油机一样，被无形的力量驱动着，在既定轨道上不停歇地运转。\n' +
-      '我曾想过，如今成为一名前端开发者，是否算是对年少时留白的创造性的一种弥补？';
+      '这座工业化堡垒，被寒冷的朔风刻上了粗粝硬朗的气息。钢铁的架构、高耸的烟囱以及巨大的工程车，构成了城市的主调，每一寸空气都弥漫着一种对精细的天然拒斥。\n' +
+      '每个人都像是抽油机一样，被无形的力量驱动着，在既定轨道上运转，想象力在枯燥的劳作中渐渐枯萎。\n\n' +
+      '我曾想过，如今成为一名前端开发者，是否是试图填补那段创造力留白的岁月？';
 
     myText.fontSize = 2.3;
 
@@ -85,11 +87,6 @@ export const daqingConfig: CityConfig = {
     group.rotation.set(0, 5.84, 0);
 
     group.name = 'decs';
-
-    AnimationFrameSubject.subscribe(() => {
-      myText.sync();
-    });
-
     const gui = new GUI();
 
     gui.add(group.position, 'x', -100, 100, 1).onChange((value) => {
