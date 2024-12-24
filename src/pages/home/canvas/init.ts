@@ -33,6 +33,13 @@ export const init = async () => {
   /**
    * add points end
    */
+  /**
+   * 相机
+   */
+  camera.rotation.copy(firstConfig.cameraRotation);
+  /**
+   * 相机
+   */
 
   /**
    * 初始化地球属性 start
@@ -123,6 +130,9 @@ export const init = async () => {
     if (switchModelProcessStore.process) {
       return;
     }
+    /**
+     * 鼠标点击模型 start
+     */
     const page = document.querySelector('#timeline-page') as HTMLDivElement;
 
     if (!isEmpty(intersects)) {
@@ -130,6 +140,18 @@ export const init = async () => {
     } else {
       page.classList.remove('pointer');
     }
+    /**
+     * 鼠标点击模型 end
+     */
+
+    /**
+     * 镜头跟随
+     */
+    const cameraOriginRotation = currentConfig.cameraRotation;
+    camera.rotation.set(cameraOriginRotation.x + mouse.y / 60, cameraOriginRotation.y - mouse.x / 60, 0);
+    /**
+     * 镜头跟随
+     */
   });
   /**
    * 高亮模型 end
@@ -175,29 +197,4 @@ export const init = async () => {
       });
     }
   });
-
-  // const gui = new GUI();
-
-  // gui.add(container.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  //   container.rotation.x = value;
-  // });
-  // gui.add(container.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  //   container.rotation.y = value;
-  // });
-  // gui.add(container.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  //   container.rotation.z = value;
-  // });
-
-  // console.log(earthGroup.children);
-  //
-  // gui.add(earthGroup.children[1].rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  //   earthGroup.children[1].rotation.x = value;
-  //   // earthGroup.rotation.x = value;
-  // });
-  // gui.add(earthGroup.children[1].rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  //   earthGroup.children[1].rotation.y = value;
-  // });
-  // gui.add(earthGroup.children[1].rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
-  //   earthGroup.children[1].rotation.z = value;
-  // });
 };

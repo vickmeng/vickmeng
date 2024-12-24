@@ -5,12 +5,10 @@ import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { AnimationFrameSubject, camera, earthGroup, points, scene } from '@/pages/home/canvas/core';
 import {
-  CAMERA_ROTATION_Y,
+  CAMERA_ROTATION_Y_1,
   EARTH_POSITION_X,
   SANDS_COUNT,
   SANDS_FLY_BATCH_COUNT,
-  SUN_POSITION_X,
-  SUN_POSITION_Y,
 } from '@/pages/home/canvas/constants';
 import { CityConfig } from '@/pages/home/canvas/types';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
@@ -185,10 +183,10 @@ const cameraRoll = async (params: { fromIndex: number }) => {
 
   const leftToRight = params.fromIndex % 2 === 0;
 
-  const moveParams = { deg: leftToRight ? CAMERA_ROTATION_Y : -CAMERA_ROTATION_Y };
+  const moveParams = { deg: leftToRight ? CAMERA_ROTATION_Y_1 : -CAMERA_ROTATION_Y_1 };
 
   const tween = new Tween(moveParams)
-    .to({ deg: leftToRight ? -CAMERA_ROTATION_Y : CAMERA_ROTATION_Y }, 4000)
+    .to({ deg: leftToRight ? -CAMERA_ROTATION_Y_1 : CAMERA_ROTATION_Y_1 }, 4000)
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
       camera.rotation.y = THREE.MathUtils.degToRad(moveParams.deg);

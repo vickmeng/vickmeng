@@ -8,7 +8,7 @@ import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canv
 // @ts-ignore
 import pumpjack from '../../../../assets/pumpjack.obj?url';
 import { CityConfig } from '@/pages/home/canvas/types';
-import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
+import { CAMERA_ROTATION_Y, MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 // @ts-ignore
 import { Text } from 'troika-three-text';
 
@@ -20,6 +20,7 @@ export const daqingConfig: CityConfig = {
   preColor: new Color(0x6be6e0),
   UIThemeColor: '#6be6e0',
   earthRotation: new Euler(0.74, 1.96, 0),
+  cameraRotation: new Euler(0, CAMERA_ROTATION_Y, 0),
 
   cityPosition: new Vector3(-223.14059996451869, 352.99110522483477, -274.9646382348542),
 

@@ -17,6 +17,7 @@ export interface CityConfig {
   cityPosition: Vector3;
   earthRotation: Euler;
   getDesc: () => Group;
+  cameraRotation: Euler;
   // markQuaternion
   // faceDirection: Vector3;
 }

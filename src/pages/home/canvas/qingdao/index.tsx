@@ -7,7 +7,7 @@ import { scene } from '@/pages/home/canvas/core';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils/utils';
 // @ts-ignore
 import ship from '../../../../assets/ship.fbx?url';
-import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
+import { CAMERA_ROTATION_Y, MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 // @ts-ignore
 import { Text } from 'troika-three-text';
 import { GUI } from 'dat.gui';
@@ -20,6 +20,7 @@ export const qingdaoConfig: CityConfig = {
   UIThemeColor: '#ff7493',
   earthRotation: new Euler(0.46, 3.05, 0),
   cityPosition: new Vector3(-210.14429595033295, 297.0576377962532, -342.9229282308912),
+  cameraRotation: new Euler(0, CAMERA_ROTATION_Y, 0),
 
   modelPosition: new Vector3(MODEL_POSITION_X, 0, 0),
   modelScale: new Vector3(1, 1, 1).multiplyScalar(0.02),

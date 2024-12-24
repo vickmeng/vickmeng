@@ -7,7 +7,7 @@ import { scene } from '@/pages/home/canvas/core';
 import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils/utils';
 // @ts-ignore
 import mark from '../../../../assets/mark.fbx?url';
-import { MODEL_POSITION_X } from '@/pages/home/canvas/constants';
+import { CAMERA_ROTATION_Y, MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 // @ts-ignore
 import { Text } from 'troika-three-text';
 
@@ -17,7 +17,7 @@ export const chengduConfig: CityConfig = {
   UIThemeColor: '#55da99',
 
   earthRotation: new Euler(0.4, 3.26, 0),
-
+  cameraRotation: new Euler(0, -CAMERA_ROTATION_Y, 0),
   cityPosition: new Vector3(-110.64084487536095, 256.54357850935827, -414.6613024757423),
 
   modelPosition: new Vector3(MODEL_POSITION_X, 180, 0),
