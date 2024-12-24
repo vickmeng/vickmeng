@@ -90,7 +90,7 @@ export const switchModel = async (opts: Options) => {
     switchProcess({ fromIndex, toIndex, fromConfig, toConfig }),
     sandsFly({ fromIndex, toIndex, fromConfig, toConfig }),
     changeColor({ fromIndex, toIndex, fromConfig, toConfig }),
-    cameraRoll({ fromIndex }),
+    cameraRoll({ fromIndex, toIndex, fromConfig, toConfig }),
     earthMove({ fromIndex }),
     earthRoute({ fromIndex, toIndex, fromConfig, toConfig }),
     // sunMove({ fromIndex }),
@@ -176,20 +176,31 @@ const sandsFly = async (params: {
   await lastValueFrom(animate$);
 };
 
-const cameraRoll = async (params: { fromIndex: number }) => {
+const cameraRoll = async (params: {
+  fromIndex: number;
+  toIndex: number;
+  fromConfig: CityConfig;
+  toConfig: CityConfig;
+}) => {
+  const { fromIndex, toIndex, fromConfig, toConfig } = params;
   const animateFinish = new Subject();
 
   const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
 
-  const leftToRight = params.fromIndex % 2 === 0;
+  const rollParams = { t: 0 };
 
-  const moveParams = { deg: leftToRight ? CAMERA_ROTATION_Y_1 : -CAMERA_ROTATION_Y_1 };
+  const fromRotation = camera.rotation;
+  const toRotation = toConfig.cameraRotation;
 
-  const tween = new Tween(moveParams)
-    .to({ deg: leftToRight ? -CAMERA_ROTATION_Y_1 : CAMERA_ROTATION_Y_1 }, 4000)
+  const fromQuaternion = new THREE.Quaternion().setFromEuler(fromRotation);
+  const toQuaternion = new THREE.Quaternion().setFromEuler(toRotation);
+
+  const tween = new Tween(rollParams)
+    .to({ t: 1 }, 4000)
     .easing(Easing.Cubic.Out)
     .onUpdate(() => {
-      camera.rotation.y = THREE.MathUtils.degToRad(moveParams.deg);
+      const interpolatedQuaternion = fromQuaternion.clone().slerp(toQuaternion, rollParams.t);
+      camera.rotation.setFromQuaternion(interpolatedQuaternion);
     })
     .onComplete(() => {
       animateFinish.next(undefined);
