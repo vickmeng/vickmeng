@@ -3,8 +3,10 @@ import * as THREE from 'three';
 import { CatmullRomCurve3, CircleGeometry, Group, Mesh, MeshBasicMaterial, ShaderMaterial, TextureLoader } from 'three';
 import { EARTH_POSITION_X } from '@/pages/home/canvas/constants';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
+import { KernelSize, OutlineEffect } from 'postprocessing';
+import { camera, scene } from '@/pages/home/canvas/core';
 
-export const createEarth = async (): Promise<Group> => {
+export const createEarth = async () => {
   const earthGroup = new Group();
   /**
    * 创建地球 start
@@ -27,6 +29,19 @@ export const createEarth = async (): Promise<Group> => {
   earthGroup.position.y = 180;
 
   earthGroup.add(earth);
+
+  const outlineEffect = new OutlineEffect(scene, camera, {
+    resolutionX: 240,
+    resolutionY: 240,
+    edgeStrength: 1.5,
+    pulseSpeed: 0.15,
+    kernelSize: KernelSize.HUGE,
+    visibleEdgeColor: 0x64abe3,
+    hiddenEdgeColor: 0x64abe3,
+    blur: true,
+  });
+  outlineEffect.blendMode.opacity = new THREE.Uniform(0.2);
+  outlineEffect.selection.set([earth]);
 
   /**
    * 创建地球 end
@@ -190,5 +205,5 @@ export const createEarth = async (): Promise<Group> => {
    * 创建飞线 end
    */
 
-  return earthGroup;
+  return { earthGroup, earthOutlineEffect: outlineEffect };
 };

@@ -3,7 +3,7 @@ import { Color, Group, Mesh, MeshBasicMaterial, PointsMaterial, ShaderMaterial }
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, earthGroup, points, scene, sun } from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, camera, earthGroup, points, scene } from '@/pages/home/canvas/core';
 import {
   CAMERA_ROTATION_Y,
   EARTH_POSITION_X,
@@ -95,7 +95,7 @@ export const switchModel = async (opts: Options) => {
     cameraRoll({ fromIndex }),
     earthMove({ fromIndex }),
     earthRoute({ fromIndex, toIndex, fromConfig, toConfig }),
-    sunMove({ fromIndex }),
+    // sunMove({ fromIndex }),
     showModal({ toConfig }),
     flyLine({ fromIndex, toIndex, fromConfig, toConfig }),
     hideSands(),
@@ -457,39 +457,39 @@ const flyLine = async (params: {
   await lastValueFrom(animate$);
 };
 
-const sunMove = async (params: { fromIndex: number }) => {
-  const animateFinish = new Subject();
-
-  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
-
-  const leftToRight = params.fromIndex % 2 === 0;
-
-  const moveParams = { x: leftToRight ? SUN_POSITION_X : -SUN_POSITION_X };
-
-  const tween = new Tween(moveParams)
-    .to({ x: leftToRight ? -SUN_POSITION_X : SUN_POSITION_X }, 4000)
-    .easing(Easing.Cubic.Out)
-    .onUpdate(() => {
-      sun.position.x = moveParams.x;
-      // 以免旋转的时候把sun搞没了，y抬高一点点，约x是0时候y抬高1
-      const upY = (Math.abs(SUN_POSITION_X) - Math.abs(moveParams.x)) / 10;
-      sun.position.y = SUN_POSITION_Y + upY;
-    })
-    .onComplete(() => {
-      animateFinish.next(undefined);
-    })
-    .start(); // Start the tween immediately.
-
-  animate$.subscribe({
-    next: () => {
-      tween.update();
-    },
-    complete: () => {
-      tween.stop();
-    },
-  });
-  await lastValueFrom(animate$);
-};
+// const sunMove = async (params: { fromIndex: number }) => {
+//   const animateFinish = new Subject();
+//
+//   const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
+//
+//   const leftToRight = params.fromIndex % 2 === 0;
+//
+//   const moveParams = { x: leftToRight ? SUN_POSITION_X : -SUN_POSITION_X };
+//
+//   const tween = new Tween(moveParams)
+//     .to({ x: leftToRight ? -SUN_POSITION_X : SUN_POSITION_X }, 4000)
+//     .easing(Easing.Cubic.Out)
+//     .onUpdate(() => {
+//       sun.position.x = moveParams.x;
+//       // 以免旋转的时候把sun搞没了，y抬高一点点，约x是0时候y抬高1
+//       const upY = (Math.abs(SUN_POSITION_X) - Math.abs(moveParams.x)) / 10;
+//       sun.position.y = SUN_POSITION_Y + upY;
+//     })
+//     .onComplete(() => {
+//       animateFinish.next(undefined);
+//     })
+//     .start(); // Start the tween immediately.
+//
+//   animate$.subscribe({
+//     next: () => {
+//       tween.update();
+//     },
+//     complete: () => {
+//       tween.stop();
+//     },
+//   });
+//   await lastValueFrom(animate$);
+// };
 
 /**
  * switchProcess
