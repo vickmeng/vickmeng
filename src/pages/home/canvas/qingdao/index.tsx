@@ -1,6 +1,6 @@
 import { CityConfig } from '@/pages/home/canvas/types';
 import * as THREE from 'three';
-import { Color, Euler, Group, MathUtils, Mesh, Vector3 } from 'three';
+import { Color, Euler, Group, MathUtils, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { scene } from '@/pages/home/canvas/core';
@@ -43,12 +43,17 @@ export const qingdaoConfig: CityConfig = {
     line.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
     line.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
     line.scale.set(modelScale.x, modelScale.y, modelScale.z);
+    line.name = 'line';
 
     scene.add(line);
 
     mesh.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
     mesh.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
     mesh.scale.set(modelScale.x, modelScale.y, modelScale.z);
+    // mesh.material = new MeshBasicMaterial({ visible: false });
+    mesh.material = new MeshBasicMaterial({ opacity: 0, transparent: true, depthTest: false });
+    mesh.name = 'model';
+    scene.add(mesh); // 不展示提供点击区域
 
     config.line = line;
     config.model = model;
@@ -66,13 +71,13 @@ export const qingdaoConfig: CityConfig = {
     const myText = new Text();
 
     myText.text =
-      '于青岛读大学前几年，我大多时光都倾注在了艺术上，压根没和编程产生半点联系。\n' +
-      '直到大四，有个室友去软件公司实习，写了俩月Java，就回来嚷嚷着要学前端。\n\n' +
-      '“啥是前端？”\n\n' +
+      '我毕业于青岛科技大学。\n' +
+      '我从来没考虑过编程能和我的生活产生半点联系，直到大四，有个室友去软件公司实习，写了俩月Java就回来嚷嚷着要学H5。\n\n' +
+      '“啥是H5？”\n\n' +
       '“给你本书自己看吧。”\n\n' +
-      '我和代码的缘分就这样开始了。\n\n' +
-      '我毕业前的实习岗位并非程序员，而是在一家大连的培训机构当咨询客服。' +
-      '我意外发现那些毕业学员的水平甚至还不及我，于是乎自己也开启了程序员的职业生涯，不禁感叹命运的奇妙';
+      '我和编程就意外的结缘了。\n\n' +
+      '我实习期岗位并非程序员，而是在一家大连的编程培训机构当咨询客服。' +
+      '我意外发现那些毕业学员的水平远不及我，于是乎自己也开启了程序员的职业生涯，命运真奇妙';
 
     myText.fontSize = 2.3;
     myText.maxWidth = 60;

@@ -10,9 +10,12 @@ export const CAMERA_ROTATION_Y = 10;
 // 模型距离远点距离X
 export const MODEL_POSITION_X = 350;
 
-// 模型距离远点距离X
+// 地球距离远点距离X
 export const EARTH_POSITION_X = 200;
 
-// 0x1e1a25 背景色
+// 太阳距离远点距离X
+export const SUN_POSITION_X = -10;
+export const SUN_POSITION_Y = 167;
 
-export const SCENE_BACKGROUND_COLOR = 0x100f0f;
+// 0x1e1a25 背景色
+export const SCENE_BACKGROUND_COLOR = 0x01050d;

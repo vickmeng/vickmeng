@@ -14,40 +14,13 @@ export const createEarth = async (): Promise<Group> => {
 
   const sphereGeometry = new THREE.SphereGeometry(500, 100, 100);
 
-  const vertexShader = `
-    // attribute vec2 uv;//默认提供,不用自己写
-    varying vec2 vUv;
-    void main(){
-      vUv = uv;// UV坐标插值计算
-      gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-    }
-`;
-
-  const fragmentShader = `
-    uniform sampler2D map;//颜色贴图变量
-    varying vec2 vUv;
-
-    void main() {
-        // 通过几何体的UV坐标从颜色贴图获取像素值
-        vec4 texColor;
-        texColor = texture2D(map, vUv);
-        // gl_FragColor = texColor; 
-        float gray = 0.299 * texColor.r + 0.587 * texColor.g + 0.114 * texColor.b;
-        gl_FragColor = vec4(gray , gray , gray + 0.015 , 1); 
-    }
-    `;
-
-  const material = new THREE.ShaderMaterial({
-    // wireframe: true,
-    uniforms: {
-      // 给着色器中同名uniform变量map传值
-      map: { value: texture },
-    },
-    vertexShader,
-    fragmentShader,
+  const material = new THREE.MeshPhongMaterial({
+    map: texture,
   });
 
   const earth = new Mesh(sphereGeometry, material);
+  earth.receiveShadow = true;
+  earth.castShadow = true;
 
   earthGroup.position.x = EARTH_POSITION_X;
   earthGroup.position.z = -500;

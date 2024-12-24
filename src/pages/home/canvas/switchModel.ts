@@ -3,8 +3,15 @@ import { Color, Group, Mesh, MeshBasicMaterial, PointsMaterial, ShaderMaterial }
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, earthGroup, points, scene } from '@/pages/home/canvas/core';
-import { CAMERA_ROTATION_Y, EARTH_POSITION_X, SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
+import { AnimationFrameSubject, camera, earthGroup, points, scene, sun } from '@/pages/home/canvas/core';
+import {
+  CAMERA_ROTATION_Y,
+  EARTH_POSITION_X,
+  SANDS_COUNT,
+  SANDS_FLY_BATCH_COUNT,
+  SUN_POSITION_X,
+  SUN_POSITION_Y,
+} from '@/pages/home/canvas/constants';
 import { CityConfig } from '@/pages/home/canvas/types';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
 import { switchModelProcessStore } from '@/pages/home/store';
@@ -25,6 +32,19 @@ export const switchModel = async (opts: Options) => {
 
   const fromConfig = CityConfigList[fromIndex];
   const toConfig = CityConfigList[toIndex];
+
+  /**
+   * 取消包围与手势 start
+   */
+  // outlinePass.enabled = false; // 初始设为禁用
+  // outlinePass.selectedObjects = [];
+
+  const page = document.querySelector('#timeline-page') as HTMLDivElement;
+  page.classList.remove('pointer');
+
+  /**
+   * 取消包围 start
+   */
   /**
    * 生成沙子 start
    */
@@ -75,6 +95,7 @@ export const switchModel = async (opts: Options) => {
     cameraRoll({ fromIndex }),
     earthMove({ fromIndex }),
     earthRoute({ fromIndex, toIndex, fromConfig, toConfig }),
+    sunMove({ fromIndex }),
     showModal({ toConfig }),
     flyLine({ fromIndex, toIndex, fromConfig, toConfig }),
     hideSands(),
@@ -433,6 +454,40 @@ const flyLine = async (params: {
     },
   });
 
+  await lastValueFrom(animate$);
+};
+
+const sunMove = async (params: { fromIndex: number }) => {
+  const animateFinish = new Subject();
+
+  const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
+
+  const leftToRight = params.fromIndex % 2 === 0;
+
+  const moveParams = { x: leftToRight ? SUN_POSITION_X : -SUN_POSITION_X };
+
+  const tween = new Tween(moveParams)
+    .to({ x: leftToRight ? -SUN_POSITION_X : SUN_POSITION_X }, 4000)
+    .easing(Easing.Cubic.Out)
+    .onUpdate(() => {
+      sun.position.x = moveParams.x;
+      // 以免旋转的时候把sun搞没了，y抬高一点点，约x是0时候y抬高1
+      const upY = (Math.abs(SUN_POSITION_X) - Math.abs(moveParams.x)) / 10;
+      sun.position.y = SUN_POSITION_Y + upY;
+    })
+    .onComplete(() => {
+      animateFinish.next(undefined);
+    })
+    .start(); // Start the tween immediately.
+
+  animate$.subscribe({
+    next: () => {
+      tween.update();
+    },
+    complete: () => {
+      tween.stop();
+    },
+  });
   await lastValueFrom(animate$);
 };
 

@@ -1,6 +1,6 @@
 import { CityConfig } from '@/pages/home/canvas/types';
 import * as THREE from 'three';
-import { Color, Euler, Group, MathUtils, Vector3 } from 'three';
+import { Color, Euler, Group, MathUtils, MeshBasicMaterial, Vector3 } from 'three';
 // @ts-ignore
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { scene } from '@/pages/home/canvas/core';
@@ -42,12 +42,15 @@ export const dalianConfig: CityConfig = {
     line.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
     line.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
     line.scale.set(modelScale.x, modelScale.y, modelScale.z);
-
+    line.name = 'line';
     scene.add(line);
 
     mesh.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
     mesh.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
     mesh.scale.set(modelScale.x, modelScale.y, modelScale.z);
+    mesh.material = new MeshBasicMaterial({ opacity: 0, transparent: true, depthTest: false });
+    mesh.name = 'model';
+    scene.add(mesh); // 不展示提供点击区域
 
     config.line = line;
     config.model = model;

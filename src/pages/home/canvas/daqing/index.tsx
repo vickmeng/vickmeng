@@ -14,7 +14,6 @@ import { Text } from 'troika-three-text';
 
 // @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
-import { GUI } from 'dat.gui';
 
 export const daqingConfig: CityConfig = {
   name: 'daqing',
@@ -46,12 +45,19 @@ export const daqingConfig: CityConfig = {
     line.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
     line.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
     line.scale.set(modelScale.x, modelScale.y, modelScale.z);
-
+    line.name = 'line';
     scene.add(line);
 
     mesh.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
     mesh.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
     mesh.scale.set(modelScale.x, modelScale.y, modelScale.z);
+    // mesh.material = new MeshBasicMaterial({ visible: false });
+    // visible无法享受outlinePass
+    mesh.material = new MeshBasicMaterial({ opacity: 0, transparent: true, depthTest: false });
+
+    mesh.name = 'model';
+
+    scene.add(mesh); // 不展示提供点击区域
 
     config.line = line;
     config.mesh = mesh;
@@ -69,9 +75,9 @@ export const daqingConfig: CityConfig = {
     const myText = new Text();
     myText.text =
       '我生在油城的大庆。\n\n' +
-      '这座工业化堡垒，被寒冷的朔风刻上了粗粝硬朗的气息。钢铁的架构、高耸的烟囱以及巨大的工程车，构成了城市的主调，每一寸空气都弥漫着一种对精细的天然拒斥。\n' +
-      '每个人都像是抽油机一样，被无形的力量驱动着，在既定轨道上运转，想象力在枯燥的劳作中渐渐枯萎。\n\n' +
-      '我曾想过，如今成为一名前端开发者，是否是试图填补那段创造力留白的岁月？';
+      '这座工业化堡垒被寒冷的朔风刻上了粗粝硬朗的气息。钢铁的架构、高耸的烟囱以及巨大的工程车，构成了城市的主调，每一寸空气都弥漫着一种对精细的天然拒斥。\n' +
+      '人们像抽油机一样，被无形的力量驱动着在既定轨道上运转，想象力在乏味的劳作中渐渐枯萎。\n\n' +
+      '我曾想过，如今成为一名前端开发者，是否是对那段创造力留白的岁月的填补？';
 
     myText.fontSize = 2.3;
     myText.maxWidth = 60;

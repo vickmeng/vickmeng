@@ -1,11 +1,20 @@
-import * as THREE from 'three';
-import { MeshBasicMaterial, SphereGeometry } from 'three';
+import { MeshBasicMaterial } from 'three';
 import { CityConfigList, handleCalculateConfigList } from './cityConfig';
-import { AnimationFrameSubject, camera, clock, earthGroup, renderer, scene } from '@/pages/home/canvas/core';
+import {
+  AnimationFrameSubject,
+  camera,
+  clock,
+  composer,
+  earthGroup,
+  mouse,
+  raycaster,
+  renderer,
+  scene,
+} from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
 // import { GUI } from 'dat.gui';
 import { currentIndexStore, switchModelProcessStore } from '@/pages/home/store';
-import ThreeMeshUI from 'three-mesh-ui';
+import { isEmpty } from 'lodash';
 
 export const init = async () => {
   const firstConfig = CityConfigList[0];
@@ -64,9 +73,9 @@ export const init = async () => {
   scene.add(desc);
 
   // 这只是个标记
-  const testMesh = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-  testMesh.position.set(0, 0, 0);
-  scene.add(testMesh);
+  // const testMesh = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+  // testMesh.position.set(0, 0, 0);
+  // scene.add(testMesh);
   //
   // const testMesh1 = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
   // testMesh1.position.set(-1000, 0, 0);
@@ -97,9 +106,38 @@ export const init = async () => {
   }
   window.addEventListener('resize', onWindowResize);
 
+  /**
+   * 高亮模型 start
+   */
+
+  document.addEventListener('mousemove', (event) => {
+    // 将鼠标坐标归一化到 - 1到1的范围
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+
+    const currentConfig = CityConfigList[currentIndexStore.currentIndex];
+
+    const intersects = raycaster.intersectObject(currentConfig.mesh);
+
+    if (switchModelProcessStore.process) {
+      return;
+    }
+    const page = document.querySelector('#timeline-page') as HTMLDivElement;
+
+    if (!isEmpty(intersects)) {
+      page.classList.add('pointer');
+    } else {
+      page.classList.remove('pointer');
+    }
+  });
+  /**
+   * 高亮模型 end
+   */
+
   AnimationFrameSubject.asObservable().subscribe(() => {
     renderer.render(scene, camera);
-    ThreeMeshUI.update();
+    // ThreeMeshUI.update();
 
     // controls.update();
     requestIdleCallback(() => {
@@ -114,6 +152,8 @@ export const init = async () => {
   // 这个动画永远不停
   AnimationFrameSubject.subscribe(() => {
     const delta = clock.getDelta();
+
+    composer.render();
 
     const activeIndex = switchModelProcessStore.process?.toIndex ?? currentIndexStore.currentIndex;
 
@@ -135,60 +175,6 @@ export const init = async () => {
       });
     }
   });
-
-  /**
-   * 调试点击 start
-   */
-
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
-
-  // document.addEventListener('click', (event) => {
-  //   // 将鼠标坐标归一化到 - 1到1的范围
-  //   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  //   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-  //   raycaster.setFromCamera(mouse, camera);
-  //
-  //   const intersects = raycaster.intersectObject(earthGroup.children[0]);
-  //
-  //   const intersection = intersects[0];
-  //
-  //   if (!intersection) {
-  //     return;
-  //   }
-  //
-  //   const direction = intersection.face.normal.normalize();
-  //
-  //   // const targetPoint = new THREE.Vector3().copy(earthGroup.position);
-  //   const targetPoint = new THREE.Vector3(0, 0, 0);
-  //   targetPoint.addScaledVector(direction, 500);
-  //
-  //   console.log('direction', direction, targetPoint);
-  //   // // 获取球体在Group中的相对位置（相对于Group的局部坐标）
-  //   // const sphereRelativePositionInGroup = earthGroup.position.clone();
-  //   //
-  //   // // 获取球体半径
-  //   // const sphereRadius = 500;
-  //   //
-  //   // // 归一化法线向量
-  //   // const magnitude = Math.sqrt(normal.x ** 2 + normal.y ** 2 + normal.z ** 2);
-  //   // const unit_n = new THREE.Vector3(normal.x / magnitude, normal.y / magnitude, normal.z / magnitude);
-  //   //
-  //   // // 计算点击点相对于球体中心（在Group局部坐标系下）的坐标
-  //   // const clickPointXRelativeToSphereInGroup = sphereRelativePositionInGroup.x + sphereRadius * unit_n.x;
-  //   // const clickPointYRelativeToSphereInGroup = sphereRelativePositionInGroup.y + sphereRadius * unit_n.y;
-  //   // const clickPointZRelativeToSphereInGroup = sphereRelativePositionInGroup.z + sphereRadius * unit_n.z;
-  //   //
-  //   const point = new Mesh(new THREE.SphereGeometry(10, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffff00 }));
-  //   point.position.set(targetPoint.x, targetPoint.y, targetPoint.z);
-  //
-  //   //
-  //   // console.log(point.position);
-  //   earthGroup.add(point);
-  // });
-  /**
-   * 调试点击 end
-   */
 
   // const gui = new GUI();
 
