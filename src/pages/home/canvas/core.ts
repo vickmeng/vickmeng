@@ -25,7 +25,7 @@ camera.rotation.y = THREE.MathUtils.degToRad(CAMERA_ROTATION_Y);
 
 export const points = new THREE.Points(
   new THREE.BufferGeometry(),
-  new THREE.PointsMaterial({ size: 1, transparent: true })
+  new THREE.PointsMaterial({ size: 0.01, transparent: true })
 );
 scene.add(points);
 

@@ -20,26 +20,30 @@ export const handleCalculateConfigList = () => {
     }
 
     // 确定多个坐标作为曲线的V1
-    const curveMidPointList: Vector3[] = [];
-
-    // 确定点位
-    Array(60)
-      .fill(null)
-      .forEach(() => {
-        const newMidPoint = new Vector3(
-          (Math.random() - 0.5) * 300,
-          (Math.random() - 0.5) * 300 + 180,
-          (Math.random() - 0.5) * 300
-        );
-
-        curveMidPointList.push(newMidPoint); // 由1/3位置附近随意点位作为V1
-      });
+    // const curveMidPointList: Vector3[] = [];
+    //
+    // // 确定点位
+    // Array(60)
+    //   .fill(null)
+    //   .forEach(() => {
+    //     const newMidPoint = new Vector3(
+    //       (Math.random() - 0.5) * 300,
+    //       (Math.random() - 0.5) * 300 + 180,
+    //       (Math.random() - 0.5) * 300
+    //     );
+    //
+    //     curveMidPointList.push(newMidPoint); // 由1/3位置附近随意点位作为V1
+    //   });
 
     // 设置曲线
     fromConfig.pointVectorList.forEach((formVector, index) => {
       const toVector = toConfig.pointVectorList[index];
 
-      const curve = new CatmullRomCurve3([formVector, curveMidPointList[index % curveMidPointList.length], toVector]);
+      const curve = new CatmullRomCurve3([
+        formVector,
+        new Vector3((Math.random() - 0.5) * 300, (Math.random() - 0.5) * 300 + 180, (Math.random() - 0.5) * 300),
+        toVector,
+      ]);
       curve.getPoints(50);
       fromConfig.toNextCurves.push(curve);
     });
