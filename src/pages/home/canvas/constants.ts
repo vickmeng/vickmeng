@@ -5,7 +5,7 @@ export const SANDS_COUNT = 10000;
 export const SANDS_FLY_BATCH_COUNT = 100; // 一共100个批次
 
 // 照相机旋转角度Y
-export const CAMERA_ROTATION_Y_1 = 10;
+
 export const CAMERA_ROTATION_Y = 0.175;
 
 // 模型距离远点距离X

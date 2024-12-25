@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Color } from 'three';
 import { Subject } from 'rxjs';
-import { CAMERA_ROTATION_Y_1, SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
+import { SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
 import { createEarth } from '@/pages/home/canvas/createEarth';
 import { EffectComposer, EffectPass, RenderPass } from 'postprocessing';
 
@@ -17,8 +17,6 @@ export const clock = new THREE.Clock();
 export const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000);
 camera.position.set(0, 180, 500);
 
-// camera.rotation.y = THREE.MathUtils.degToRad(CAMERA_ROTATION_Y_1);
-
 export const points = new THREE.Points(
   new THREE.BufferGeometry(),
   new THREE.PointsMaterial({ size: 0.01, transparent: true })
@@ -29,10 +27,6 @@ const createEarthRes = await createEarth();
 export const earthGroup = createEarthRes.earthGroup;
 
 scene.add(earthGroup);
-
-// const createSunRes = createSun();
-// export const sun = createSunRes.sun;
-// scene.add(sun);
 
 /**
  * 创建环境光 start
