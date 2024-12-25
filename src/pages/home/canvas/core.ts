@@ -4,12 +4,13 @@ import { Subject } from 'rxjs';
 import { SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
 import { createEarth } from '@/pages/home/canvas/createEarth';
 import { EffectComposer, EffectPass, RenderPass } from 'postprocessing';
+import { createBackground } from '@/pages/home/canvas/createBackground';
 
 export const AnimationFrameSubject = new Subject();
 
 export const scene = new THREE.Scene();
 
-scene.background = new Color(SCENE_BACKGROUND_COLOR);
+scene.background = createBackground();
 
 export const clock = new THREE.Clock();
 

@@ -34,7 +34,7 @@ export const createEarth = async () => {
     resolutionX: 240,
     resolutionY: 240,
     edgeStrength: 1.5,
-    pulseSpeed: 0.15,
+    pulseSpeed: 0.25,
     kernelSize: KernelSize.HUGE,
     visibleEdgeColor: 0x64abe3,
     hiddenEdgeColor: 0x64abe3,
