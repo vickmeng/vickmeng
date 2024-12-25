@@ -5,6 +5,7 @@ import { SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
 import { createEarth } from '@/pages/home/canvas/createEarth';
 import { EffectComposer, EffectPass, RenderPass } from 'postprocessing';
 import { createBackground } from '@/pages/home/canvas/createBackground';
+import { createStars } from '@/pages/home/canvas/createStars';
 
 export const AnimationFrameSubject = new Subject();
 
@@ -44,6 +45,16 @@ scene.add(pLight);
  * 创建环境光 end
  */
 
+/**
+ * 创建星空 start
+ */
+const starsRes = createStars();
+scene.add(starsRes.points);
+
+/**
+ * 创建星空 end
+ */
+
 export const renderer = new THREE.WebGLRenderer({
   antialias: true,
   powerPreference: 'high-performance',
@@ -57,6 +68,7 @@ composer.addPass(new RenderPass(scene, camera));
 
 // composer.addPass(new EffectPass(camera, createSunRes.sunGodRaysEffect));
 composer.addPass(new EffectPass(camera, createEarthRes.earthOutlineEffect));
+// composer.addPass(new EffectPass(camera, starsRes.effect));
 
 export const raycaster = new THREE.Raycaster();
 export const mouse = new THREE.Vector2();
