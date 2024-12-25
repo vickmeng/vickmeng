@@ -158,27 +158,13 @@ export const init = async () => {
    */
 
   AnimationFrameSubject.asObservable().subscribe(() => {
-    renderer.render(scene, camera);
-    // ThreeMeshUI.update();
-
-    // controls.update();
-    requestIdleCallback(() => {
-      AnimationFrameSubject.next(undefined);
-    });
-  });
-
-  requestIdleCallback(() => {
-    AnimationFrameSubject.next(undefined);
-  });
-
-  // 这个动画永远不停
-  AnimationFrameSubject.subscribe(() => {
     const delta = clock.getDelta();
 
+    renderer.render(scene, camera);
     composer.render();
+    // ThreeMeshUI.update();
 
     const activeIndex = switchModelProcessStore.process?.toIndex ?? currentIndexStore.currentIndex;
-
     // 当前城市大一点
     if (cityHighLights[activeIndex].scale.x > 2) {
       cityHighLights.forEach((_cityMark) => {
@@ -196,5 +182,13 @@ export const init = async () => {
         }
       });
     }
+
+    requestIdleCallback(() => {
+      AnimationFrameSubject.next(undefined);
+    });
+  });
+
+  requestIdleCallback(() => {
+    AnimationFrameSubject.next(undefined);
   });
 };
