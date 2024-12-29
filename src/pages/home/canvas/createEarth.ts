@@ -4,7 +4,8 @@ import { CatmullRomCurve3, CircleGeometry, Group, Mesh, MeshBasicMaterial, Shade
 import { EARTH_POSITION_X } from '@/pages/home/canvas/constants';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
 import { KernelSize, OutlineEffect } from 'postprocessing';
-import { camera, scene } from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, camera, scene } from '@/pages/home/canvas/core';
+import { currentIndexStore, switchModelProcessStore } from '@/pages/home/store';
 
 export const createEarth = async () => {
   const earthGroup = new Group();
@@ -103,6 +104,28 @@ export const createEarth = async () => {
   });
   earthGroup.add(...cityHighLights);
 
+  AnimationFrameSubject.asObservable().subscribe((delta) => {
+    // 高亮当前城市
+    const activeIndex = switchModelProcessStore.process?.toIndex ?? currentIndexStore.currentIndex;
+    // 当前城市大一点
+    if (cityHighLights[activeIndex].scale.x > 2) {
+      cityHighLights.forEach((_cityMark) => {
+        _cityMark.scale.x = 0;
+        _cityMark.scale.y = 0;
+      });
+    } else {
+      cityHighLights.forEach((_cityMark, index) => {
+        if (index === activeIndex) {
+          _cityMark.scale.x += delta * 1.2;
+          _cityMark.scale.y += delta * 1.2;
+        } else {
+          _cityMark.scale.x += delta * 0.3;
+          _cityMark.scale.y += delta * 0.3;
+        }
+      });
+    }
+  });
+
   /**
    * 创建高亮光 end
    */
@@ -156,6 +179,7 @@ export const createEarth = async () => {
       const _toNextGeometry = new THREE.TubeGeometry(_toNextCurve, 20, 2, 8, false);
       const _material = new THREE.ShaderMaterial({
         transparent: true,
+        depthTest: false,
         uniforms: {
           color: {
             value: CityConfigList[0].preColor,

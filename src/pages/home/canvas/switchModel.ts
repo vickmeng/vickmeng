@@ -1,10 +1,16 @@
 import * as THREE from 'three';
-import { Color, Group, Mesh, MeshBasicMaterial, PointsMaterial, ShaderMaterial } from 'three';
+import { Color, Euler, Group, Mesh, MeshBasicMaterial, PointsMaterial, ShaderMaterial } from 'three';
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, earthGroup, points, scene } from '@/pages/home/canvas/core';
-import { EARTH_POSITION_X, SANDS_COUNT, SANDS_FLY_BATCH_COUNT } from '@/pages/home/canvas/constants';
+import { AnimationFrameSubject, camera, earthGroup, mouse, points, scene } from '@/pages/home/canvas/core';
+import {
+  EARTH_POSITION_X,
+  MOUSE_ROLL_CAMERA_SPEED_X,
+  MOUSE_ROLL_CAMERA_SPEED_Y,
+  SANDS_COUNT,
+  SANDS_FLY_BATCH_COUNT,
+} from '@/pages/home/canvas/constants';
 import { CityConfig } from '@/pages/home/canvas/types';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
 import { switchModelProcessStore } from '@/pages/home/store';
@@ -177,7 +183,7 @@ const cameraRoll = async (params: {
   fromConfig: CityConfig;
   toConfig: CityConfig;
 }) => {
-  const { fromIndex, toIndex, fromConfig, toConfig } = params;
+  const { toConfig } = params;
   const animateFinish = new Subject();
 
   const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
@@ -185,7 +191,12 @@ const cameraRoll = async (params: {
   const rollParams = { t: 0 };
 
   const fromRotation = camera.rotation;
-  const toRotation = toConfig.cameraRotation;
+  // 要考虑当前鼠标位置，鼠标位置会控制相机角度
+  const toRotation = new Euler(
+    toConfig.cameraRotation.x + mouse.y * MOUSE_ROLL_CAMERA_SPEED_X,
+    toConfig.cameraRotation.y - mouse.x * MOUSE_ROLL_CAMERA_SPEED_Y,
+    toConfig.cameraRotation.z
+  );
 
   const fromQuaternion = new THREE.Quaternion().setFromEuler(fromRotation);
   const toQuaternion = new THREE.Quaternion().setFromEuler(toRotation);

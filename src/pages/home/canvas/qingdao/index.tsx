@@ -71,8 +71,8 @@ export const qingdaoConfig: CityConfig = {
     const myText = new Text();
 
     myText.text =
-      '我在青岛读的大学。\n' +
-      '从来没考虑过编程能和我产生半点联系，直到大四，有个室友去软件公司实习，写了俩月Java就回来嚷嚷着要学H5。\n\n' +
+      '我在青岛读的大学。\n\n' +
+      '前三年没和编程产生半点联系，直到大四，有个室友去软件公司实习，写了俩月Java就回来嚷嚷着要学H5。\n\n' +
       '“啥是H5？”\n\n' +
       '“给你本书自己看吧。”\n\n' +
       '缘，妙不可言。\n\n' +
@@ -91,25 +91,6 @@ export const qingdaoConfig: CityConfig = {
 
     group.add(myText);
     group.name = 'desc';
-
-    // const gui = new GUI();
-    //
-    // gui.add(group.position, 'x', -100, 100, 1).onChange((value) => {
-    //   group.position.x = value;
-    // });
-    // gui.add(group.position, 'y', 100, 400, 1).onChange((value) => {
-    //   group.position.y = value;
-    // });
-    //
-    // gui.add(group.rotation, 'x', 0, 2 * Math.PI, 0.01).onChange((value) => {
-    //   group.rotation.x = value;
-    // });
-    // gui.add(group.rotation, 'y', 0, 2 * Math.PI, 0.01).onChange((value) => {
-    //   group.rotation.y = value;
-    // });
-    // gui.add(group.rotation, 'z', 0, 2 * Math.PI, 0.01).onChange((value) => {
-    //   group.rotation.z = value;
-    // });
 
     return group;
   },

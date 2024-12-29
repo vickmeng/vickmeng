@@ -1,18 +1,14 @@
-import { camera } from '@/pages/home/canvas/core';
-import { BufferAttribute, BufferGeometry, Points, PointsMaterial, TextureLoader, Vector3 } from 'three';
+import { AnimationFrameSubject, camera } from '@/pages/home/canvas/core';
+import { BufferAttribute, BufferGeometry, Group, Points, PointsMaterial, TextureLoader, Vector3 } from 'three';
 import circleImg from '@/assets/circle.png';
 
-export const createStars = () => {
-  const numPoints = 5000;
-
-  const minSize = 10;
-  const maxSize = 20;
-  const minDistance = 50;
-  const maxDistance = 1200;
+const createOneGroupStars = () => {
+  const numPoints = 200;
+  const minDistance = 100;
+  const maxDistance = 2000;
   // 创建点几何体
   const pointsGeometry = new BufferGeometry();
   const positions = new Float32Array(numPoints * 3);
-  const sizes = new Float32Array(numPoints);
 
   for (let i = 0; i < numPoints; i++) {
     // 随机生成一个在球面上的方向向量（单位向量）
@@ -29,18 +25,11 @@ export const createStars = () => {
     positions[index] = pointPosition.x;
     positions[index + 1] = pointPosition.y;
     positions[index + 2] = pointPosition.z;
-
-    // 随机生成点的大小
-    const randomSize = Math.random() * (maxSize - minSize) + minSize;
-    // const randomSize = 18;
-    sizes[i] = randomSize;
-
-    // 随机生成点的颜色（RGB值）
   }
 
   // 将位置数据、大小数据和颜色数据设置到几何体的属性中
   pointsGeometry.setAttribute('position', new BufferAttribute(positions, 3));
-  pointsGeometry.setAttribute('size', new BufferAttribute(sizes, 1));
+  // pointsGeometry.setAttribute('size', new BufferAttribute(sizes, 1));
 
   const sprite = new TextureLoader().load(circleImg);
 
@@ -49,13 +38,39 @@ export const createStars = () => {
     sizeAttenuation: true, // 根据距离衰减大小，使远处的点看起来更小
     transparent: true,
     map: sprite,
-    color: 0x5a9dce,
-    // alphaTest: 0.5,
+    size: 4,
+    color: 0x437ca6,
     opacity: 0.8,
+  });
+
+  // 旋转方向随机一些，这个处理比较粗糙
+  const rotationX = (Math.random() - 0.5) * 0.1;
+  const rotationY = Math.random() * 0.1;
+  // const rotationZ = Math.random() * 0.1;
+
+  AnimationFrameSubject.asObservable().subscribe((delta) => {
+    points.rotation.x += delta * rotationX;
+    points.rotation.y += delta * rotationY;
+    // 绕Z轴效果不好
+    // points.rotation.z += delta * rotationZ;
   });
 
   // 创建点对象（粒子系统）
   const points = new Points(pointsGeometry, pointsMaterial);
-
-  return { points };
+  return points;
+};
+export const createStars = () => {
+  const group = new Group();
+  // 随便加几组星星
+  group.add(createOneGroupStars());
+  group.add(createOneGroupStars());
+  group.add(createOneGroupStars());
+  group.add(createOneGroupStars());
+  group.add(createOneGroupStars());
+  group.add(createOneGroupStars());
+  group.add(createOneGroupStars());
+  group.add(createOneGroupStars());
+  group.add(createOneGroupStars());
+  group.add(createOneGroupStars());
+  return group;
 };

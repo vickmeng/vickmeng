@@ -10,11 +10,13 @@ import {
   raycaster,
   renderer,
   scene,
+  stars,
 } from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
 // import { GUI } from 'dat.gui';
 import { currentIndexStore, switchModelProcessStore } from '@/pages/home/store';
 import { isEmpty } from 'lodash';
+import { MOUSE_ROLL_CAMERA_SPEED_X, MOUSE_ROLL_CAMERA_SPEED_Y } from '@/pages/home/canvas/constants';
 
 export const init = async () => {
   const firstConfig = CityConfigList[0];
@@ -148,7 +150,11 @@ export const init = async () => {
      * 镜头跟随
      */
     const cameraOriginRotation = currentConfig.cameraRotation;
-    camera.rotation.set(cameraOriginRotation.x + mouse.y / 60, cameraOriginRotation.y - mouse.x / 60, 0);
+    camera.rotation.set(
+      cameraOriginRotation.x + mouse.y * MOUSE_ROLL_CAMERA_SPEED_X,
+      cameraOriginRotation.y - mouse.x * MOUSE_ROLL_CAMERA_SPEED_Y,
+      0
+    );
     /**
      * 镜头跟随
      */
@@ -159,36 +165,15 @@ export const init = async () => {
 
   AnimationFrameSubject.asObservable().subscribe(() => {
     const delta = clock.getDelta();
-
     renderer.render(scene, camera);
     composer.render();
-    // ThreeMeshUI.update();
-
-    const activeIndex = switchModelProcessStore.process?.toIndex ?? currentIndexStore.currentIndex;
-    // 当前城市大一点
-    if (cityHighLights[activeIndex].scale.x > 2) {
-      cityHighLights.forEach((_cityMark) => {
-        _cityMark.scale.x = 0;
-        _cityMark.scale.y = 0;
-      });
-    } else {
-      cityHighLights.forEach((_cityMark, index) => {
-        if (index === activeIndex) {
-          _cityMark.scale.x += delta * 1.2;
-          _cityMark.scale.y += delta * 1.2;
-        } else {
-          _cityMark.scale.x += delta * 0.3;
-          _cityMark.scale.y += delta * 0.3;
-        }
-      });
-    }
 
     requestIdleCallback(() => {
-      AnimationFrameSubject.next(undefined);
+      AnimationFrameSubject.next(delta);
     });
   });
 
   requestIdleCallback(() => {
-    AnimationFrameSubject.next(undefined);
+    AnimationFrameSubject.next(clock.getDelta());
   });
 };

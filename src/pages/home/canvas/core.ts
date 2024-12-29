@@ -1,13 +1,11 @@
 import * as THREE from 'three';
-import { Color } from 'three';
 import { Subject } from 'rxjs';
-import { SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
 import { createEarth } from '@/pages/home/canvas/createEarth';
 import { EffectComposer, EffectPass, RenderPass } from 'postprocessing';
 import { createBackground } from '@/pages/home/canvas/createBackground';
 import { createStars } from '@/pages/home/canvas/createStars';
 
-export const AnimationFrameSubject = new Subject();
+export const AnimationFrameSubject = new Subject<number>();
 
 export const scene = new THREE.Scene();
 
@@ -16,7 +14,7 @@ scene.background = createBackground();
 export const clock = new THREE.Clock();
 
 // 创建相机
-export const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000);
+export const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
 camera.position.set(0, 180, 500);
 
 export const points = new THREE.Points(
@@ -48,8 +46,8 @@ scene.add(pLight);
 /**
  * 创建星空 start
  */
-const starsRes = createStars();
-scene.add(starsRes.points);
+const stars = createStars();
+scene.add(stars);
 
 /**
  * 创建星空 end
@@ -58,6 +56,7 @@ scene.add(starsRes.points);
 export const renderer = new THREE.WebGLRenderer({
   antialias: true,
   powerPreference: 'high-performance',
+  // depth: true,
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
