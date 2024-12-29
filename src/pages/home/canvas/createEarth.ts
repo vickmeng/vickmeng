@@ -56,6 +56,7 @@ export const createEarth = async () => {
 
     const _material = new ShaderMaterial({
       transparent: true,
+      depthTest: false,
       uniforms: {
         color: {
           value: CityConfigList[0].preColor,
