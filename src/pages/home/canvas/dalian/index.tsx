@@ -12,7 +12,6 @@ import { CAMERA_ROTATION_Y, MODEL_POSITION_X } from '@/pages/home/canvas/constan
 import { Text } from 'troika-three-text';
 // @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
-import { GUI } from 'dat.gui';
 
 export const dalianConfig: CityConfig = {
   name: 'dalian',
@@ -73,7 +72,7 @@ export const dalianConfig: CityConfig = {
     text1.text =
       '大连是我职业生涯起点,' +
       '两年里让我从小白成长为靠谱开发者。\n' +
-      '作为国内最早一批使用Angular2+的团队，开荒过程收益良多，' +
+      '作为国内最早一批使用Angular2+的团队，开荒过程收益良多。' +
       '也借此加入了RxCN开源组织，参与Rxjs官方文档及高分文章翻译校验。';
 
     const text2 = new Text();
@@ -136,9 +135,9 @@ export const dalianConfig: CityConfig = {
 
     group.name = 'desc';
 
-    const gui = new GUI();
-    gui.add(text2.position, 'x', -100, 100, 0.1);
-    gui.add(text2.position, 'y', -100, 100, 0.1);
+    // const gui = new GUI();
+    // gui.add(text2.position, 'x', -100, 100, 0.1);
+    // gui.add(text2.position, 'y', -100, 100, 0.1);
 
     return group;
   },

@@ -82,11 +82,12 @@ export const qingdaoConfig: CityConfig = {
     myText.font = font;
     myText.overflowWrap = 'break-word';
 
+    group.add(myText);
+
     group.position.set(-38, 200, 400);
 
     group.rotation.set(0, 2 * Math.PI * 0.01, 0);
 
-    group.add(myText);
     group.name = 'desc';
 
     return group;

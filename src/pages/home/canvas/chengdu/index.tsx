@@ -10,6 +10,8 @@ import mark from '../../../../assets/mark.fbx?url';
 import { CAMERA_ROTATION_Y, MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 // @ts-ignore
 import { Text } from 'troika-three-text';
+import font from '../../../../assets/朱雀仿宋.ttf?url';
+import { GUI } from 'dat.gui';
 
 export const chengduConfig: CityConfig = {
   name: 'chengdu',
@@ -65,9 +67,75 @@ export const chengduConfig: CityConfig = {
   toNextCurves: [],
   getDesc: () => {
     const group = new Group();
-    const myText = new Text();
-    group.add(myText);
+    const text1 = new Text();
+    text1.name = 'p';
+    text1.text = '成都';
+
+    // const text2 = new Text();
+    // text2.name = 'h';
+    // text2.text = '大连商务集团天狗网（2016~2018，前端开发工程师）';
+    // text2.position.y = -9.5;
+    //
+    // const text3 = new Text();
+    // text3.name = 'h';
+    // text3.text = '1.后台BI可视化分析系统';
+    // text3.position.y = -13.5;
+    //
+    // const text4 = new Text();
+    // text4.name = 'p';
+    // text4.text = '项目介绍：老的系统还停留在Jquery阶段，我负责可视化功能开发与落地Angular2.x + Typescript技术转型';
+    // text4.position.y = -17;
+    //
+    // const text5 = new Text();
+    // text5.name = 'p';
+    // text5.text = '技术栈：Typescript，Angular2.x，D3.js，G2，Jquery';
+    // text5.position.y = -23.5;
+    //
+    // const text6 = new Text();
+    // text6.name = 'h';
+    // text6.text = '2.天狗农产品商城';
+    // text6.position.y = -28;
+    //
+    // const text7 = new Text();
+    // text7.name = 'p';
+    // text7.text = '项目介绍：基于Ionic的移动端跨端项目，这个技术路线在国内并不热门。';
+    // text7.position.y = -31.5;
+    //
+    // const text8 = new Text();
+    // text8.name = 'p';
+    // text8.text = '技术栈：Typescript，Angular2.x，Cordova, Ionic';
+    // text8.position.y = -39;
+
+    const textList = [text1];
+    textList.forEach((_text) => {
+      if (_text.name === 'p') {
+        _text.fontSize = 2;
+        _text.maxWidth = Math.min(_text.maxWidth, 60);
+        _text.lineHeight = 1.2;
+        _text.font = font;
+        _text.overflowWrap = 'break-word';
+        _text.material = new MeshBasicMaterial({ color: new Color(0xffffff) });
+      } else if (_text.name === 'h') {
+        _text.fontSize = 2;
+        _text.maxWidth = Math.min(_text.maxWidth, 60);
+        _text.lineHeight = 1.2;
+        _text.font = font;
+        _text.overflowWrap = 'break-word';
+        _text.material = new MeshBasicMaterial({ color: new Color(0xf2dd0b) });
+      }
+    });
+
+    group.add(...textList);
+
+    group.position.set(-38, 200, 400);
+
+    group.rotation.set(0, 2 * Math.PI * 0.01, 0);
+
     group.name = 'desc';
+
+    // const gui = new GUI();
+    // gui.add(text2.position, 'x', -100, 100, 0.1);
+    // gui.add(text2.position, 'y', -100, 100, 0.1);
 
     return group;
   },
