@@ -19,7 +19,7 @@ export const SUN_POSITION_X = -10;
 export const SUN_POSITION_Y = 167;
 
 // 0x1e1a25 背景色
-export const SCENE_BACKGROUND_COLOR = 0x01050d;
+// export const SCENE_BACKGROUND_COLOR = 0x01050d;
 
 // 鼠标控制箱及旋转的速度
 export const MOUSE_ROLL_CAMERA_SPEED_X = 1 / 60;

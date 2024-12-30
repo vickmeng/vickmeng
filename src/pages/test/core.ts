@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { SCENE_BACKGROUND_COLOR } from '@/pages/home/canvas/constants';
 
 // 创建场景
 const scene = new THREE.Scene();

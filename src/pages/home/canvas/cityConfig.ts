@@ -7,7 +7,7 @@ import { chengduConfig } from '@/pages/home/canvas/chengdu';
 
 //
 
-export const CityConfigList: CityConfig[] = [daqingConfig, qingdaoConfig, dalianConfig, chengduConfig];
+export const CityConfigList: CityConfig[] = [dalianConfig, daqingConfig, qingdaoConfig, dalianConfig, chengduConfig];
 
 // handleCalculateConfigList通过计算补全配置
 export const handleCalculateConfigList = () => {
