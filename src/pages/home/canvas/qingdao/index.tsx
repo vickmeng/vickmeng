@@ -72,8 +72,8 @@ export const qingdaoConfig: CityConfig = {
 
     myText.text =
       '多年以后，面对键盘，我会回想起同学带我去见识代码的那个遥远的下午。\n\n' +
-      '大四那年，室友去软件公司实习，写了俩月Java就回来嚷嚷着要搞H5。\n\n' +
-      '“啥是H5？”\n\n' +
+      '大四那年，室友去软件公司实习，写了俩月Java就回来嚷嚷着要搞前端。\n\n' +
+      '“那是啥？”\n\n' +
       '“给你本书自己看吧。”\n\n' +
       '这样一个随口问题让编程成为了我的主要爱好，命运奇妙。';
     myText.fontSize = 2.3;
@@ -86,7 +86,7 @@ export const qingdaoConfig: CityConfig = {
 
     group.position.set(-38, 200, 400);
 
-    group.rotation.set(0, 2 * Math.PI * 0.01, 0);
+    // group.rotation.set(0, 2 * Math.PI * 0.01, 0);
 
     group.name = 'desc';
 

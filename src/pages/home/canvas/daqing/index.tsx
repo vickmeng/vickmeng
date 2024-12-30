@@ -90,7 +90,7 @@ export const daqingConfig: CityConfig = {
 
     group.add(myText);
     group.position.set(-18, 194, 400);
-    group.rotation.set(0, 2 * Math.PI * 0.99, 0);
+    // group.rotation.set(0, 2 * Math.PI * 0.999, 0);
 
     group.name = 'desc';
 

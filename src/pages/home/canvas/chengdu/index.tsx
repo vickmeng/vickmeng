@@ -10,7 +10,9 @@ import mark from '../../../../assets/mark.fbx?url';
 import { CAMERA_ROTATION_Y, MODEL_POSITION_X } from '@/pages/home/canvas/constants';
 // @ts-ignore
 import { Text } from 'troika-three-text';
+// @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
+
 import { GUI } from 'dat.gui';
 
 export const chengduConfig: CityConfig = {
@@ -69,73 +71,90 @@ export const chengduConfig: CityConfig = {
     const group = new Group();
     const text1 = new Text();
     text1.name = 'p';
-    text1.text = '成都';
+    text1.text = '2019年来成都定居，经历了两段美妙的工作经历。';
 
-    // const text2 = new Text();
-    // text2.name = 'h';
-    // text2.text = '大连商务集团天狗网（2016~2018，前端开发工程师）';
-    // text2.position.y = -9.5;
+    const text2 = new Text();
+    text2.name = 'h';
+    text2.text = 'Thoughtworks（2019~2021，前端主程）';
+    text2.position.x = 12;
+    text2.position.y = -3.2;
     //
-    // const text3 = new Text();
-    // text3.name = 'h';
-    // text3.text = '1.后台BI可视化分析系统';
-    // text3.position.y = -13.5;
-    //
-    // const text4 = new Text();
-    // text4.name = 'p';
-    // text4.text = '项目介绍：老的系统还停留在Jquery阶段，我负责可视化功能开发与落地Angular2.x + Typescript技术转型';
-    // text4.position.y = -17;
-    //
-    // const text5 = new Text();
-    // text5.name = 'p';
-    // text5.text = '技术栈：Typescript，Angular2.x，D3.js，G2，Jquery';
-    // text5.position.y = -23.5;
-    //
-    // const text6 = new Text();
-    // text6.name = 'h';
-    // text6.text = '2.天狗农产品商城';
-    // text6.position.y = -28;
-    //
-    // const text7 = new Text();
-    // text7.name = 'p';
-    // text7.text = '项目介绍：基于Ionic的移动端跨端项目，这个技术路线在国内并不热门。';
-    // text7.position.y = -31.5;
-    //
-    // const text8 = new Text();
-    // text8.name = 'p';
-    // text8.text = '技术栈：Typescript，Angular2.x，Cordova, Ionic';
-    // text8.position.y = -39;
+    const text3 = new Text();
+    text3.name = 'p';
+    text3.text =
+      '我所在的海外业务线，高度遵循敏捷开发，报价也比较高（4500/人天）。我在这领略了TDD，Pair，Showcase，Review等一系列的工程实践。具体参与项目如下：';
+    text3.position.y = -7;
 
-    const textList = [text1];
+    const text4 = new Text();
+    text4.name = 'h';
+    text4.text = '项目1.FormBuilder无代码表单配置平台';
+    text4.position.y = -15.9;
+    //
+    const text5 = new Text();
+    text5.name = 'p';
+    text5.text =
+      '项目介绍：为新加坡政府打造的无代码表单生成平台，类似于金数据，分设计端（Angular）和填写端（React）与自研基础组件库（React）。我负责前端部分整体设计。参与人员来自中国、新加坡、印度，也是我首次和外国开发者配合工作。';
+    text5.position.y = -20;
+
+    const text6 = new Text();
+    text6.name = 'p';
+    text6.text = '技术栈：Typescript，Angular，React，Formik，testing_library，Lerna';
+    text6.position.y = -31;
+
+    const text7 = new Text();
+    text7.name = 'p';
+    text7.text =
+      '后续：在项目过程中，深深感到React在表单场景的乏力，于是着手开发rx_form并于2022年完成，做到了灵活、高性能、跨端、跨框架，提供了99%的单元测试覆盖和完整的文档。';
+    text7.position.y = -35;
+
+    const text8 = new Text();
+    text8.name = 'h';
+    text8.text = '中建电商（2021至今，业务线前端负责人）';
+    text8.position.x = 10;
+    text8.position.y = -44;
+
+    const text9 = new Text();
+    text9.name = 'p';
+    text9.text =
+      '主要职责：带领团队从零开发收验货，物流，数砼等多个业务线10余个项目，分别运行于PC端，手机原生，小程序等不同平台。负责团队管理，任务规划，内部培训，需求评审，代码审核，重难点把控等工作。人员由本部人员，外包人员，临时劳务等多角色组成，团队人数最高达12人。';
+    text9.position.y = -47.5;
+
+    const text10 = new Text();
+    text10.name = 'p';
+    text10.text =
+      '技术栈：Typescript，React，React_native，React_native_web，Taro，rx_form，Umi，基于pnpm的monorepo，three';
+    text10.position.y = -59;
+
+    const textList = [text1, text2, text3, text4, text5, text6, text7, text8, text9, text10];
     textList.forEach((_text) => {
       if (_text.name === 'p') {
         _text.fontSize = 2;
-        _text.maxWidth = Math.min(_text.maxWidth, 60);
+        _text.maxWidth = Math.min(_text.maxWidth, 64);
         _text.lineHeight = 1.2;
         _text.font = font;
         _text.overflowWrap = 'break-word';
         _text.material = new MeshBasicMaterial({ color: new Color(0xffffff) });
       } else if (_text.name === 'h') {
         _text.fontSize = 2;
-        _text.maxWidth = Math.min(_text.maxWidth, 60);
+        _text.maxWidth = Math.min(_text.maxWidth, 64);
         _text.lineHeight = 1.2;
         _text.font = font;
         _text.overflowWrap = 'break-word';
-        _text.material = new MeshBasicMaterial({ color: new Color(0xf2dd0b) });
+        _text.material = new MeshBasicMaterial({ color: new Color(0x55da99) });
       }
     });
 
     group.add(...textList);
 
-    group.position.set(-38, 200, 400);
+    group.position.set(-38, 212, 400);
 
-    group.rotation.set(0, 2 * Math.PI * 0.01, 0);
+    // group.rotation.set(0, 2 * Math.PI * 0.01, 0);
 
     group.name = 'desc';
 
-    // const gui = new GUI();
-    // gui.add(text2.position, 'x', -100, 100, 0.1);
-    // gui.add(text2.position, 'y', -100, 100, 0.1);
+    const gui = new GUI();
+
+    gui.add(text2.position, 'x', -100, 100, 0.1);
 
     return group;
   },
