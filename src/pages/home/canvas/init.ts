@@ -10,7 +10,6 @@ import {
   raycaster,
   renderer,
   scene,
-  stars,
 } from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
 // import { GUI } from 'dat.gui';
@@ -31,7 +30,7 @@ export const init = async () => {
   // scene.add(backgroundMesh);
 
   initLoadingProgressStore.progress = 10;
-  initLoadingProgressStore.message = '完成基础场景初始化,开始模型加载';
+  initLoadingProgressStore.message = '完成基础场景初始化,开始模型加载...';
   /**
    * add points end
    */
@@ -47,7 +46,6 @@ export const init = async () => {
    * 初始化地球属性 start
    */
   earthGroup.rotation.set(firstConfig.earthRotation.x, firstConfig.earthRotation.y, firstConfig.earthRotation.z);
-  const cityHighLights = earthGroup.children.filter((c) => c.name === 'cityHighLight');
 
   /**
    * 初始化地球属性 end
@@ -76,24 +74,10 @@ export const init = async () => {
   );
 
   initLoadingProgressStore.progress = 70;
-  initLoadingProgressStore.message = '完成模型加载,开始数据计算';
+  initLoadingProgressStore.message = '完成模型加载,开始数据计算...';
 
   const desc = firstConfig.getDesc();
   scene.add(desc);
-
-  // 这只是个标记
-  // const testMesh = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-  // testMesh.position.set(0, 0, 0);
-  // scene.add(testMesh);
-  //
-  // const testMesh1 = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-  // testMesh1.position.set(-1000, 0, 0);
-  // scene.add(testMesh1);
-  //
-  // const testMesh2 = new THREE.Mesh(new SphereGeometry(30), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
-  // testMesh2.position.set(1000, 0, 0);
-  // scene.add(testMesh2);
-
   /**
    * 一次创建所有场景 end
    */

@@ -71,7 +71,7 @@ export const dalianConfig: CityConfig = {
     const text1 = new Text();
     text1.name = 'p';
     text1.text =
-      '第一份工作是大四实习期在一家编程培训机构当客服，意外发现学员的水平远不及我，干脆我也开启了程序员的职业生涯：';
+      '第一份工作是大四实习期在一家编程培训机构当客服，意外发现学员的水平远不及我，干脆我也开启了职业编程生涯：';
 
     const text2 = new Text();
     text2.name = 'h';
@@ -80,14 +80,13 @@ export const dalianConfig: CityConfig = {
 
     const text3 = new Text();
     text3.name = 'h';
-    text3.text = '1.后台BI系统';
+    text3.text = '1.后台BI可视化分析系统';
     text3.position.y = -9;
 
     const text4 = new Text();
     text4.name = 'p';
-    text4.text =
-      '负责可视化系统业务开发与底层架构演进，老的系统还停留在Jquery阶段，我负责可视化功能开发与落地Angular2.x系统升级。';
-    text4.position.y = -12;
+    text4.text = '项目介绍：老的系统还停留在Jquery阶段，我负责可视化功能开发与整体转型Angular2.x + Typescript';
+    text4.position.y = -12.4;
 
     const text5 = new Text();
     text5.name = 'p';
@@ -102,29 +101,28 @@ export const dalianConfig: CityConfig = {
     const text7 = new Text();
     text7.name = 'p';
     text7.text =
-      '移动端跨端项目。基于Cordova实现的跨端能力与浏览器混合开发，回头来看这个技术路线真的不行，从展示效果和是适配性都有缺陷。';
+      '项目介绍：移动端跨端项目。基于Cordova实现的跨端能力与浏览器混合开发，回头来看这个技术路线真的不行，从展示效果和是适配性都有缺陷。';
     text7.position.y = -28;
 
     const text8 = new Text();
     text8.name = 'p';
     text8.text = '技术栈：Typescript，Angular2.x，Cordova, Ionic';
-    text8.position.y = -33.7;
+    text8.position.y = -36.5;
 
     const text9 = new Text();
     text9.name = 'h';
     text9.text = '此外';
     text9.position.x = 16.6;
-    text9.position.y = -37.6;
+    text9.position.y = -40.1;
 
     const text10 = new Text();
     text10.name = 'p';
     text10.text =
-      '我们应该是中国最早一批使用Angular2.x的团队,\n' +
+      '我们是中国最早一批使用Angular2.x的团队,\n' +
       '通过Angular认识了一批同好，加入了RxCN开源\n' +
-      '组织，参与Rxjs文档翻译与校验，并写了一些教\n' +
-      '学文章。';
+      '组织，参与Rxjs官方文档与高分文章翻译与校验。';
     text10.position.x = 16.6;
-    text10.position.y = -41.2;
+    text10.position.y = -44.0;
 
     const textList = [text1, text2, text3, text4, text5, text6, text7, text8, text9, text10];
     textList.forEach((_text) => {

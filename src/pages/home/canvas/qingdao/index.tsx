@@ -71,7 +71,7 @@ export const qingdaoConfig: CityConfig = {
     const myText = new Text();
 
     myText.text =
-      '多年以后，面对我带的团队，老孟会回想起同学带我去见识代码的那个遥远的下午。\n\n' +
+      '多年以后，面对技术文档，我会回想起同学带我去见识代码的那个遥远的下午。\n\n' +
       '大四那年，室友去软件公司实习，写了俩月Java就回来嚷嚷着要搞H5。\n\n' +
       '“啥是H5？”\n\n' +
       '“给你本书自己看吧。”\n\n' +

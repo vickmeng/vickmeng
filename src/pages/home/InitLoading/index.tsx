@@ -22,22 +22,22 @@ const InitLoading = () => {
   return (
     <div className={`initLoading ${loading ? 'loading' : 'loading-finished'}`}>
       <svg width="300" height="300">
-        <circle cx="150" cy="150" r="145" stroke="gray" strokeWidth="10" fill="none" />
+        <circle cx="150" cy="150" r="145" stroke="gray" strokeWidth="1" fill="none" />
         <circle
           cx="150"
           cy="150"
           r="145"
-          stroke="white"
-          strokeWidth="10"
+          stroke="#6be6e0"
+          strokeWidth="1"
           fill="none"
           strokeDasharray="911 911"
           strokeDashoffset={strokeDashoffset}
         />
-        <text x="150" y="140" textAnchor="middle" dominantBaseline="middle" fill="white">
+        <text x="150" y="140" textAnchor="middle" dominantBaseline="middle" fill="#6be6e0">
           {progress}%
         </text>
 
-        <text x="150" y="168" textAnchor="middle" dominantBaseline="middle" fill="white">
+        <text x="150" y="168" textAnchor="middle" dominantBaseline="middle" fill="#6be6e0">
           {message}...
         </text>
       </svg>

@@ -3,7 +3,7 @@ import { BufferAttribute, BufferGeometry, Group, Points, PointsMaterial, Texture
 import circleImg from '@/assets/circle.png';
 
 const createOneGroupStars = () => {
-  const numPoints = 200;
+  const numPoints = 50;
   const minDistance = 100;
   const maxDistance = 2000;
   // 创建点几何体
@@ -62,15 +62,29 @@ const createOneGroupStars = () => {
 export const createStars = () => {
   const group = new Group();
   // 随便加几组星星
-  group.add(createOneGroupStars());
-  group.add(createOneGroupStars());
-  group.add(createOneGroupStars());
-  group.add(createOneGroupStars());
-  group.add(createOneGroupStars());
-  group.add(createOneGroupStars());
-  group.add(createOneGroupStars());
-  group.add(createOneGroupStars());
-  group.add(createOneGroupStars());
-  group.add(createOneGroupStars());
+  group.add(
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars(),
+    createOneGroupStars()
+  );
+
   return group;
 };
