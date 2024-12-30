@@ -73,7 +73,7 @@ export const dalianConfig: CityConfig = {
     text1.text =
       '大连是我职业生涯起点,' +
       '两年里让我从小白成长为靠谱开发者。\n' +
-      '作为国内最早一批使用Angular2.x的团队，探索过程收益良多，' +
+      '作为国内最早一批使用Angular2+的团队，开荒过程收益良多，' +
       '也借此加入了RxCN开源组织，参与Rxjs官方文档及高分文章翻译校验。';
 
     const text2 = new Text();
@@ -103,7 +103,7 @@ export const dalianConfig: CityConfig = {
 
     const text7 = new Text();
     text7.name = 'p';
-    text7.text = '项目介绍：移动端跨端项目。基于Ionic实现的跨端能力，这个路线在国内并不热门。';
+    text7.text = '项目介绍：基于Ionic的移动端跨端项目，这个技术路线在国内并不热门。';
     text7.position.y = -31.5;
 
     const text8 = new Text();
