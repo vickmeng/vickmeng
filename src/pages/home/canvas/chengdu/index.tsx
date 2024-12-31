@@ -122,7 +122,7 @@ export const chengduConfig: CityConfig = {
     const text10 = new Text();
     text10.name = 'p';
     text10.text =
-      '技术栈：Typescript，React，React_native，React_native_web，Taro，rx_form，Umi，基于pnpm的monorepo，three';
+      '技术栈：Typescript，React，React_native，React_native_web，Taro，rx_form，Umi，基于pnpm的monorepo，three，antd，qiankun';
     text10.position.y = -59;
 
     const textList = [text1, text2, text3, text4, text5, text6, text7, text8, text9, text10];
