@@ -14,6 +14,7 @@ import { Text } from 'troika-three-text';
 
 // @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
+import daqingUrl from '@/assets/daqing.jpg';
 
 export const daqingConfig: CityConfig = {
   name: 'daqing',
@@ -97,4 +98,14 @@ export const daqingConfig: CityConfig = {
 
     return group;
   },
+  modelDesc: (
+    <>
+      <img src={daqingUrl} width={'100%'} />
+      <p>这是抽油机，俗称“磕头机”，在大庆到处都是，我家楼下就有。</p>
+      <p>
+        别看它慢悠悠的，实则威力惊人，前面的“锤头”锤死了不少溜号的工人，我小时候总幻想过这玩意儿如果能像变形金刚一样变成机器人，肯定比擎天柱猛。
+      </p>
+      <p>过去偷油的油耗子猖獗，如果你看到老尼桑的后轮减震改的很夸张，整个屁股撅起来，那就是油耗子的车。</p>
+    </>
+  ),
 };

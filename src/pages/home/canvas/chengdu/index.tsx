@@ -155,4 +155,5 @@ export const chengduConfig: CityConfig = {
 
     return group;
   },
+  modelDesc: <>这是成都广汉三星堆</>,
 };

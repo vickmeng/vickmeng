@@ -12,7 +12,7 @@ import { CAMERA_ROTATION_Y, MODEL_POSITION_X } from '@/pages/home/canvas/constan
 import { Text } from 'troika-three-text';
 // @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
-
+import qingdaoUrl from '@/assets/qingdao.jpg';
 export const qingdaoConfig: CityConfig = {
   name: 'qingdao',
   name_cn: '青岛',
@@ -87,10 +87,13 @@ export const qingdaoConfig: CityConfig = {
 
     group.position.set(-38, 200, 400);
 
-    // group.rotation.set(0, 2 * Math.PI * 0.01, 0);
-
     group.name = 'desc';
 
     return group;
   },
+  modelDesc: (
+    <>
+      <img src={qingdaoUrl} width={'100%'}></img>
+    </>
+  ),
 };

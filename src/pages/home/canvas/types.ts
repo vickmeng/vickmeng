@@ -1,4 +1,5 @@
 import { CatmullRomCurve3, Color, Euler, Group, LineSegments, Mesh, Vector3 } from 'three';
+import { ReactNode } from 'react';
 
 export interface CityConfig {
   name: string;
@@ -19,6 +20,7 @@ export interface CityConfig {
   earthRotation: Euler;
   getDesc: () => Group;
   cameraRotation: Euler;
+  modelDesc: ReactNode;
   // markQuaternion
   // faceDirection: Vector3;
 }

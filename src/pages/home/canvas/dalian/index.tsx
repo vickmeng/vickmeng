@@ -143,4 +143,5 @@ export const dalianConfig: CityConfig = {
 
     return group;
   },
+  modelDesc: <>这是大连的跨海大桥</>,
 };
