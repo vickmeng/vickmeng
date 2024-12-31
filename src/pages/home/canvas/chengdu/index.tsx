@@ -13,8 +13,6 @@ import { Text } from 'troika-three-text';
 // @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
 
-import { GUI } from 'dat.gui';
-
 export const chengduConfig: CityConfig = {
   name: 'chengdu',
   preColor: new Color(0x55da99),
@@ -82,7 +80,7 @@ export const chengduConfig: CityConfig = {
     const text3 = new Text();
     text3.name = 'p';
     text3.text =
-      '我所在的海外业务线，高度遵循敏捷开发，报价也比较高（4500/人天）。我在这领略了TDD，Pair，Showcase，Review等一系列的工程实践。具体参与项目如下：';
+      '我加入的是海外业务线，高度遵循敏捷开发，报价也比较高（4500/人天）。我在这领略了TDD，Pair，Showcase，Review等一系列的工程实践。具体参与项目如下：';
     text3.position.y = -7;
 
     const text4 = new Text();
@@ -93,7 +91,7 @@ export const chengduConfig: CityConfig = {
     const text5 = new Text();
     text5.name = 'p';
     text5.text =
-      '项目介绍：为新加坡政府打造的无代码表单生成平台，类似于金数据，分设计端（Angular）和填写端（React）与自研基础组件库（React）。我负责前端部分整体设计。参与人员来自中国、新加坡、印度，也是我首次和外国开发者配合工作。';
+      '项目介绍：为新加坡政府打造的无代码表单生成平台，类似于金数据。分设计端（Angular）和填写端（React）与自研基础组件库（React）。我负责前端部分整体设计。参与人员分别来自中国、新加坡、印度，也是我首次和外国开发者配合工作。';
     text5.position.y = -20;
 
     const text6 = new Text();
@@ -104,19 +102,19 @@ export const chengduConfig: CityConfig = {
     const text7 = new Text();
     text7.name = 'p';
     text7.text =
-      '后续：在项目过程中，深深感到React在表单场景的乏力，于是着手开发rx_form并于2022年完成，做到了灵活、高性能、跨端、跨框架，提供了99%的单元测试覆盖和完整的文档。';
+      '后续：在项目过程中，深感React在表单场景的乏力，于是着手开发rx_form并于2022年完成，做到了灵活、高性能、跨端、跨框架，提供了99%的单元测试覆盖和完整的文档。';
     text7.position.y = -35;
 
     const text8 = new Text();
     text8.name = 'h';
-    text8.text = '中建电商（2021至今，业务线前端负责人）';
+    text8.text = '中建电商（2021至今，创新团队前端负责人）';
     text8.position.x = 10;
     text8.position.y = -44;
 
     const text9 = new Text();
     text9.name = 'p';
     text9.text =
-      '主要职责：带领团队从零开发收验货，物流，数砼等多个业务线10余个项目，分别运行于PC端，手机原生，小程序等不同平台。负责团队管理，任务规划，内部培训，需求评审，代码审核，重难点把控等工作。人员由本部人员，外包人员，临时劳务等多角色组成，团队人数最高达12人。';
+      '主要职责：带领团队从零开发收验货，物流，数砼等多个业务线10余分别运行于PC端，手机原生，小程序等不同平台的应用。负责团队管理，规范制定，任务分配，内训，需求评审，代码审核，重难点攻坚等工作。团队由本部员工，外包员工，临时劳务等多角色组成，团队人数最高达12人。';
     text9.position.y = -47.5;
 
     const text10 = new Text();
@@ -148,13 +146,11 @@ export const chengduConfig: CityConfig = {
 
     group.position.set(-38, 212, 400);
 
-    // group.rotation.set(0, 2 * Math.PI * 0.01, 0);
-
     group.name = 'desc';
 
-    const gui = new GUI();
-
-    gui.add(text2.position, 'x', -100, 100, 0.1);
+    // const gui = new GUI();
+    //
+    // gui.add(text2.position, 'x', -100, 100, 0.1);
 
     return group;
   },
