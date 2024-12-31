@@ -88,13 +88,13 @@ export const chengduConfig: CityConfig = {
     const text4 = new Text();
     text4.name = 'h';
     text4.text = '重点项目.FormBuilder无代码表单配置平台';
-    text4.position.y = -14;
+    text4.position.y = -13;
     //
     const text5 = new Text();
     text5.name = 'p';
     text5.text =
       '项目介绍：为新加坡政府打造的无代码表单生成平台，类似于金数据。分设计端（Angular）和填写端（React）与自研基础组件库（React）。我负责前端部分整体设计。开发者分别来自中国、新加坡、印度，也是我首次跨国合作。';
-    text5.position.y = -19;
+    text5.position.y = -18;
 
     const text6 = new Text();
     text6.name = 'p';
