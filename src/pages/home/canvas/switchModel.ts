@@ -3,7 +3,15 @@ import { Color, Euler, Group, Mesh, MeshBasicMaterial, PointsMaterial, ShaderMat
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, earthGroup, mouse, points, scene } from '@/pages/home/canvas/core';
+import {
+  AnimationFrameSubject,
+  camera,
+  earthGroup,
+  modelSelectEffect,
+  mouse,
+  points,
+  scene,
+} from '@/pages/home/canvas/core';
 import {
   EARTH_POSITION_X,
   MOUSE_ROLL_CAMERA_SPEED_X,
@@ -35,11 +43,10 @@ export const switchModel = async (opts: Options) => {
   /**
    * 取消包围与手势 start
    */
-  // outlinePass.enabled = false; // 初始设为禁用
-  // outlinePass.selectedObjects = [];
 
   const page = document.querySelector('#timeline-page') as HTMLDivElement;
   page.classList.remove('pointer');
+  (fromConfig.mesh.material as MeshBasicMaterial).opacity = 0.0;
 
   /**
    * 取消包围 start

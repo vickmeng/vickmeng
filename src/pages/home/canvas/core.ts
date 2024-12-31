@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Subject } from 'rxjs';
 import { createEarth } from '@/pages/home/canvas/createEarth';
-import { EffectComposer, EffectPass, RenderPass } from 'postprocessing';
+import { EffectComposer, EffectPass, KernelSize, OutlineEffect, RenderPass } from 'postprocessing';
 import { createBackground } from '@/pages/home/canvas/createBackground';
 import { createStars } from '@/pages/home/canvas/createStars';
 
@@ -64,10 +64,20 @@ renderer.shadowMap.enabled = true;
 
 export const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
-
-// composer.addPass(new EffectPass(camera, createSunRes.sunGodRaysEffect));
 composer.addPass(new EffectPass(camera, createEarthRes.earthOutlineEffect));
-// composer.addPass(new EffectPass(camera, starsRes.effect));
+
+// export const modelSelectEffect = new OutlineEffect(scene, camera, {
+//   resolutionX: 240,
+//   resolutionY: 240,
+//   edgeStrength: 0.5,
+//   kernelSize: KernelSize.HUGE,
+//   visibleEdgeColor: 0x64abe3,
+//   hiddenEdgeColor: 0x64abe3,
+//   blur: true,
+// });
+// // modelSelectEffect.blendMode.opacity = new THREE.Uniform(0.2);
+//
+// composer.addPass(new EffectPass(camera, modelSelectEffect));
 
 export const raycaster = new THREE.Raycaster();
 export const mouse = new THREE.Vector2();

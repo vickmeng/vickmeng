@@ -123,8 +123,11 @@ export const init = async () => {
 
     if (!isEmpty(intersects)) {
       page.classList.add('pointer');
+
+      (currentConfig.mesh.material as MeshBasicMaterial).opacity = 0.1;
     } else {
       page.classList.remove('pointer');
+      (currentConfig.mesh.material as MeshBasicMaterial).opacity = 0.0;
     }
     /**
      * 鼠标点击模型 end
