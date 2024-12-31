@@ -1,16 +1,18 @@
 import { switchModel } from '@/pages/home/canvas/switchModel';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import InitLoading from './InitLoading';
 import { useSnapshot } from 'valtio/react';
-import { currentIndexStore } from '@/pages/home/store';
+import { currentIndexStore, modelOpenStore } from '@/pages/home/store';
 import { init } from '@/pages/home/canvas/init';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
 import Indicator from '@/pages/home/Indicator';
 import './index.less';
+import ModelDescCard from '@/pages/home/ModelDescCard';
 
 export default function HomePage() {
   const { currentIndex } = useSnapshot(currentIndexStore);
+  const { open } = useSnapshot(modelOpenStore);
 
   const [switching, setSwitching] = useState(false);
 
@@ -73,9 +75,41 @@ export default function HomePage() {
     };
   }, [switching, toNext, toPre]);
 
+  const currentConfig = useMemo(() => {
+    return CityConfigList[currentIndex];
+  }, [currentIndex]);
+
   return (
     <div id={'timeline-page'}>
       <InitLoading />
+
+      {open && (
+        <ModelDescCard
+          title={currentConfig.name_cn}
+          onClose={() => {
+            modelOpenStore.open = false;
+          }}
+        >
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+          <p>1231231231</p>
+        </ModelDescCard>
+      )}
+
       {!switching && <Indicator toNext={toNext} toPre={toPre} />}
     </div>
   );

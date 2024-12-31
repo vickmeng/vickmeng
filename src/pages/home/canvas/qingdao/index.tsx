@@ -15,6 +15,7 @@ import font from '../../../../assets/朱雀仿宋.ttf?url';
 
 export const qingdaoConfig: CityConfig = {
   name: 'qingdao',
+  name_cn: '青岛',
   preColor: new Color(0xff7493),
   UIThemeColor: '#ff7493',
   earthRotation: new Euler(0.46, 3.05, 0),

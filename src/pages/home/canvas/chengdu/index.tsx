@@ -15,6 +15,7 @@ import font from '../../../../assets/朱雀仿宋.ttf?url';
 
 export const chengduConfig: CityConfig = {
   name: 'chengdu',
+  name_cn: '成都',
   preColor: new Color(0x55da99),
   UIThemeColor: '#55da99',
 

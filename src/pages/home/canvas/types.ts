@@ -2,6 +2,7 @@ import { CatmullRomCurve3, Color, Euler, Group, LineSegments, Mesh, Vector3 } fr
 
 export interface CityConfig {
   name: string;
+  name_cn: string;
   modelPosition: Vector3;
   modelScale: Vector3;
   modelRotation: Euler;

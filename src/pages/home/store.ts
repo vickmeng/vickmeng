@@ -9,3 +9,5 @@ export const switchModelProcessStore = proxy<{
     value: number;
   } | null;
 }>({ process: null });
+
+export const modelOpenStore = proxy<{ open: boolean }>({ open: false });

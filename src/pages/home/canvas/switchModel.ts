@@ -13,7 +13,7 @@ import {
 } from '@/pages/home/canvas/constants';
 import { CityConfig } from '@/pages/home/canvas/types';
 import { CityConfigList } from '@/pages/home/canvas/cityConfig';
-import { switchModelProcessStore } from '@/pages/home/store';
+import { modelOpenStore, switchModelProcessStore } from '@/pages/home/store';
 
 interface Options {
   fromIndex: number;
@@ -39,6 +39,7 @@ export const switchModel = async (opts: Options) => {
   const page = document.querySelector('#timeline-page') as HTMLDivElement;
   page.classList.remove('pointer');
   (fromConfig.mesh.material as MeshBasicMaterial).opacity = 0.0;
+  modelOpenStore.open = false;
 
   /**
    * 取消包围 start

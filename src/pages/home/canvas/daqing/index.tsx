@@ -17,6 +17,7 @@ import font from '../../../../assets/朱雀仿宋.ttf?url';
 
 export const daqingConfig: CityConfig = {
   name: 'daqing',
+  name_cn: '大庆',
   preColor: new Color(0x6be6e0),
   UIThemeColor: '#6be6e0',
   earthRotation: new Euler(0.74, 1.96, 0),

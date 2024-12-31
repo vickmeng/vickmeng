@@ -13,7 +13,7 @@ import {
 } from '@/pages/home/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
 // import { GUI } from 'dat.gui';
-import { currentIndexStore, switchModelProcessStore } from '@/pages/home/store';
+import { currentIndexStore, modelOpenStore, switchModelProcessStore } from '@/pages/home/store';
 import { isEmpty } from 'lodash';
 import { MOUSE_ROLL_CAMERA_SPEED_X, MOUSE_ROLL_CAMERA_SPEED_Y } from '@/pages/home/canvas/constants';
 
@@ -100,7 +100,7 @@ export const init = async () => {
   window.addEventListener('resize', onWindowResize);
 
   /**
-   * 高亮模型 start
+   * mousemove start
    */
 
   document.addEventListener('mousemove', (event) => {
@@ -116,9 +116,7 @@ export const init = async () => {
     if (switchModelProcessStore.process) {
       return;
     }
-    /**
-     * 鼠标点击模型 start
-     */
+
     const page = document.querySelector('#timeline-page') as HTMLDivElement;
 
     if (!isEmpty(intersects)) {
@@ -129,25 +127,39 @@ export const init = async () => {
       page.classList.remove('pointer');
       (currentConfig.mesh.material as MeshBasicMaterial).opacity = 0.0;
     }
-    /**
-     * 鼠标点击模型 end
-     */
 
-    /**
-     * 镜头跟随
-     */
+    // 镜头跟随
     const cameraOriginRotation = currentConfig.cameraRotation;
     camera.rotation.set(
       cameraOriginRotation.x + mouse.y * MOUSE_ROLL_CAMERA_SPEED_X,
       cameraOriginRotation.y - mouse.x * MOUSE_ROLL_CAMERA_SPEED_Y,
       0
     );
-    /**
-     * 镜头跟随
-     */
   });
   /**
-   * 高亮模型 end
+   * mousemove end
+   */
+
+  /**
+   * click start
+   */
+
+  document.addEventListener('click', (event) => {
+    // 将鼠标坐标归一化到 - 1到1的范围
+    const currentConfig = CityConfigList[currentIndexStore.currentIndex];
+
+    const intersects = raycaster.intersectObject(currentConfig.mesh);
+
+    if (switchModelProcessStore.process) {
+      return;
+    }
+
+    if (!isEmpty(intersects)) {
+      modelOpenStore.open = true;
+    }
+  });
+  /**
+   * click end
    */
 
   AnimationFrameSubject.asObservable().subscribe(() => {

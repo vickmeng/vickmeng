@@ -15,6 +15,7 @@ import font from '../../../../assets/朱雀仿宋.ttf?url';
 
 export const dalianConfig: CityConfig = {
   name: 'dalian',
+  name_cn: '大连',
   preColor: new Color(0xf2dd0b),
   UIThemeColor: '#f2dd0b',
 
