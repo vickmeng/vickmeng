@@ -94,6 +94,9 @@ export const qingdaoConfig: CityConfig = {
   modelDesc: (
     <>
       <img src={qingdaoUrl} width={'100%'}></img>
+      <p>如果选最宜居的城市，我就选青岛，类似地中海气候，非常舒服。</p>
+      <p>我在这上了4年大学，后悔海鲜吃少了。</p>
+      <p>这个地方真的掏不出什么城市名片，最有名的就是帆船文化，但老百姓是不玩的，不晓得为啥总宣传这个东西。</p>
     </>
   ),
 };

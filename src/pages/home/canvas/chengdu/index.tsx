@@ -12,6 +12,7 @@ import { CAMERA_ROTATION_Y, MODEL_POSITION_X } from '@/pages/home/canvas/constan
 import { Text } from 'troika-three-text';
 // @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
+import chengduUrl from '@/assets/chengdu.jpeg';
 
 export const chengduConfig: CityConfig = {
   name: 'chengdu',
@@ -81,7 +82,7 @@ export const chengduConfig: CityConfig = {
     const text3 = new Text();
     text3.name = 'p';
     text3.text =
-      '我加入的是海外业务线，高度遵循敏捷开发，报价也比较高（4500/人天）。我在这领略了TDD，Pair，Showcase，Review等一系列的工程实践。具体参与项目如下：';
+      '我加入的是海外业务线，高度遵循敏捷开发，报价出奇高（4500/人天）。我在这领略了TDD，Pair，Showcase，Review等一系列的工程实践。';
     text3.position.y = -7;
 
     const text4 = new Text();
@@ -155,5 +156,12 @@ export const chengduConfig: CityConfig = {
 
     return group;
   },
-  modelDesc: <>这是成都广汉三星堆</>,
+  modelDesc: (
+    <>
+      <img src={chengduUrl} width={'100%'} />
+      <p>成都首屈一指的城市名片应该是熊猫，但我个人无感，一个个脏兮兮的，毛都黄了。</p>
+      <p>其次应该是火锅，不过我是北方人更喜欢涮肉蘸芝麻酱。</p>
+      <p>再其次就是三星堆，可惜我没见识成，上次去的时候不知道要提前预约，扑了个空，下次还去。（2024夏天）</p>
+    </>
+  ),
 };

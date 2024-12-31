@@ -13,6 +13,9 @@ import { Text } from 'troika-three-text';
 // @ts-ignore
 import font from '../../../../assets/朱雀仿宋.ttf?url';
 
+import dalianUrl from '@/assets/dalian.png';
+import daqingUrl from '@/assets/daqing.jpg';
+
 export const dalianConfig: CityConfig = {
   name: 'dalian',
   name_cn: '大连',
@@ -143,5 +146,13 @@ export const dalianConfig: CityConfig = {
 
     return group;
   },
-  modelDesc: <>这是大连的跨海大桥</>,
+  modelDesc: (
+    <>
+      <img src={dalianUrl} width={'100%'} />
+      <p>这是大连的跨海大桥，是不是很好看？其实现实一点也不好看，灰突突的，还把海景隔绝了，我一直对此耿耿于怀。</p>
+      <p>
+        大连已不复当年荣光，沦为了低配青岛，十几年没啥变化，沙滩脏兮兮的，海鲜也瘦。唯一推荐的就是森林动物园，真的很棒！
+      </p>
+    </>
+  ),
 };

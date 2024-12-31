@@ -11,17 +11,14 @@
   0% {
     width: 0;
     height: 8px;
-    padding: 0;
   }
   50% {
     width: 600px;
     height: 8px;
-    padding: 0;
   }
   100% {
     width: 600px;
     height: 600px;
-    padding: 8px;
   }
 }
 
@@ -92,7 +89,6 @@
 
 
   &__content {
-    padding: 8px;
     box-sizing: border-box;
     overflow-y: auto;
     animation: showContent 1200ms ease forwards;
@@ -114,6 +110,8 @@
     &::-webkit-scrollbar-track {
       background: rgba(57, 57, 57, 0.2); /* 设置滚动条轨道的颜色 */
     }
+
+    p{padding: 0 0.5em}
   }
 }
 
