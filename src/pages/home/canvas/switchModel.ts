@@ -3,15 +3,7 @@ import { Color, Euler, Group, Mesh, MeshBasicMaterial, PointsMaterial, ShaderMat
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import {
-  AnimationFrameSubject,
-  camera,
-  earthGroup,
-  modelSelectEffect,
-  mouse,
-  points,
-  scene,
-} from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, camera, earthGroup, mouse, points, scene } from '@/pages/home/canvas/core';
 import {
   EARTH_POSITION_X,
   MOUSE_ROLL_CAMERA_SPEED_X,
