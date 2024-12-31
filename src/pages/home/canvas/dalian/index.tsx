@@ -14,7 +14,6 @@ import { Text } from 'troika-three-text';
 import font from '../../../../assets/朱雀仿宋.ttf?url';
 
 import dalianUrl from '@/assets/dalian.png';
-import daqingUrl from '@/assets/daqing.jpg';
 
 export const dalianConfig: CityConfig = {
   name: 'dalian',
@@ -87,12 +86,12 @@ export const dalianConfig: CityConfig = {
 
     const text3 = new Text();
     text3.name = 'h';
-    text3.text = '项目1.后台BI可视化分析系统';
+    text3.text = '重点项目1.BI可视化分析系统';
     text3.position.y = -15.5;
 
     const text4 = new Text();
     text4.name = 'p';
-    text4.text = '项目介绍：老的系统还停留在Jquery阶段，我负责可视化功能开发与落地Angular + Typescript技术转型';
+    text4.text = '项目介绍：老的系统还停留在Jquery阶段，我负责可视化功能开发与落地Angular + Typescript技术升级';
     text4.position.y = -19;
 
     const text5 = new Text();
@@ -102,18 +101,18 @@ export const dalianConfig: CityConfig = {
 
     const text6 = new Text();
     text6.name = 'h';
-    text6.text = '项目2.天狗农产品商城';
+    text6.text = '重点项目2.天狗农产品商城';
     text6.position.y = -30;
 
     const text7 = new Text();
     text7.name = 'p';
-    text7.text = '项目介绍：基于Ionic的移动端跨端项目，这个技术路线在国内并不热门。';
+    text7.text = '项目介绍：基于Ionic的移动端跨端项目。';
     text7.position.y = -33.5;
 
     const text8 = new Text();
     text8.name = 'p';
     text8.text = '技术栈：Typescript，Angular，Cordova, Ionic';
-    text8.position.y = -41;
+    text8.position.y = -38;
 
     const textList = [text1, text2, text3, text4, text5, text6, text7, text8];
     textList.forEach((_text) => {
