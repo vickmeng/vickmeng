@@ -4,12 +4,45 @@ import { CatmullRomCurve3, Mesh } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GUI } from 'dat.gui';
 
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+  powerPreference: 'high-performance',
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+
+document.body.appendChild(renderer.domElement);
+
 const scene = new THREE.Scene();
 
-// 创建相机
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 150;
 camera.position.y = 150;
+
+const groundGeometry = new THREE.PlaneGeometry(300, 300);
+groundGeometry.rotateX(0.5 * Math.PI);
+
+// 创建一个基础材质
+const material = new THREE.MeshBasicMaterial({ color: 0xcccccc, side: 2 });
+// 创建网格对象（结合几何体和材质）
+const ground = new THREE.Mesh(groundGeometry, material);
+scene.add(ground);
+
+// 创建一个立方体几何体
+const wallGeometry = new THREE.PlaneGeometry(300, 300);
+// 创建一个基础材质
+const wallMaterial = new THREE.MeshBasicMaterial({ color: 0x808080, side: 2 });
+// 创建网格对象（结合几何体和材质）
+const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+wall.position.z = -150;
+scene.add(wall);
+
+// 创建轨道控制器
+const controls = new OrbitControls(camera, renderer.domElement);
+const clock = new THREE.Clock();
+
+const gui = new GUI();
+gui.add(wall.position, 'z', -150, 150, 25);
 
 const flyMaterial = new THREE.ShaderMaterial({
   transparent: true,
@@ -35,55 +68,18 @@ const flyMaterial = new THREE.ShaderMaterial({
           uniform float x;
           void main() {
               if(vUv.x < x && vUv.x > x - 0.5){
-                float per = 1.0 - (x-vUv.x) / 0.5;//范围0~1
+                float per = 1.0 - (x-vUv.x) / 0.5;
                 gl_FragColor = vec4(color, per);
               }else{
-                discard;
+                gl_FragColor = vec4(color, 0.2);
+                // discard;
               }
           }
         `,
 });
 
-// 创建渲染器
-const renderer = new THREE.WebGLRenderer({
-  antialias: true,
-  powerPreference: 'high-performance',
-});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-document.body.appendChild(renderer.domElement);
-
-// 创建一个立方体几何体
-const geometry = new THREE.PlaneGeometry(300, 300);
-geometry.rotateX(0.5 * Math.PI);
-
-// 创建一个基础材质
-const material = new THREE.MeshBasicMaterial({ color: 0xcccccc, side: 2 });
-// 创建网格对象（结合几何体和材质）
-const ground = new THREE.Mesh(geometry, material);
-scene.add(ground);
-
-// 创建一个立方体几何体
-const wallGeometry = new THREE.PlaneGeometry(300, 300);
-
-// 创建一个基础材质
-const wallMaterial = new THREE.MeshBasicMaterial({ color: 0x808080, side: 2 });
-// 创建网格对象（结合几何体和材质）
-const wall = new THREE.Mesh(wallGeometry, wallMaterial);
-wall.position.z = -150;
-scene.add(wall);
-
-// 创建轨道控制器
-const controls = new OrbitControls(camera, renderer.domElement);
-const clock = new THREE.Clock();
-
-const gui = new GUI();
-gui.add(wall.position, 'z', -150, 150, 25);
-
-// 渲染循环，让立方体旋转起来（可根据需求选择是否保留这部分旋转动画逻辑）
 function animate() {
-  // console.log(clock.getDelta());
-
+  // 飞线动画
   if (flyMaterial.uniforms.x.value >= 1) {
     flyMaterial.uniforms.x.value = 0;
   } else {
