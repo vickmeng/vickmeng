@@ -4,6 +4,7 @@ export default defineConfig({
   routes: [
     { path: "/", component: "home" },
     { path: "/test", component: "test" },
+    { path: "/curve", component: "curve" },
   ],
   npmClient: 'pnpm',
   alias: {

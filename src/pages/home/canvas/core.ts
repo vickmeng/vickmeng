@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Subject } from 'rxjs';
 import { createEarth } from '@/pages/home/canvas/createEarth';
-import { EffectComposer, EffectPass, KernelSize, OutlineEffect, RenderPass } from 'postprocessing';
+import { EffectComposer, EffectPass, RenderPass } from 'postprocessing';
 import { createBackground } from '@/pages/home/canvas/createBackground';
 import { createStars } from '@/pages/home/canvas/createStars';
 
