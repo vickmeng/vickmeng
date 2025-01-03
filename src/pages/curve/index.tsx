@@ -1,5 +1,5 @@
 import './canvas';
-import { add1, add2, add3, add4, fly } from '@/pages/curve/canvas';
+import { add1, add2, add4, fly } from '@/pages/curve/canvas';
 
 // add1();
 // add2();
@@ -12,10 +12,12 @@ const Curve = () => {
       <button onClick={add1}>加一个飞线</button>
       <br />
       <button onClick={add2}>加一个平滑点的</button>
+      <a href={'./bezierCurve'}>具体看原理</a>
       <br />
-      <button onClick={add3}>加一个俯冲的飞线</button>
-      <br />
-      <button onClick={add4}>换个方式</button> <a href={'./bezierCurve'}>具体看原理</a>
+      {/* <button onClick={add3}>加一个俯冲的飞线</button> */}
+      {/* <br /> */}
+      <button onClick={add4}>换个更好看的方式</button>
+      <a href={'./bezierCurve'}>具体看原理</a>
       <br />
       <button onClick={fly}>动起来</button>
     </div>

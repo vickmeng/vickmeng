@@ -14,6 +14,7 @@ renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xaaaaaa);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 150;
@@ -28,21 +29,21 @@ const material = new THREE.MeshBasicMaterial({ color: 0xcccccc, side: 2 });
 const ground = new THREE.Mesh(groundGeometry, material);
 scene.add(ground);
 
-// 创建一个立方体几何体
-const wallGeometry = new THREE.PlaneGeometry(300, 300);
-// 创建一个基础材质
-const wallMaterial = new THREE.MeshBasicMaterial({ color: 0x808080, side: 2 });
-// 创建网格对象（结合几何体和材质）
-const wall = new THREE.Mesh(wallGeometry, wallMaterial);
-wall.position.z = -150;
-scene.add(wall);
+// // 创建一个立方体几何体
+// const wallGeometry = new THREE.PlaneGeometry(300, 300);
+// // 创建一个基础材质
+// const wallMaterial = new THREE.MeshBasicMaterial({ color: 0x808080, side: 2 });
+// // 创建网格对象（结合几何体和材质）
+// const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+// wall.position.z = -150;
+// scene.add(wall);
 
 // 创建轨道控制器
 const controls = new OrbitControls(camera, renderer.domElement);
 const clock = new THREE.Clock();
 
-const gui = new GUI();
-gui.add(wall.position, 'z', -150, 150, 25);
+// const gui = new GUI();
+// gui.add(wall.position, 'z', -150, 150, 25);
 
 const flyMaterial = new THREE.ShaderMaterial({
   transparent: true,
@@ -121,7 +122,7 @@ export const add2 = () => {
     [new THREE.Vector3(0, 0, 0), new THREE.Vector3(50, 30, 0), new THREE.Vector3(100, 0, 0)],
     false,
     'catmullrom',
-    0.5
+    0.8
   );
 
   const _geometry = new THREE.TubeGeometry(curve, 100, 2, 8, false);
@@ -135,38 +136,38 @@ export const add2 = () => {
   scene.add(_mesh);
   addPoint(50, 30, _mesh.position.z);
 };
-
-export const add3 = () => {
-  const curve = new CatmullRomCurve3(
-    [
-      new THREE.Vector3(0, 0, 0),
-      new THREE.Vector3(20, 30, 0),
-
-      new THREE.Vector3(50, 30, 0),
-      new THREE.Vector3(100, 0, 0),
-    ],
-    false,
-    'catmullrom',
-    0.5
-  );
-
-  const _geometry = new THREE.TubeGeometry(curve, 100, 2, 8, false);
-
-  const _material = new THREE.MeshBasicMaterial({ color: 0xff00ff });
-
-  const _mesh = new THREE.Mesh(_geometry, _material);
-
-  _mesh.position.z = 0;
-  _mesh.name = 'line';
-  scene.add(_mesh);
-  addPoint(20, 30, _mesh.position.z);
-  addPoint(50, 30, _mesh.position.z);
-};
+//
+// export const add3 = () => {
+//   const curve = new CatmullRomCurve3(
+//     [
+//       new THREE.Vector3(0, 0, 0),
+//       new THREE.Vector3(20, 30, 0),
+//
+//       new THREE.Vector3(50, 30, 0),
+//       new THREE.Vector3(100, 0, 0),
+//     ],
+//     false,
+//     'catmullrom',
+//     0.5
+//   );
+//
+//   const _geometry = new THREE.TubeGeometry(curve, 100, 2, 8, false);
+//
+//   const _material = new THREE.MeshBasicMaterial({ color: 0xff00ff });
+//
+//   const _mesh = new THREE.Mesh(_geometry, _material);
+//
+//   _mesh.position.z = 0;
+//   _mesh.name = 'line';
+//   scene.add(_mesh);
+//   addPoint(20, 30, _mesh.position.z);
+//   addPoint(50, 30, _mesh.position.z);
+// };
 
 export const add4 = () => {
   const curve = new THREE.QuadraticBezierCurve3(
     new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(25, 70, 0),
+    new THREE.Vector3(50, 70, 0),
     new THREE.Vector3(100, 0, 0)
   );
   const _geometry = new THREE.TubeGeometry(curve, 100, 2, 8, false);
@@ -179,7 +180,7 @@ export const add4 = () => {
   _mesh.name = 'line';
   scene.add(_mesh);
 
-  addPoint(25, 70, _mesh.position.z);
+  addPoint(50, 70, _mesh.position.z);
   addPoint(50, 30, _mesh.position.z);
 };
 
