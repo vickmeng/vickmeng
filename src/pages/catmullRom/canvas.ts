@@ -85,8 +85,9 @@ const PMinus1 = new THREE.Vector3(-3, 0, 0);
 const P0 = new THREE.Vector3(-1, 1, 0);
 const P1 = new THREE.Vector3(1, 5, 0);
 const P2 = new THREE.Vector3(3, 0, 0);
+const P3 = new THREE.Vector3(5, 0.5, 0);
 
-const pointVList = [PMinus1, P0, P1, P2];
+const pointVList = [PMinus1, P0, P1, P2, P3];
 
 const curve = new CatmullRomCurve3(pointVList, false, 'catmullrom', 0.5);
 // const curve = new THREE.LineCurve3(pointVList);
@@ -113,7 +114,7 @@ pointVList.forEach((v) => {
 for (let i = -50; i <= 50; i += 0.1) {
   const t = i;
   // @ts-ignore
-  const position = calculate({ t, tension: 0.5, PList: pointVList });
+  const position = calculate({ t, tension: 0.5, PList: [PMinus1, P0, P1, P2] });
 
   const p = createPoint({ position, color: 0x000000, size: 0.05, opacity: 0.8 });
   scene.add(p);
