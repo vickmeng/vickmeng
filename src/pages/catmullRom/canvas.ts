@@ -17,10 +17,10 @@ const calculate = (params: {
 }) => {
   const { t, tension = 0.5, PList } = params;
 
-  const PMinus2 = PList[0];
-  const PMinus1 = PList[1];
-  const P0 = PList[2];
-  const P1 = PList[3];
+  const PMinus1 = PList[0];
+  const P0 = PList[1];
+  const P1 = PList[2];
+  const P2 = PList[3];
 
   const matrixA = matrix([[1, t, Math.pow(t, 2), Math.pow(t, 3)]]);
   const matrixB = matrix([
@@ -31,10 +31,10 @@ const calculate = (params: {
   ]);
 
   const matrixC = matrix([
-    [PMinus2.x, PMinus2.y, PMinus2.z],
     [PMinus1.x, PMinus1.y, PMinus1.z],
     [P0.x, P0.y, P0.z],
     [P1.x, P1.y, P1.z],
+    [P2.x, P2.y, P2.z],
   ]);
 
   const matrixRes = multiply(matrixA, matrixB, matrixC);
@@ -85,9 +85,9 @@ const PMinus1 = new THREE.Vector3(-3, 0, 0);
 const P0 = new THREE.Vector3(-1, 1, 0);
 const P1 = new THREE.Vector3(1, 5, 0);
 const P2 = new THREE.Vector3(3, 0, 0);
-const P3 = new THREE.Vector3(5, 0.5, 0);
+// const P3 = new THREE.Vector3(5, 0.5, 0);
 
-const pointVList = [PMinus1, P0, P1, P2, P3];
+const pointVList = [PMinus1, P0, P1, P2];
 
 const curve = new CatmullRomCurve3(pointVList, false, 'catmullrom', 0.5);
 // const curve = new THREE.LineCurve3(pointVList);
