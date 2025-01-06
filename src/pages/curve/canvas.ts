@@ -84,7 +84,7 @@ function animate() {
   if (flyMaterial.uniforms.x.value >= 1) {
     flyMaterial.uniforms.x.value = 0;
   } else {
-    flyMaterial.uniforms.x.value += clock.getDelta() * 1.0;
+    flyMaterial.uniforms.x.value += clock.getDelta() * 1.5;
   }
 
   requestAnimationFrame(animate);
@@ -96,12 +96,7 @@ animate();
 
 export const add1 = () => {
   const curve = new CatmullRomCurve3(
-    [
-      new THREE.Vector3(-100, 0, 0),
-      new THREE.Vector3(-50, 50, 0),
-      new THREE.Vector3(50, 50, 0),
-      new THREE.Vector3(100, 0, 0),
-    ],
+    [new THREE.Vector3(-100, 0, 0), new THREE.Vector3(0, 60, 0), new THREE.Vector3(100, 0, 0)],
     false,
     'catmullrom',
     0.5
@@ -119,8 +114,7 @@ export const add1 = () => {
 
   scene.add(_mesh);
 
-  addPoint(-50, 50, _mesh.position.z);
-  addPoint(50, 50, _mesh.position.z);
+  addPoint(0, 60, _mesh.position.z);
 };
 
 // export const add2 = () => {
@@ -192,8 +186,7 @@ export const add4 = () => {
   _mesh.name = 'line';
   scene.add(_mesh);
 
-  addPoint(-50, 50, _mesh.position.z);
-  addPoint(50, 50, _mesh.position.z);
+  addPoint(0, 60, _mesh.position.z);
 };
 
 export const fly = () => {
