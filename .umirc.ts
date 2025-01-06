@@ -6,6 +6,7 @@ export default defineConfig({
     { path: "/test", component: "test" },
     { path: "/curve", component: "curve" },
     { path: "/bezierCurve", component: "bezierCurve" },
+    { path: "/catmullRom", component: "catmullRom" },
   ],
   npmClient: 'pnpm',
   alias: {

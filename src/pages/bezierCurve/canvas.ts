@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GUI } from 'dat.gui';
 const createPoint = (params: { position: THREE.Vector3; color: number }) => {
   const _point = new THREE.Mesh(
-    new THREE.SphereGeometry(5),
+    new THREE.SphereGeometry(3),
     new THREE.MeshBasicMaterial({ color: params.color, transparent: true, opacity: 0.5 })
   );
   _point.position.copy(params.position);
@@ -42,10 +42,7 @@ const vP1 = new THREE.Vector3(-100, 0, 0);
 const vP2 = new THREE.Vector3(-50, 100, 0);
 const vP3 = new THREE.Vector3(100, 0, 0);
 
-const bezierCurve = new THREE.Line(
-  new THREE.BufferGeometry(),
-  new THREE.LineBasicMaterial({ color: 0x0000ff, linewidth: 3 })
-);
+const bezierCurve = new THREE.Line(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: 0x0000ff }));
 
 scene.add(bezierCurve);
 
@@ -103,16 +100,7 @@ function animate() {
   const curve = new THREE.QuadraticBezierCurve3(vP1, vP2, vP3);
   const points = curve.getPoints(50);
 
-  bezierCurve.geometry.setAttribute(
-    'position',
-    new THREE.Float32BufferAttribute(
-      points.reduce<number[]>((pre, cur) => {
-        pre.push(cur.x, cur.y, cur.z);
-        return pre;
-      }, []),
-      3
-    )
-  );
+  bezierCurve.geometry.setFromPoints(points);
 
   controls.update();
   renderer.render(scene, camera);
