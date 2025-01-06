@@ -8,7 +8,6 @@ import { add1, add4, fly } from '@/pages/curve/canvas';
 const Curve = () => {
   return (
     <div style={{ position: 'fixed', color: '#fff' }}>
-      <h3>起点(-100, 0, 0)，途径(-50, 50, 0)和(50, 50, 0)，终点(100, 0, 0)</h3>
       <button onClick={add1}>加一个飞线</button>
 
       <a href={'./catmullRom'}>具体看原理</a>
