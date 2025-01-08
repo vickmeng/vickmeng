@@ -3,6 +3,7 @@ import { defineConfig } from "umi";
 export default defineConfig({
   routes: [
     { path: "/", component: "home" },
+    { path: "/timeline", component: "timeline" },
     { path: "/test", component: "test" },
     { path: "/curve", component: "curve" },
     { path: "/bezierCurve", component: "bezierCurve" },

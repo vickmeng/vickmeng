@@ -1,7 +1,7 @@
 import { Mesh, MeshBasicMaterial, SphereGeometry } from 'three';
-import { SUN_POSITION_X, SUN_POSITION_Y } from '@/pages/home/canvas/constants';
+import { SUN_POSITION_X, SUN_POSITION_Y } from '@/pages/timeline/canvas/constants';
 import { GodRaysEffect, KernelSize } from 'postprocessing';
-import { camera } from '@/pages/home/canvas/core';
+import { camera } from '@/pages/timeline/canvas/core';
 
 export const createSun = () => {
   const sunMaterial = new MeshBasicMaterial({

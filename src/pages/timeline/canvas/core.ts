@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { Subject } from 'rxjs';
-import { createEarth } from '@/pages/home/canvas/createEarth';
+import { createEarth } from '@/pages/timeline/canvas/createEarth';
 import { EffectComposer, EffectPass, RenderPass } from 'postprocessing';
-import { createBackground } from '@/pages/home/canvas/createBackground';
-import { createStars } from '@/pages/home/canvas/createStars';
+import { createBackground } from '@/pages/timeline/canvas/createBackground';
+import { createStars } from '@/pages/timeline/canvas/createStars';
 
 export const AnimationFrameSubject = new Subject<number>();
 

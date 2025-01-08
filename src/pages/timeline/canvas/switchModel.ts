@@ -3,17 +3,17 @@ import { Color, Euler, Group, Mesh, MeshBasicMaterial, PointsMaterial, ShaderMat
 
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { AnimationFrameSubject, camera, earthGroup, mouse, points, scene } from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, camera, earthGroup, mouse, points, scene } from '@/pages/timeline/canvas/core';
 import {
   EARTH_POSITION_X,
   MOUSE_ROLL_CAMERA_SPEED_X,
   MOUSE_ROLL_CAMERA_SPEED_Y,
   SANDS_COUNT,
   SANDS_FLY_BATCH_COUNT,
-} from '@/pages/home/canvas/constants';
-import { CityConfig } from '@/pages/home/canvas/types';
-import { CityConfigList } from '@/pages/home/canvas/cityConfig';
-import { modelOpenStore, switchModelProcessStore } from '@/pages/home/store';
+} from '@/pages/timeline/canvas/constants';
+import { CityConfig } from '@/pages/timeline/canvas/types';
+import { CityConfigList } from '@/pages/timeline/canvas/cityConfig';
+import { modelOpenStore, switchModelProcessStore } from '@/pages/timeline/store';
 
 interface Options {
   fromIndex: number;

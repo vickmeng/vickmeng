@@ -1,4 +1,4 @@
-import { AnimationFrameSubject, camera } from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, camera } from '@/pages/timeline/canvas/core';
 import { BufferAttribute, BufferGeometry, Group, Points, PointsMaterial, TextureLoader, Vector3 } from 'three';
 import circleImg from '@/assets/circle.png';
 

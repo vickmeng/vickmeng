@@ -1,7 +1,7 @@
 import './index.less';
 import { useSnapshot } from 'valtio/react';
-import { currentIndexStore } from '@/pages/home/store';
-import { CityConfigList } from '@/pages/home/canvas/cityConfig';
+import { currentIndexStore } from '@/pages/timeline/store';
+import { CityConfigList } from '@/pages/timeline/canvas/cityConfig';
 
 const Indicator = (props: { toPre: () => Promise<void>; toNext: () => Promise<void> }) => {
   const { currentIndex } = useSnapshot(currentIndexStore);

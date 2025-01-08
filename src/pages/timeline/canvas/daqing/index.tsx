@@ -2,13 +2,13 @@ import * as THREE from 'three';
 import { Color, Euler, Group, MathUtils, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 // @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { scene } from '@/pages/home/canvas/core';
-import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/home/canvas/utils/utils';
+import { scene } from '@/pages/timeline/canvas/core';
+import { getVectorListFromMesh, getVerticesFromVectors } from '@/pages/timeline/canvas/utils/utils';
 
 // @ts-ignore
 import pumpjack from '../../../../assets/pumpjack.obj?url';
-import { CityConfig } from '@/pages/home/canvas/types';
-import { CAMERA_ROTATION_Y, MODEL_POSITION_X } from '@/pages/home/canvas/constants';
+import { CityConfig } from '@/pages/timeline/canvas/types';
+import { CAMERA_ROTATION_Y, MODEL_POSITION_X } from '@/pages/timeline/canvas/constants';
 // @ts-ignore
 import { Text } from 'troika-three-text';
 

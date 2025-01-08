@@ -1,11 +1,11 @@
 import EarthImg from '@/assets/earthNight.jpg';
 import * as THREE from 'three';
 import { CatmullRomCurve3, CircleGeometry, Group, Mesh, MeshBasicMaterial, ShaderMaterial, TextureLoader } from 'three';
-import { EARTH_POSITION_X } from '@/pages/home/canvas/constants';
-import { CityConfigList } from '@/pages/home/canvas/cityConfig';
+import { EARTH_POSITION_X } from '@/pages/timeline/canvas/constants';
+import { CityConfigList } from '@/pages/timeline/canvas/cityConfig';
 import { KernelSize, OutlineEffect } from 'postprocessing';
-import { AnimationFrameSubject, camera, scene } from '@/pages/home/canvas/core';
-import { currentIndexStore, switchModelProcessStore } from '@/pages/home/store';
+import { AnimationFrameSubject, camera, scene } from '@/pages/timeline/canvas/core';
+import { currentIndexStore, switchModelProcessStore } from '@/pages/timeline/store';
 
 export const createEarth = async () => {
   const earthGroup = new Group();

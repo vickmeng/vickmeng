@@ -10,12 +10,12 @@ import {
   raycaster,
   renderer,
   scene,
-} from '@/pages/home/canvas/core';
+} from '@/pages/timeline/canvas/core';
 import { initLoadingProgressStore } from '@/stores';
 // import { GUI } from 'dat.gui';
-import { currentIndexStore, modelOpenStore, switchModelProcessStore } from '@/pages/home/store';
+import { currentIndexStore, modelOpenStore, switchModelProcessStore } from '@/pages/timeline/store';
 import { isEmpty } from 'lodash';
-import { MOUSE_ROLL_CAMERA_SPEED_X, MOUSE_ROLL_CAMERA_SPEED_Y } from '@/pages/home/canvas/constants';
+import { MOUSE_ROLL_CAMERA_SPEED_X, MOUSE_ROLL_CAMERA_SPEED_Y } from '@/pages/timeline/canvas/constants';
 
 export const init = async () => {
   const firstConfig = CityConfigList[0];
