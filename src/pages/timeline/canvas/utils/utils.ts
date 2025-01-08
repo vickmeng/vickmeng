@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Vector3 } from 'three';
-import { SANDS_COUNT } from '@/pages/home/canvas/constants';
+import { SANDS_COUNT } from '@/pages/timeline/canvas/constants';
 
 interface Params {
   mesh: THREE.Mesh;
