@@ -13,8 +13,13 @@ export const addModels = async () => {
 
   for (let i = 0; i < 2; i++) {
     const model = await loader.loadAsync(Praying);
-    model.receiveShadow = true;
-    model.castShadow = true;
+
+    console.log(model);
+
+    const people = model.children[1];
+
+    people.receiveShadow = true;
+    people.castShadow = true;
 
     model.position.x = -180;
     model.position.y = -100;
@@ -34,8 +39,11 @@ export const addModels = async () => {
 
   for (let i = 0; i < 2; i++) {
     const model = await loader.loadAsync(Praying);
-    model.receiveShadow = true;
-    model.castShadow = true;
+
+    const people = model.children[1];
+
+    people.receiveShadow = true;
+    people.castShadow = true;
 
     model.position.x = 180;
     model.position.y = 70;

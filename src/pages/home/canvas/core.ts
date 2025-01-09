@@ -29,7 +29,7 @@ camera.position.y = 160;
 // scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(-1000, 200, 0);
+directionalLight.position.set(-1000, 400, 0);
 directionalLight.lookAt(new THREE.Vector3(0, 0, 0));
 directionalLight.castShadow = true;
 
