@@ -21,7 +21,7 @@ export const addModels = async () => {
     people.receiveShadow = true;
     people.castShadow = true;
 
-    model.position.x = -180;
+    model.position.x = -130;
     model.position.y = -100;
     model.position.z = 700 - i * 240;
 
@@ -45,7 +45,7 @@ export const addModels = async () => {
     people.receiveShadow = true;
     people.castShadow = true;
 
-    model.position.x = 180;
+    model.position.x = 130;
     model.position.y = 70;
 
     model.position.z = 700 - i * 240;

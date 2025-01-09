@@ -18,9 +18,11 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 export const scene = new THREE.Scene();
 // scene.background = new THREE.Color(0xaaaaaa);
 
+scene.fog = new THREE.FogExp2(0x000000, 0.001);
+
 export const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
 camera.position.z = 1000;
-camera.position.y = 160;
+camera.position.y = 120;
 
 /**
  * 光 start
@@ -28,7 +30,7 @@ camera.position.y = 160;
 // export const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 // scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
 directionalLight.position.set(-1000, 400, 0);
 directionalLight.lookAt(new THREE.Vector3(0, 0, 0));
 directionalLight.castShadow = true;
