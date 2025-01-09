@@ -38,6 +38,9 @@ dependencies:
   three-mesh-ui:
     specifier: 6.5.4
     version: 6.5.4(three@0.169.0)
+  three.terrain.js:
+    specifier: 2.0.0
+    version: 2.0.0
   troika-three-text:
     specifier: 0.52.2
     version: 0.52.2(three@0.169.0)
@@ -8846,6 +8849,10 @@ packages:
       three: '>=0.144.0'
     dependencies:
       three: 0.169.0
+    dev: false
+
+  /three.terrain.js@2.0.0:
+    resolution: {integrity: sha512-M3DLpZ4Vo/yuxp2g64ZUvoCxcR/WMDwK3ZxcohPQqYR2y/SfO70XZ8pG+OvyHiMJvnoMoPefAOSfs2Pu4jVJsg==}
     dev: false
 
   /three@0.169.0:
