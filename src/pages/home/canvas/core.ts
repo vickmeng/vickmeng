@@ -28,10 +28,10 @@ camera.position.y = 8;
 /**
  * 光 start
  */
-// export const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-// scene.add(ambientLight);
+export const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
 directionalLight.position.set(-80, 40, 0);
 directionalLight.lookAt(new THREE.Vector3(0, 0, 0));
 directionalLight.castShadow = true;
