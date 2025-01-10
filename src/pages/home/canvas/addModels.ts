@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { Euler, Group, MathUtils, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-// import SpaceMan from '@/assets/Praying.fbx?url';
 import SpaceMan from '@/assets/spaceMan.fbx?url';
 import { clock, scene } from '@/pages/home/canvas/core';
 import AstronautMap from '@/assets/Astronaut_D.jpg';
