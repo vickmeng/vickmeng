@@ -18,6 +18,7 @@
     "mathjs": "14.0.1",
     "postprocessing": "6.36.4",
     "rxjs": "7.8.1",
+    "swiper": "11.2.0",
     "three": "0.169.0",
     "three-mesh-ui": "6.5.4",
     "three.terrain.js": "2.0.0",

@@ -32,6 +32,9 @@ dependencies:
   rxjs:
     specifier: 7.8.1
     version: 7.8.1
+  swiper:
+    specifier: 11.2.0
+    version: 11.2.0
   three:
     specifier: 0.169.0
     version: 0.169.0
@@ -8748,6 +8751,11 @@ packages:
       csso: 4.2.0
       picocolors: 1.1.0
       stable: 0.1.8
+    dev: false
+
+  /swiper@11.2.0:
+    resolution: {integrity: sha512-rjjAKgDEs+grR2eQshVDCcE4KNPC7CI294nfcbV9gE8WCsLdvOYXDeZKUYevqAZZp8j5hE7kpT3dAGVKFBWlxQ==}
+    engines: {node: '>= 4.7.0'}
     dev: false
 
   /synckit@0.8.5:
