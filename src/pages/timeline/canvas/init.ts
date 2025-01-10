@@ -94,7 +94,7 @@ export const init = async () => {
 
   function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    // camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
   window.addEventListener('resize', onWindowResize);

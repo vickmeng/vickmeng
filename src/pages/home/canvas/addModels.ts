@@ -24,10 +24,10 @@ export const addModels = async () => {
     people.receiveShadow = true;
     people.castShadow = true;
 
-    model.position.x = -130;
-    model.position.y = -40;
-    model.position.z = 700 - i * 240;
-    model.scale.set(60, 60, 60);
+    model.position.x = -8;
+    model.position.y = -3;
+    model.position.z = 35 - i * 8;
+    model.scale.set(4, 4, 4);
     model.rotation.copy(new Euler(0, MathUtils.degToRad(90), 0));
 
     const mixer = new THREE.AnimationMixer(model);
@@ -49,10 +49,10 @@ export const addModels = async () => {
     people.receiveShadow = true;
     people.castShadow = true;
 
-    model.position.x = 130;
-    model.position.y = -20;
-    model.position.z = 700 - i * 240;
-    model.scale.set(60, 60, 60);
+    model.position.x = 8;
+    model.position.y = -1;
+    model.position.z = 35 - i * 8;
+    model.scale.set(4, 4, 4);
 
     model.rotation.copy(new Euler(MathUtils.degToRad(180), MathUtils.degToRad(-90), 0));
 
