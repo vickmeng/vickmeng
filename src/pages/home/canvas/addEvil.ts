@@ -14,7 +14,8 @@ export const addEvil = async () => {
     child.material = new MeshPhongMaterial({
       color: 0xffffff,
       specular: 0xffffff, // 高光颜色设为白色
-      shininess: 100, // 增加高光光泽度
+      shininess: 10, // 增加高光光泽度
+      side: 2,
     });
     child.receiveShadow = true;
     child.castShadow = true;

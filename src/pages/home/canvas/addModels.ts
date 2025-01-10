@@ -15,7 +15,7 @@ export const addModels = async () => {
 
   const AstronautTexture = await textureLoader.loadAsync(AstronautMap);
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 9; i++) {
     const model = await loader.loadAsync(SpaceMan);
 
     const people = model.children[0] as Mesh;
@@ -40,7 +40,7 @@ export const addModels = async () => {
     group.add(model);
   }
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 9; i++) {
     const model = await loader.loadAsync(SpaceMan);
 
     const people = model.children[0] as Mesh;

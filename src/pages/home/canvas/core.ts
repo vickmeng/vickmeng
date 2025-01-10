@@ -18,7 +18,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 export const scene = new THREE.Scene();
 
-const fog = new THREE.FogExp2(0x000000, 0.024);
+const fog = new THREE.FogExp2(0x000000, 0.022);
 
 scene.fog = fog;
 
@@ -39,7 +39,7 @@ directionalLight.castShadow = true;
 
 directionalLight.shadow.mapSize.width = 2048;
 directionalLight.shadow.mapSize.height = 2048;
-const d = 50;
+const d = 100;
 
 directionalLight.shadow.camera.left = -d;
 directionalLight.shadow.camera.right = d;
@@ -61,7 +61,7 @@ scene.add(pointLight);
 //
 // const helper = new THREE.PointLightHelper(pointLight, 4);
 // scene.add(helper);
-
+//
 const gui = new GUI();
 gui.add(pointLight.position, 'x', -100, 100, 1);
 gui.add(pointLight.position, 'y', -100, 100, 1);
