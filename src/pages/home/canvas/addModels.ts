@@ -1,19 +1,9 @@
-import {
-  Euler,
-  Group,
-  MathUtils,
-  Mesh,
-  MeshBasicMaterial,
-  MeshPhongMaterial,
-  MeshStandardMaterial,
-  TextureLoader,
-} from 'three';
+import * as THREE from 'three';
+import { Euler, Group, MathUtils, Mesh, MeshPhongMaterial, TextureLoader } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 // import SpaceMan from '@/assets/Praying.fbx?url';
 import SpaceMan from '@/assets/spaceMan.fbx?url';
-
-import * as THREE from 'three';
-import { AnimationFrameSubject, clock, scene } from '@/pages/home/canvas/core';
+import { clock, scene } from '@/pages/home/canvas/core';
 import AstronautMap from '@/assets/Astronaut_D.jpg';
 
 export const addModels = async () => {
@@ -67,13 +57,6 @@ export const addModels = async () => {
 
     model.rotation.copy(new Euler(MathUtils.degToRad(180), MathUtils.degToRad(-90), 0));
 
-    // const mixer = new THREE.AnimationMixer(model);
-    // const action = mixer.clipAction(model.animations[0]);
-
-    // action.play();
-    // action.timeScale = 0.1;
-    // action.paused = true;
-    // mixer.update(delta);
     group.add(model);
   }
 
