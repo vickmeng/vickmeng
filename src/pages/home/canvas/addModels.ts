@@ -3,7 +3,7 @@ import { Euler, Group, MathUtils, Mesh, MeshPhongMaterial, TextureLoader } from 
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import SpaceMan from '@/assets/spaceMan.fbx?url';
 import { clock, scene } from '@/pages/home/canvas/core';
-import AstronautMap from '@/assets/Astronaut_D.jpg';
+import spaceManMap from '@/assets/spaceManMap.jpg';
 
 export const addModels = async () => {
   const delta = clock.getDelta();
@@ -13,16 +13,16 @@ export const addModels = async () => {
   const textureLoader = new TextureLoader();
   // const model = await loader.loadAsync(Praying);
 
-  const AstronautTexture = await textureLoader.loadAsync(AstronautMap);
+  const AstronautTexture = await textureLoader.loadAsync(spaceManMap);
 
   for (let i = 0; i < 9; i++) {
     const model = await loader.loadAsync(SpaceMan);
 
-    const people = model.children[0] as Mesh;
-    (people.material as MeshPhongMaterial).map = AstronautTexture;
+    const man = model.children[0] as Mesh;
+    (man.material as MeshPhongMaterial).map = AstronautTexture;
 
-    people.receiveShadow = true;
-    people.castShadow = true;
+    man.receiveShadow = true;
+    man.castShadow = true;
 
     model.position.x = -8;
     model.position.y = -3;
