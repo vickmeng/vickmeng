@@ -18,10 +18,9 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 export const scene = new THREE.Scene();
 
-const fog = new THREE.FogExp2(0x000000, 0.021);
+const fog = new THREE.FogExp2(0x000000, 0.024);
 
 scene.fog = fog;
-// scene.fog = new THREE.Fog(0x000000, 50, 100);
 
 export const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
 camera.position.z = 50;
@@ -30,10 +29,10 @@ camera.position.y = 8;
 /**
  * 光 start
  */
-export const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
+export const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
 directionalLight.position.set(-80, 40, 0);
 directionalLight.lookAt(new THREE.Vector3(0, 0, 0));
 directionalLight.castShadow = true;
@@ -47,26 +46,26 @@ directionalLight.shadow.camera.right = d;
 directionalLight.shadow.camera.top = d;
 directionalLight.shadow.camera.bottom = -d;
 //
-directionalLight.shadow.camera.far = 100;
+directionalLight.shadow.camera.far = 200;
 directionalLight.shadow.camera.near = 0.1;
 
 scene.add(directionalLight);
 // const helper = new THREE.DirectionalLightHelper(directionalLight, 100);
 // scene.add(helper);
 
-const light = new THREE.PointLight(0xffffff, 100000, 100);
-light.position.z = -40;
-light.position.y = 18;
-light.castShadow = true;
-scene.add(light);
+const pointLight = new THREE.PointLight(0xffffff, 100000, 100);
+pointLight.position.z = -40;
+pointLight.position.y = 18;
+pointLight.castShadow = true;
+scene.add(pointLight);
 //
-// const helper = new THREE.PointLightHelper(light, 4);
+// const helper = new THREE.PointLightHelper(pointLight, 4);
 // scene.add(helper);
 
 const gui = new GUI();
-gui.add(light.position, 'x', -100, 100, 1);
-gui.add(light.position, 'y', -100, 100, 1);
-gui.add(light.position, 'z', -100, 100, 1);
+gui.add(pointLight.position, 'x', -100, 100, 1);
+gui.add(pointLight.position, 'y', -100, 100, 1);
+gui.add(pointLight.position, 'z', -100, 100, 1);
 gui.add(fog, 'density', -0, 1, 0.001);
 
 /**
