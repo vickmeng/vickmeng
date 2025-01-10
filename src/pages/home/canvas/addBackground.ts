@@ -1,4 +1,4 @@
-import { Mesh, MeshBasicMaterial, MeshPhongMaterial, MeshStandardMaterial, PlaneGeometry, SphereGeometry } from 'three';
+import { Mesh, MeshStandardMaterial, PlaneGeometry } from 'three';
 import { scene } from '@/pages/home/canvas/core';
 
 export const addBackground = async () => {

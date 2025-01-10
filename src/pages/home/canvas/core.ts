@@ -1,6 +1,7 @@
 import { Subject } from 'rxjs';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { GUI } from 'dat.gui';
 
 export const AnimationFrameSubject = new Subject<number>();
 
@@ -16,10 +17,11 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 export const scene = new THREE.Scene();
-// scene.background = new THREE.Color(0xaaaaaa);
 
-scene.fog = new THREE.FogExp2(0x000000, 0.025);
-// scene.fog = new THREE.Fog(0x000000, 1, 40);
+const fog = new THREE.FogExp2(0x000000, 0.021);
+
+scene.fog = fog;
+// scene.fog = new THREE.Fog(0x000000, 50, 100);
 
 export const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
 camera.position.z = 50;
@@ -28,10 +30,10 @@ camera.position.y = 8;
 /**
  * 光 start
  */
-export const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+export const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 directionalLight.position.set(-80, 40, 0);
 directionalLight.lookAt(new THREE.Vector3(0, 0, 0));
 directionalLight.castShadow = true;
@@ -47,18 +49,25 @@ directionalLight.shadow.camera.bottom = -d;
 //
 directionalLight.shadow.camera.far = 100;
 directionalLight.shadow.camera.near = 0.1;
-// directionalLight.shadow.bias = -0.0001;
 
 scene.add(directionalLight);
-const helper = new THREE.DirectionalLightHelper(directionalLight, 100);
-scene.add(helper);
-// const light = new THREE.PointLight(0xff0000, 100000, 1000);
-// light.castShadow = true;
-// light.position.set(-150, 150, 0);
-// scene.add(light);
-//
-// const helper = new THREE.PointLightHelper(light, 100);
+// const helper = new THREE.DirectionalLightHelper(directionalLight, 100);
 // scene.add(helper);
+
+const light = new THREE.PointLight(0xffffff, 100000, 100);
+light.position.z = -40;
+light.position.y = 18;
+light.castShadow = true;
+scene.add(light);
+//
+// const helper = new THREE.PointLightHelper(light, 4);
+// scene.add(helper);
+
+const gui = new GUI();
+gui.add(light.position, 'x', -100, 100, 1);
+gui.add(light.position, 'y', -100, 100, 1);
+gui.add(light.position, 'z', -100, 100, 1);
+gui.add(fog, 'density', -0, 1, 0.001);
 
 /**
  * 光 end

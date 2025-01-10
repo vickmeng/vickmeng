@@ -11,7 +11,7 @@ import {
   Vector3,
 } from 'three';
 import { AnimationFrameSubject, scene } from '@/pages/home/canvas/core';
-
+// https://smythdesign.com/blog/stylized-grass-webgl/
 // Parameters
 const PLANE_SIZE = 80;
 const BLADE_COUNT = 200000;
@@ -145,7 +145,7 @@ function generateBlade(center: Vector3, vArrOffset: number, uv: number[]) {
   return { verts, indices };
 }
 
-export function generateField() {
+export function addGrass() {
   const positions: number[] = [];
   const uvs: number[] = [];
   const indices: number[] = [];

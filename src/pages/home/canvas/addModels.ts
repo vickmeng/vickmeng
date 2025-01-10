@@ -15,7 +15,7 @@ export const addModels = async () => {
 
   const AstronautTexture = await textureLoader.loadAsync(AstronautMap);
 
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 8; i++) {
     const model = await loader.loadAsync(SpaceMan);
 
     const people = model.children[0] as Mesh;
@@ -26,7 +26,7 @@ export const addModels = async () => {
 
     model.position.x = -8;
     model.position.y = -3;
-    model.position.z = 35 - i * 8;
+    model.position.z = 38 - i * 8;
     model.scale.set(4, 4, 4);
     model.rotation.copy(new Euler(0, MathUtils.degToRad(90), 0));
 
@@ -40,7 +40,7 @@ export const addModels = async () => {
     group.add(model);
   }
 
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 8; i++) {
     const model = await loader.loadAsync(SpaceMan);
 
     const people = model.children[0] as Mesh;
@@ -51,7 +51,7 @@ export const addModels = async () => {
 
     model.position.x = 8;
     model.position.y = -1;
-    model.position.z = 35 - i * 8;
+    model.position.z = 38 - i * 8;
     model.scale.set(4, 4, 4);
 
     model.rotation.copy(new Euler(MathUtils.degToRad(180), MathUtils.degToRad(-90), 0));
