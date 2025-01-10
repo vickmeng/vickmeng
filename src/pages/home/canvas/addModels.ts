@@ -1,30 +1,44 @@
-import { Euler, Group, MathUtils } from 'three';
+import {
+  Euler,
+  Group,
+  MathUtils,
+  Mesh,
+  MeshBasicMaterial,
+  MeshPhongMaterial,
+  MeshStandardMaterial,
+  TextureLoader,
+} from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import Praying from '@/assets/Praying.fbx?url';
+// import SpaceMan from '@/assets/Praying.fbx?url';
+import SpaceMan from '@/assets/spaceMan.fbx?url';
+
 import * as THREE from 'three';
 import { AnimationFrameSubject, clock, scene } from '@/pages/home/canvas/core';
+import AstronautMap from '@/assets/Astronaut_D.jpg';
 
 export const addModels = async () => {
+  const delta = clock.getDelta();
   const group = new Group();
 
   const loader = new FBXLoader();
-  const delta = clock.getDelta();
+  const textureLoader = new TextureLoader();
   // const model = await loader.loadAsync(Praying);
 
+  const AstronautTexture = await textureLoader.loadAsync(AstronautMap);
+
   for (let i = 0; i < 2; i++) {
-    const model = await loader.loadAsync(Praying);
+    const model = await loader.loadAsync(SpaceMan);
 
-    console.log(model);
-
-    const people = model.children[1];
+    const people = model.children[0] as Mesh;
+    (people.material as MeshPhongMaterial).map = AstronautTexture;
 
     people.receiveShadow = true;
     people.castShadow = true;
 
     model.position.x = -130;
-    model.position.y = -100;
+    model.position.y = -40;
     model.position.z = 700 - i * 240;
-
+    model.scale.set(60, 60, 60);
     model.rotation.copy(new Euler(0, MathUtils.degToRad(90), 0));
 
     const mixer = new THREE.AnimationMixer(model);
@@ -38,20 +52,28 @@ export const addModels = async () => {
   }
 
   for (let i = 0; i < 2; i++) {
-    const model = await loader.loadAsync(Praying);
+    const model = await loader.loadAsync(SpaceMan);
 
-    const people = model.children[1];
+    const people = model.children[0] as Mesh;
+    (people.material as MeshPhongMaterial).map = AstronautTexture;
 
     people.receiveShadow = true;
     people.castShadow = true;
 
     model.position.x = 130;
-    model.position.y = 70;
-
+    model.position.y = -20;
     model.position.z = 700 - i * 240;
+    model.scale.set(60, 60, 60);
 
     model.rotation.copy(new Euler(MathUtils.degToRad(180), MathUtils.degToRad(-90), 0));
 
+    // const mixer = new THREE.AnimationMixer(model);
+    // const action = mixer.clipAction(model.animations[0]);
+
+    // action.play();
+    // action.timeScale = 0.1;
+    // action.paused = true;
+    // mixer.update(delta);
     group.add(model);
   }
 

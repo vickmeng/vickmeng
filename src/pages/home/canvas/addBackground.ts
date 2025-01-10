@@ -1,10 +1,32 @@
-import { MathUtils, Mesh, MeshStandardMaterial, PlaneGeometry, SphereGeometry } from 'three';
+import {
+  MathUtils,
+  Mesh,
+  MeshLambertMaterial,
+  MeshStandardMaterial,
+  PlaneGeometry,
+  SphereGeometry,
+  TextureLoader,
+  Vector2,
+} from 'three';
 import { scene } from '@/pages/home/canvas/core';
+import grass from '@/assets/grasslight-big.jpg';
+import grassNM from '@/assets/grasslight-big-nm.jpg';
 
-export const addBackground = () => {
-  const groundGeometry = new PlaneGeometry(2000, 2000);
+export const addBackground = async () => {
+  const textureLoader = new TextureLoader();
+  const grassColorTexture = textureLoader.load(grass);
+  const grassNormalTexture = textureLoader.load(grassNM);
+
+  const groundGeometry = new PlaneGeometry(2048, 2048);
   groundGeometry.rotateX(-0.5 * Math.PI);
   const groundMaterial = new MeshStandardMaterial({ color: 0xcccccc });
+
+  // const groundMaterial = new MeshLambertMaterial({
+  //   map: grassColorTexture,
+  //   normalMap: grassNormalTexture,
+  //   normalScale: new Vector2(0.2, 0.2), // 控制法线纹理的强度，可根据需要调整
+  // });
+
   const ground = new Mesh(groundGeometry, groundMaterial);
   scene.add(ground);
   ground.receiveShadow = true;
@@ -30,9 +52,9 @@ export const addBackground = () => {
   //
   // scene.add(terrain);
 
-  const ball = new Mesh(new SphereGeometry(100, 100), new MeshStandardMaterial({ color: 0xcccccc }));
-  ball.receiveShadow = true;
-  ball.castShadow = true;
+  // const ball = new Mesh(new SphereGeometry(100, 100), new MeshStandardMaterial({ color: 0xcccccc }));
+  // ball.receiveShadow = true;
+  // ball.castShadow = true;
 
-  scene.add(ball);
+  // scene.add(ball);
 };
