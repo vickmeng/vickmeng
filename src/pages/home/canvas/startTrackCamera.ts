@@ -117,11 +117,29 @@ const fadeOut = async () => {
   await lastValueFrom(animate$);
 };
 
-export const startTrackCamera = async () => {
+const handleSwitchTrack = async () => {
   fadeIn();
   await move();
 
   setTimeout(fadeOut, 11000);
 
-  startTrackCamera();
+  handleSwitchTrack();
+};
+
+let playing = false;
+
+export const startTrackCamera = async () => {
+  console.log('startTrackCamera', playing);
+
+  if (playing) {
+    return;
+  }
+
+  playing = true;
+
+  await move();
+
+  setTimeout(fadeOut, 11000);
+
+  handleSwitchTrack();
 };
