@@ -342,6 +342,8 @@ const hideSands = async () => {
     },
   });
 
+  // tween.stop()
+
   await lastValueFrom(animate$);
 };
 

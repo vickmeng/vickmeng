@@ -1,4 +1,4 @@
-import { camera, clock, renderer, scene, controls, AnimationFrameSubject } from '@/pages/home/canvas/core';
+import { AnimationFrameSubject, camera, clock, composer, renderer, scene } from '@/pages/home/canvas/core';
 import { addModels } from '@/pages/home/canvas/addModels';
 import { addBackground } from '@/pages/home/canvas/addBackground';
 import { addGrass } from '@/pages/home/canvas/addGrass';
@@ -10,9 +10,10 @@ addModels();
 addBackground();
 addGrass();
 addEvil();
+// moveCamera();
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
-  // camera.updateProjectionMatrix();
+  camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 window.addEventListener('resize', onWindowResize);
@@ -20,8 +21,9 @@ window.addEventListener('resize', onWindowResize);
 AnimationFrameSubject.asObservable().subscribe(() => {
   const delta = clock.getDelta();
   renderer.render(scene, camera);
+  composer.render();
   // composer.render();
-  controls.update(delta);
+  // controls.update(delta);
   requestIdleCallback(() => {
     AnimationFrameSubject.next(delta);
   });

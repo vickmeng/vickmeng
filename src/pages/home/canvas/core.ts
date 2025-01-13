@@ -1,7 +1,10 @@
 import { Subject } from 'rxjs';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GUI } from 'dat.gui';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
+import { fadeMaterial } from '@/pages/home/canvas/fadeMaterial';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 
 export const AnimationFrameSubject = new Subject<number>();
 
@@ -50,38 +53,29 @@ directionalLight.shadow.camera.far = 200;
 directionalLight.shadow.camera.near = 0.1;
 
 scene.add(directionalLight);
-// const helper = new THREE.DirectionalLightHelper(directionalLight, 100);
-// scene.add(helper);
 
 const pointLight = new THREE.PointLight(0xffffff, 100000, 100);
 pointLight.position.z = -40;
 pointLight.position.y = 18;
 pointLight.castShadow = true;
 scene.add(pointLight);
-//
-// const helper = new THREE.PointLightHelper(pointLight, 4);
-// scene.add(helper);
-//
+
 const gui = new GUI();
-gui.add(pointLight.position, 'x', -100, 100, 1);
-gui.add(pointLight.position, 'y', -100, 100, 1);
-gui.add(pointLight.position, 'z', -100, 100, 1);
-gui.add(fog, 'density', -0, 1, 0.001);
+
+gui.add(fog, 'density', 0, 1, 0.0001);
 
 /**
  * 光 end
  */
 
 /**
- * 地板 start
+ * 后期特效滤镜 start
  */
-// const groundGeometry = new THREE.PlaneGeometry(2000, 2000);
-// groundGeometry.rotateX(-0.5 * Math.PI);
-// const groundMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
-// const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-// scene.add(ground);
+export const composer = new EffectComposer(renderer);
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
+const fadePass = new ShaderPass(fadeMaterial);
+composer.addPass(fadePass);
 /**
- * 地板 end
+ * 后期特效滤镜 start
  */
-
-export const controls = new OrbitControls(camera, renderer.domElement);
