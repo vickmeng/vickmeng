@@ -1,12 +1,14 @@
 /* 定义动画关键帧 */
 @keyframes moveAndBlink {
   0% {
-    transform: translateY(0); /* 初始位置，不做上下移动 */
+    bottom: 20px;
+
     opacity: 1; /* 初始透明度，完全不透明 */
   }
 
   100% {
-    transform: translateY(-15px); /* 最终回到初始位置 */
+    bottom: 32px;
+
     opacity: 0; /* 完全不透明 */
   }
 }

@@ -129,8 +129,6 @@ const handleSwitchTrack = async () => {
 let playing = false;
 
 export const startTrackCamera = async () => {
-  console.log('startTrackCamera', playing);
-
   if (playing) {
     return;
   }

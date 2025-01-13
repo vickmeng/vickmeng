@@ -4,9 +4,10 @@ import { Mousewheel } from 'swiper/modules';
 import 'swiper/css/mousewheel';
 import 'swiper/css';
 import './index.less';
-import Nav from '@/pages/home/components/Nav';
+import Nav from '@/pages/home/components/Nav/Nav';
 import { startTrackCamera } from '@/pages/home/canvas/startTrackCamera';
 import ContentFirst from '@/pages/home/components/ContentFirst/ContentFirst';
+import { sideIndexStore } from '@/pages/home/store';
 
 const Home = () => {
   useEffect(() => {
@@ -27,7 +28,9 @@ const Home = () => {
         modules={[Mousewheel]}
         speed={500}
         draggable={false}
-        onBeforeSlideChangeStart={(swiper) => {
+        onSlideChange={(swiper) => {
+          sideIndexStore.sideIndex = swiper.activeIndex;
+
           startTrackCamera();
         }}
       >

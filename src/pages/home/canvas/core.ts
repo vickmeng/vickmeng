@@ -1,6 +1,5 @@
 import { Subject } from 'rxjs';
 import * as THREE from 'three';
-import { GUI } from 'dat.gui';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 import { fadeMaterial } from '@/pages/home/canvas/fadeMaterial';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -60,9 +59,9 @@ pointLight.position.y = 18;
 pointLight.castShadow = true;
 scene.add(pointLight);
 
-const gui = new GUI();
+// const gui = new GUI();
 
-gui.add(fog, 'density', 0, 1, 0.0001);
+// gui.add(fog, 'density', 0, 1, 0.0001);
 
 /**
  * 光 end
