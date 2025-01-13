@@ -6,6 +6,7 @@ import 'swiper/css';
 import './index.less';
 import Nav from '@/pages/home/components/Nav';
 import { startTrackCamera } from '@/pages/home/canvas/startTrackCamera';
+import ContentFirst from '@/pages/home/components/ContentFirst/ContentFirst';
 
 const Home = () => {
   useEffect(() => {
@@ -33,7 +34,7 @@ const Home = () => {
         <Nav></Nav>
 
         <SwiperSlide>
-          <h1 style={{ color: 'red' }}> Slide 1</h1>
+          <ContentFirst />
         </SwiperSlide>
         <SwiperSlide>
           <h1 style={{ color: 'red' }}> Slide 2</h1>

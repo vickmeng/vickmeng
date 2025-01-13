@@ -7,13 +7,6 @@ const Nav = () => {
     <div style={{ position: 'fixed', zIndex: 1000, top: 0 }}>
       <button
         onClick={() => {
-          swiper.slideTo(0);
-        }}
-      >
-        首页
-      </button>
-      <button
-        onClick={() => {
           swiper.slideTo(1);
         }}
       >

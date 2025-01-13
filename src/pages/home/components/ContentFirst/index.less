@@ -1,0 +1,32 @@
+/* 定义动画关键帧 */
+@keyframes moveAndBlink {
+  0% {
+    transform: translateY(0); /* 初始位置，不做上下移动 */
+    opacity: 1; /* 初始透明度，完全不透明 */
+  }
+
+  100% {
+    transform: translateY(-15px); /* 最终回到初始位置 */
+    opacity: 0; /* 完全不透明 */
+  }
+}
+
+.next-page-tip {
+
+  animation: moveAndBlink 1s ease-in-out infinite; /* 动画名称为moveAndBlink，持续时间3秒，缓动效果为ease-in-out，无限循环播放 */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  color: #2c2c2c;
+
+  img {
+    width: 60px;
+  }
+
+}
