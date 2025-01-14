@@ -1,19 +1,12 @@
-import { useSwiper } from 'swiper/react';
 import { ReactNode } from 'react';
 import './index.less';
-import { useSnapshot } from 'valtio/react';
-import { sideIndexStore } from '@/pages/home/store';
 
 const NavLink = ({ children, slideToIndex }: { children: ReactNode; slideToIndex: number }) => {
-  const swiper = useSwiper();
-
-  const { sideIndex } = useSnapshot(sideIndexStore);
-
   return (
     <div
-      className={`nav-link ${sideIndex === slideToIndex ? 'active' : ''}`}
+      className={'nav-link active'}
       onClick={() => {
-        swiper.slideTo(slideToIndex);
+        // swiper.slideTo(slideToIndex);
       }}
     >
       {children}

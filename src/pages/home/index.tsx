@@ -5,6 +5,7 @@ import './index.less';
 import Start from '@/pages/home/components/Start';
 import { useSnapshot } from 'valtio/react';
 import { playingStore } from '@/pages/home/store';
+import { startTrackCamera } from '@/pages/home/canvas/startTrackCamera';
 
 const Home = () => {
   const { playing } = useSnapshot(playingStore);
@@ -12,6 +13,20 @@ const Home = () => {
   useEffect(() => {
     // @ts-ignore
     import('./canvas/init.ts');
+  }, []);
+
+  useEffect(() => {
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > 30) {
+        startTrackCamera();
+      }
+    };
+
+    document.addEventListener('wheel', onWheel);
+
+    return () => {
+      document.removeEventListener('wheel', onWheel);
+    };
   }, []);
 
   return (
