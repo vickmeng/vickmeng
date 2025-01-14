@@ -3,7 +3,7 @@
   0% {
     bottom: 20px;
 
-    opacity: 1; /* 初始透明度，完全不透明 */
+    opacity: 0.8; /* 初始透明度，完全不透明 */
   }
 
   100% {
@@ -14,6 +14,7 @@
 }
 
 .next-page-tip {
+  font-size: 14px;
 
   animation: moveAndBlink 1s ease-in-out infinite; /* 动画名称为moveAndBlink，持续时间3秒，缓动效果为ease-in-out，无限循环播放 */
   position: fixed;
@@ -26,6 +27,8 @@
   align-items: center;
 
   color: #2c2c2c;
+
+  cursor: pointer;
 
   img {
     width: 60px;

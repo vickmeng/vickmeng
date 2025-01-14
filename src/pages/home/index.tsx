@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel } from 'swiper/modules';
 import 'swiper/css/mousewheel';
 import 'swiper/css';
 import './index.less';
-import Nav from '@/pages/home/components/Nav/Nav';
-import { startTrackCamera } from '@/pages/home/canvas/startTrackCamera';
-import ContentFirst from '@/pages/home/components/ContentFirst/ContentFirst';
-import { sideIndexStore } from '@/pages/home/store';
+import Start from '@/pages/home/components/Start';
+import { useSnapshot } from 'valtio/react';
+import { playingStore } from '@/pages/home/store';
 
 const Home = () => {
+  const { playing } = useSnapshot(playingStore);
+
   useEffect(() => {
     // @ts-ignore
     import('./canvas/init.ts');
@@ -19,42 +18,7 @@ const Home = () => {
     <>
       <div id={'home_bg'} style={{ position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, zIndex: '-1' }}></div>
 
-      <Swiper
-        autoplay={false}
-        direction={'vertical'}
-        mousewheel={{
-          thresholdDelta: 60,
-        }}
-        modules={[Mousewheel]}
-        speed={500}
-        draggable={false}
-        onSlideChange={(swiper) => {
-          sideIndexStore.sideIndex = swiper.activeIndex;
-
-          startTrackCamera();
-        }}
-      >
-        <Nav></Nav>
-
-        <SwiperSlide>
-          <ContentFirst />
-        </SwiperSlide>
-        <SwiperSlide>
-          <h1 style={{ color: 'red' }}> Slide 2</h1>
-        </SwiperSlide>
-        <SwiperSlide>
-          <h1 style={{ color: 'red' }}> Slide 3</h1>
-        </SwiperSlide>
-        <SwiperSlide>
-          <h1 style={{ color: 'red' }}> Slide 4</h1>
-        </SwiperSlide>
-        <SwiperSlide>
-          <h1 style={{ color: 'red' }}> Slide 5</h1>
-        </SwiperSlide>
-        <SwiperSlide>
-          <h1 style={{ color: 'red' }}> Slide 6</h1>
-        </SwiperSlide>
-      </Swiper>
+      {!playing && <Start />}
     </>
   );
 };

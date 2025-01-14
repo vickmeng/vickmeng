@@ -11,7 +11,7 @@ addModels();
 addBackground();
 addGrass();
 addEvil();
-// moveCamera();
+
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -24,10 +24,10 @@ const lookAtPosition = new Vector3(0, 0, 8);
 AnimationFrameSubject.asObservable().subscribe(() => {
   const delta = clock.getDelta();
   renderer.render(scene, camera);
+
   composer.render();
   camera.lookAt(lookAtPosition);
-  // composer.render();
-  // controls.update(delta);
+
   requestIdleCallback(() => {
     AnimationFrameSubject.next(delta);
   });

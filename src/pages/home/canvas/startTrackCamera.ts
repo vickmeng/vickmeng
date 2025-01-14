@@ -8,6 +8,7 @@ import { Tween } from '@tweenjs/tween.js';
 import { AnimationFrameSubject, camera } from '@/pages/home/canvas/core';
 import { fadeMaterial } from '@/pages/home/canvas/fadeMaterial';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
+import { playingStore } from '@/pages/home/store';
 
 const moveCameraTracks: CatmullRomCurve3[] = [
   new CatmullRomCurve3([new Vector3(0, 8, 50), new Vector3(0, 1.2, 7.7)]),
@@ -119,25 +120,22 @@ const fadeOut = async () => {
 
 const handleSwitchTrack = async () => {
   fadeIn();
-  await move();
 
-  setTimeout(fadeOut, 11000);
+  setTimeout(fadeOut, 12000);
+  await move();
 
   handleSwitchTrack();
 };
 
-let playing = false;
-
 export const startTrackCamera = async () => {
-  if (playing) {
+  if (playingStore.playing) {
     return;
   }
 
-  playing = true;
+  playingStore.playing = true;
 
+  setTimeout(fadeOut, 12000);
   await move();
-
-  setTimeout(fadeOut, 11000);
 
   handleSwitchTrack();
 };

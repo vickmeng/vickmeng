@@ -25,6 +25,7 @@ const fog = new THREE.FogExp2(0x000000, 0.022);
 scene.fog = fog;
 
 export const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
+
 camera.position.z = 50;
 camera.position.y = 8;
 
@@ -58,10 +59,6 @@ pointLight.position.z = -40;
 pointLight.position.y = 18;
 pointLight.castShadow = true;
 scene.add(pointLight);
-
-// const gui = new GUI();
-
-// gui.add(fog, 'density', 0, 1, 0.0001);
 
 /**
  * 光 end
