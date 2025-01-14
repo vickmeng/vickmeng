@@ -1,6 +1,4 @@
 import { useEffect } from 'react';
-import 'swiper/css/mousewheel';
-import 'swiper/css';
 import './index.less';
 import Start from '@/pages/home/components/Start';
 import { useSnapshot } from 'valtio/react';
@@ -32,13 +30,13 @@ const Home = () => {
 
   return (
     <>
-      <div id={'home_bg'} style={{ position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, zIndex: '-1' }}></div>
+      <div id={'home_bg'}></div>
 
       {!playing && <Start />}
 
       {playing && (
         <div
-          style={{ position: 'fixed', color: '#fff', fontSize: '12px', cursor: 'pointer' }}
+          style={{ position: 'fixed', color: '#fff', fontSize: '12px', cursor: 'pointer', zIndex: 1000, top: 0 }}
           onClick={() => {
             trackHelperGroup.visible = !trackHelperGroup.visible;
           }}
