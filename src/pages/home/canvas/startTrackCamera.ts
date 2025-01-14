@@ -198,7 +198,6 @@ const handleSwitchTrack = async (isStart: boolean) => {
 };
 
 export const startTrackCamera = async () => {
-  console.log('startTrackCamera');
   if (playingStore.playing) {
     return;
   }
