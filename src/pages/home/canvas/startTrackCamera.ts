@@ -178,14 +178,29 @@ const addTrackHelper = () => {
   }
 };
 
+const delay = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 const handleSwitchTrack = async (isStart: boolean) => {
+  addTrackHelper();
+
+  const animationList: (() => Promise<any>)[] = [];
+
   if (!isStart) {
     // 第一次没有fadeIn
-    fadeIn();
+    animationList.push(() => fadeIn());
   }
+  animationList.push(() => moveTrack());
 
-  addTrackHelper();
-  setTimeout(fadeOut, 12000);
+  const fadeOutAndDelay = async () => {
+    await delay(12000);
+    await fadeOut();
+  };
+  animationList.push(() => fadeOutAndDelay());
+
+  await Promise.all(animationList);
+
   await moveTrack();
 
   handleSwitchTrack(false);
