@@ -4,6 +4,7 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 import { fadeMaterial } from '@/pages/home/canvas/fadeMaterial';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { Group, Vector3 } from 'three';
 
 export const AnimationFrameSubject = new Subject<number>();
 
@@ -28,6 +29,7 @@ export const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window
 
 camera.position.z = 50;
 camera.position.y = 8;
+camera.lookAt(new Vector3(0, 0, 0));
 
 /**
  * 光 start
@@ -75,3 +77,10 @@ composer.addPass(fadePass);
 /**
  * 后期特效滤镜 start
  */
+
+/**
+ * 轨道helper
+ */
+export const trackHelperGroup = new Group();
+trackHelperGroup.visible = false;
+scene.add(trackHelperGroup);

@@ -6,6 +6,7 @@ import Start from '@/pages/home/components/Start';
 import { useSnapshot } from 'valtio/react';
 import { playingStore } from '@/pages/home/store';
 import { startTrackCamera } from '@/pages/home/canvas/startTrackCamera';
+import { trackHelperGroup } from '@/pages/home/canvas/core';
 
 const Home = () => {
   const { playing } = useSnapshot(playingStore);
@@ -34,6 +35,17 @@ const Home = () => {
       <div id={'home_bg'} style={{ position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, zIndex: '-1' }}></div>
 
       {!playing && <Start />}
+
+      {playing && (
+        <div
+          style={{ position: 'fixed', color: '#fff', fontSize: '12px', cursor: 'pointer' }}
+          onClick={() => {
+            trackHelperGroup.visible = !trackHelperGroup.visible;
+          }}
+        >
+          切换辅助工具
+        </div>
+      )}
     </>
   );
 };

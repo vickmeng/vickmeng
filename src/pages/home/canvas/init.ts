@@ -3,7 +3,6 @@ import { addModels } from '@/pages/home/canvas/addModels';
 import { addBackground } from '@/pages/home/canvas/addBackground';
 import { addGrass } from '@/pages/home/canvas/addGrass';
 import { addEvil } from '@/pages/home/canvas/addEvil';
-import { Vector3 } from 'three';
 
 document.querySelector('#home_bg')!.appendChild(renderer.domElement);
 
@@ -19,14 +18,14 @@ function onWindowResize() {
 }
 window.addEventListener('resize', onWindowResize);
 
-const lookAtPosition = new Vector3(0, 0, 8);
+// const lookAtPosition = new Vector3(0, 0, 8);
 
 AnimationFrameSubject.asObservable().subscribe(() => {
   const delta = clock.getDelta();
   renderer.render(scene, camera);
 
   composer.render();
-  camera.lookAt(lookAtPosition);
+  // camera.lookAt(lookAtPosition);
 
   requestIdleCallback(() => {
     AnimationFrameSubject.next(delta);
