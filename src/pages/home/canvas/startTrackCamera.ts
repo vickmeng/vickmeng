@@ -3,25 +3,13 @@
 // import { Easing, Tween } from '@tweenjs/moveCameraTween.js';
 //
 
-import { CatmullRomCurve3, Vector3, Curve, Group, Mesh, SphereGeometry, MeshBasicMaterial } from 'three';
+import * as THREE from 'three';
+import { CatmullRomCurve3, Curve, Mesh, MeshBasicMaterial, SphereGeometry, Vector3 } from 'three';
 import { Tween } from '@tweenjs/tween.js';
 import { AnimationFrameSubject, camera, trackHelperGroup } from '@/pages/home/canvas/core';
 import { fadeMaterial } from '@/pages/home/canvas/fadeMaterial';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
 import { playingStore } from '@/pages/home/store';
-import * as THREE from 'three';
-
-const moveCameraTracks: CatmullRomCurve3[] = [
-  new CatmullRomCurve3([new Vector3(0, 8, 50), new Vector3(0, 1.2, 7.7)]),
-  new CatmullRomCurve3([new Vector3(-5, 6.9, 50), new Vector3(-4.947714954383741, 4, 45.8), new Vector3(-6, 3.54, 40)]),
-  new CatmullRomCurve3([new Vector3(50, 6.6, 0), new Vector3(34, 37, 0.0), new Vector3(0, 50, 0.0)]),
-  new CatmullRomCurve3([
-    new Vector3(12.7, 15.6, -42.7),
-    new Vector3(4.7, 20, -42),
-    new Vector3(-4.1, 22, -41),
-    new Vector3(-15, 20.7, -40),
-  ]),
-];
 
 interface Track {
   cameraTrack: Curve<Vector3> | Vector3;
