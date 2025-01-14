@@ -117,6 +117,7 @@ const fadeIn = async () => {
 };
 
 const fadeOut = async () => {
+  console.log('fadeOut');
   const animateFinish = new Subject();
 
   const animate$ = AnimationFrameSubject.pipe(takeUntil(animateFinish));
@@ -185,32 +186,23 @@ const delay = (ms: number) => {
 const handleSwitchTrack = async (isStart: boolean) => {
   addTrackHelper();
 
-  const animationList: (() => Promise<any>)[] = [];
-
-  if (!isStart) {
-    // 第一次没有fadeIn
-    animationList.push(() => fadeIn());
-  }
-  animationList.push(() => moveTrack());
-
   const fadeOutAndDelay = async () => {
     await delay(12000);
     await fadeOut();
   };
-  animationList.push(() => fadeOutAndDelay());
+  // animationList.push(fadeOutAndDelay);
 
-  await Promise.all(animationList);
+  await Promise.all([isStart ? undefined : fadeIn(), moveTrack(), fadeOutAndDelay()]);
 
-  await moveTrack();
-
-  handleSwitchTrack(false);
+  await handleSwitchTrack(false);
 };
 
 export const startTrackCamera = async () => {
+  console.log('startTrackCamera');
   if (playingStore.playing) {
     return;
   }
 
   playingStore.playing = true;
-  handleSwitchTrack(true);
+  await handleSwitchTrack(true);
 };
