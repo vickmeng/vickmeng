@@ -3,7 +3,7 @@ import './index.less';
 const FirstSide = () => {
   return (
     <div className={'first-side'}>
-      <FadeBox style={{ fontSize: '20px' }}>我是老孟 &nbsp;&nbsp;东北人&nbsp;&nbsp;1993</FadeBox>
+      <FadeBox style={{ fontSize: '20px' }}>我是老孟 &nbsp;&nbsp;1993&nbsp;&nbsp;在成都</FadeBox>
 
       <br></br>
 

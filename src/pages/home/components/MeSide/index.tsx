@@ -7,7 +7,7 @@ const MeSide = () => {
   return (
     <div className={'me-side'}>
       <div className={'me-side__content'}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
           <div style={{ marginRight: '20px' }}>
             <FadeBox>
               <img src={photo} className={'photo'}></img>
@@ -35,7 +35,9 @@ const MeSide = () => {
         </div>
 
         <FadeBox>
-          <p>如果你喜欢这个网站，或是想共同学习进步，或是有好的工作机会，请多多联系我！直接加我微信就OK！</p>
+          <p>
+            如果你喜欢这个网站，或是想共同学习进步，或是有好的工作机会，请多多联系我！直接加我微信就OK！我在成都高新区！
+          </p>
         </FadeBox>
 
         <br></br>
@@ -44,7 +46,7 @@ const MeSide = () => {
           <p>至于为什么做了这个网站？</p>
         </FadeBox>
         <FadeBox>
-          <p>因为最近真的很迷藤本树，这网站也是还原了暗之恶魔登场的名场面。</p>
+          <p>因为最近真的很迷藤本树，这网站也是复刻了暗之恶魔登场的名场面。</p>
         </FadeBox>
 
         <FadeBox>
