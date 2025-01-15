@@ -68,80 +68,105 @@ export const dalianConfig: CityConfig = {
   pointVectorList: [],
   pointVertices: [],
   toNextCurves: [],
+  // getDesc: () => {
+  //   const group = new Group();
+  //   const text1 = new Text();
+  //   text1.name = 'p';
+  //   text1.text =
+  //     '大连是我职业生涯起点,' +
+  //     '两年里让我从小白成长为靠谱开发者。\n' +
+  //     '身处国内最早一批使用Angular的团队（不是Angularjs！），开荒过程收益良多。' +
+  //     '也借此加入了RxCN开源组织，参与Rxjs官方文档及高分文章的翻译校验。';
+  //
+  //   const text2 = new Text();
+  //   text2.name = 'h';
+  //   text2.text = '大连商务集团天狗网（2016~2018，前端开发工程师）';
+  //   text2.position.x = 9;
+  //   text2.position.y = -11.5;
+  //
+  //   const text3 = new Text();
+  //   text3.name = 'h';
+  //   text3.text = '重点项目1.BI可视化分析系统';
+  //   text3.position.y = -15.5;
+  //
+  //   const text4 = new Text();
+  //   text4.name = 'p';
+  //   text4.text = '项目介绍：老的系统还停留在Jquery阶段，我负责可视化功能开发与落地Angular + Typescript技术升级';
+  //   text4.position.y = -19;
+  //
+  //   const text5 = new Text();
+  //   text5.name = 'p';
+  //   text5.text = '技术栈：Typescript，Angular，D3.js，G2，Jquery';
+  //   text5.position.y = -25.5;
+  //
+  //   const text6 = new Text();
+  //   text6.name = 'h';
+  //   text6.text = '重点项目2.天狗农产品商城';
+  //   text6.position.y = -30;
+  //
+  //   const text7 = new Text();
+  //   text7.name = 'p';
+  //   text7.text = '项目介绍：基于Ionic的移动端跨端项目。';
+  //   text7.position.y = -33.5;
+  //
+  //   const text8 = new Text();
+  //   text8.name = 'p';
+  //   text8.text = '技术栈：Typescript，Angular，Cordova, Ionic';
+  //   text8.position.y = -38;
+  //
+  //   const textList = [text1, text2, text3, text4, text5, text6, text7, text8];
+  //   textList.forEach((_text) => {
+  //     if (_text.name === 'p') {
+  //       _text.fontSize = 2;
+  //       _text.maxWidth = Math.min(_text.maxWidth, 60);
+  //       _text.lineHeight = 1.2;
+  //       _text.font = font;
+  //       _text.overflowWrap = 'break-word';
+  //       _text.material = new MeshBasicMaterial({ color: new Color(0xffffff) });
+  //     } else if (_text.name === 'h') {
+  //       _text.fontSize = 2;
+  //       _text.maxWidth = Math.min(_text.maxWidth, 60);
+  //       _text.lineHeight = 1.2;
+  //       _text.font = font;
+  //       _text.overflowWrap = 'break-word';
+  //       _text.material = new MeshBasicMaterial({ color: new Color(0xf2dd0b) });
+  //     }
+  //   });
+  //
+  //   group.add(...textList);
+  //   group.position.set(-18, 210, 400);
+  //   // group.rotation.set(0, 2 * Math.PI * 0.99, 0);
+  //
+  //   group.name = 'desc';
+  //
+  //   // const gui = new GUI();
+  //   // gui.add(text2.position, 'x', -100, 100, 0.1);
+  //   // gui.add(text2.position, 'y', -100, 100, 0.1);
+  //
+  //   return group;
+  // },
   getDesc: () => {
     const group = new Group();
-    const text1 = new Text();
-    text1.name = 'p';
-    text1.text =
-      '大连是我职业生涯起点,' +
-      '两年里让我从小白成长为靠谱开发者。\n' +
-      '身处国内最早一批使用Angular的团队（不是Angularjs！），开荒过程收益良多。' +
-      '也借此加入了RxCN开源组织，参与Rxjs官方文档及高分文章的翻译校验。';
 
-    const text2 = new Text();
-    text2.name = 'h';
-    text2.text = '大连商务集团天狗网（2016~2018，前端开发工程师）';
-    text2.position.x = 9;
-    text2.position.y = -11.5;
+    const myText = new Text();
 
-    const text3 = new Text();
-    text3.name = 'h';
-    text3.text = '重点项目1.BI可视化分析系统';
-    text3.position.y = -15.5;
+    myText.text =
+      '我大学实习工作是在大连的一家编程培训学校当客服，意外发现那帮毕业生的水平完全赶不上我，干脆我也开启了职业生涯。\n\n' +
+      '在大连的2年里始终是程序员加纹身师的双职业，基本全年无休，下了班还要熬夜画纹身设计稿，累到出鼻血，实在熬不住了必须放弃一样。\n\n' +
+      '纹身师不好找对象，于是割爱纹身。\n\n' +
+      '既然决定全职编程就要好好做，大连缺乏就业土壤不便久留，于是动身成都。';
 
-    const text4 = new Text();
-    text4.name = 'p';
-    text4.text = '项目介绍：老的系统还停留在Jquery阶段，我负责可视化功能开发与落地Angular + Typescript技术升级';
-    text4.position.y = -19;
+    myText.fontSize = 2.3;
+    myText.maxWidth = 60;
+    myText.lineHeight = 1.2;
+    myText.font = font;
+    myText.overflowWrap = 'break-word';
 
-    const text5 = new Text();
-    text5.name = 'p';
-    text5.text = '技术栈：Typescript，Angular，D3.js，G2，Jquery';
-    text5.position.y = -25.5;
+    group.add(myText);
 
-    const text6 = new Text();
-    text6.name = 'h';
-    text6.text = '重点项目2.天狗农产品商城';
-    text6.position.y = -30;
-
-    const text7 = new Text();
-    text7.name = 'p';
-    text7.text = '项目介绍：基于Ionic的移动端跨端项目。';
-    text7.position.y = -33.5;
-
-    const text8 = new Text();
-    text8.name = 'p';
-    text8.text = '技术栈：Typescript，Angular，Cordova, Ionic';
-    text8.position.y = -38;
-
-    const textList = [text1, text2, text3, text4, text5, text6, text7, text8];
-    textList.forEach((_text) => {
-      if (_text.name === 'p') {
-        _text.fontSize = 2;
-        _text.maxWidth = Math.min(_text.maxWidth, 60);
-        _text.lineHeight = 1.2;
-        _text.font = font;
-        _text.overflowWrap = 'break-word';
-        _text.material = new MeshBasicMaterial({ color: new Color(0xffffff) });
-      } else if (_text.name === 'h') {
-        _text.fontSize = 2;
-        _text.maxWidth = Math.min(_text.maxWidth, 60);
-        _text.lineHeight = 1.2;
-        _text.font = font;
-        _text.overflowWrap = 'break-word';
-        _text.material = new MeshBasicMaterial({ color: new Color(0xf2dd0b) });
-      }
-    });
-
-    group.add(...textList);
-    group.position.set(-18, 210, 400);
-    // group.rotation.set(0, 2 * Math.PI * 0.99, 0);
+    group.position.set(-18, 200, 400);
 
     group.name = 'desc';
-
-    // const gui = new GUI();
-    // gui.add(text2.position, 'x', -100, 100, 0.1);
-    // gui.add(text2.position, 'y', -100, 100, 0.1);
 
     return group;
   },

@@ -88,11 +88,9 @@ export const daqingConfig: CityConfig = {
     myText.font = font;
     myText.overflowWrap = 'break-word';
 
-    myText.material = new MeshBasicMaterial({ color: new Color(0xffffff) });
-
     group.add(myText);
+
     group.position.set(-18, 194, 400);
-    // group.rotation.set(0, 2 * Math.PI * 0.999, 0);
 
     group.name = 'desc';
 
