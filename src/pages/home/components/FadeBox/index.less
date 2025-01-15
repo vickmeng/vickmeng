@@ -1,0 +1,26 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0; /* 初始透明度，完全不透明 */
+  }
+
+  100% {
+    opacity: 1; /* 完全不透明 */
+  }
+}
+
+
+.fade-box {
+  opacity: 0;
+
+
+  &.in {
+    animation: fadeIn 1500ms ease-in-out;
+    opacity: 1;
+
+
+
+
+  }
+}
+
+

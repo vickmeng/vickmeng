@@ -1,13 +1,23 @@
 import { useEffect } from 'react';
 import './index.less';
-import Start from '@/pages/home/components/Start';
+import WheelTip from '@/pages/home/components/WheelTip';
 import { useSnapshot } from 'valtio/react';
-import { playingStore } from '@/pages/home/store';
+import { playingStore, sideIndexStore } from '@/pages/home/store';
 import { startTrackCamera } from '@/pages/home/canvas/startTrackCamera';
-import { trackHelperGroup } from '@/pages/home/canvas/core';
+import Nav from '@/pages/home/components/Nav/Nav';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import WorkSide from '@/pages/home/components/WorkSide';
+import FirstSide from '@/pages/home/components/FirstSide';
+import { Mousewheel } from 'swiper/modules';
+import ProjectSide from '@/pages/home/components/ProjectSide';
+import CommunitySide from '@/pages/home/components/CommunitySide';
+import MeSide from '@/pages/home/components/MeSide';
 
 const Home = () => {
   const { playing } = useSnapshot(playingStore);
+  const { sideIndex } = useSnapshot(sideIndexStore);
 
   useEffect(() => {
     // @ts-ignore
@@ -16,6 +26,10 @@ const Home = () => {
 
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
+      if (playing) {
+        return;
+      }
+
       if (Math.abs(e.deltaY) > 30) {
         startTrackCamera();
       }
@@ -26,23 +40,39 @@ const Home = () => {
     return () => {
       document.removeEventListener('wheel', onWheel);
     };
-  }, []);
+  }, [playing]);
 
   return (
     <>
       <div id={'home_bg'}></div>
 
-      {!playing && <Start />}
+      {sideIndex !== 4 && <WheelTip />}
 
       {playing && (
-        <div
-          style={{ position: 'fixed', color: '#fff', fontSize: '12px', cursor: 'pointer', zIndex: 1000, top: 0 }}
-          onClick={() => {
-            trackHelperGroup.visible = !trackHelperGroup.visible;
-          }}
-        >
-          切换辅助工具
-        </div>
+        <>
+          <Swiper
+            direction={'vertical'}
+            draggable={false}
+            onSlideChange={(swiper) => {
+              sideIndexStore.sideIndex = swiper.activeIndex;
+            }}
+            mousewheel={{
+              thresholdDelta: 60,
+            }}
+            modules={[Mousewheel]}
+            className={`${[1, 2, 3].includes(sideIndex) ? 'blur' : ''}`}
+            speed={400}
+            // slidesPerView={0}
+            // lazyPreloadPrevNext={}
+          >
+            <Nav></Nav>
+            <SwiperSlide>{({ isActive }) => (isActive ? <FirstSide /> : undefined)}</SwiperSlide>
+            <SwiperSlide>{({ isActive }) => (isActive ? <WorkSide /> : undefined)}</SwiperSlide>
+            <SwiperSlide>{({ isActive }) => (isActive ? <ProjectSide /> : undefined)}</SwiperSlide>
+            <SwiperSlide>{({ isActive }) => (isActive ? <CommunitySide /> : undefined)}</SwiperSlide>
+            <SwiperSlide>{({ isActive }) => (isActive ? <MeSide /> : undefined)}</SwiperSlide>
+          </Swiper>
+        </>
       )}
     </>
   );
