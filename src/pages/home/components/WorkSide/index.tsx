@@ -4,7 +4,7 @@ import FadeBox from '@/pages/home/components/FadeBox';
 const WorkSide = () => {
   return (
     <div className={'work-side'}>
-      <div style={{ width: '200px', paddingBottom: '190px' }}>
+      <div style={{ width: '200px', paddingBottom: '198px' }}>
         <FadeBox>
           <h2 style={{ marginBottom: '60px' }}>工作经历</h2>
         </FadeBox>
@@ -62,7 +62,7 @@ const WorkSide = () => {
           </p>
 
           <FadeBox>
-            <p>加入海外业务线,任前端主程（高端外包线，4800/人天）。</p>
+            <p>加入海外业务线，任前端主程（高端外包线，4800/人天）。</p>
           </FadeBox>
           <FadeBox>
             <p>兼任TDD，Angular讲师。</p>
@@ -86,7 +86,9 @@ const WorkSide = () => {
 
           <FadeBox>
             <p>职业生涯的起点，负责日常迭代。</p>
-            <p>落地从es5+Jq到ts+Angular的技术升级，是国内最早的一批Angular使用者。</p>
+            <p>
+              落地从es5+Jq到ts+Angular的技术升级。作为是国内最早的一批Angular使用者，借机加入RxJS中文社区，结识了很多同好。
+            </p>
           </FadeBox>
         </div>
       </div>

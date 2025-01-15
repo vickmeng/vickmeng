@@ -25,7 +25,7 @@ const FirstSide = () => {
       <br></br>
 
       <FadeBox>
-        <a style={{ color: '#fff' }} href={'./timeLine'} target={'_blank'} rel="noreferrer">
+        <a style={{ color: '#fff' }} href={'/#/timeline'} target={'_blank'} rel="noreferrer">
           (点击查看一路经历)
         </a>
       </FadeBox>
