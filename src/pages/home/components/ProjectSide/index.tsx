@@ -83,7 +83,7 @@ const ProjectSide = () => {
             <FadeBox>
               <p>
                 <span className={'sub-title'}>项目介绍 </span>
-                项目介绍：基于Ionic的移动端混合开发项目，这个技术路线现在看起来有些冷门。
+                项目介绍：基于Ionic的移动端混合开发项目。
               </p>
             </FadeBox>
 
@@ -108,7 +108,7 @@ const ProjectSide = () => {
             <FadeBox>
               <p>
                 <span className={'sub-title'}>项目介绍 </span>
-                项目介绍：负责调研与落地Jq+es5到Angular + Typescript技术升级，负责可视化相关功能的调研与开发。
+                项目介绍：负责调研与落地从Jq + es5到Angular + Typescript技术升级，负责可视化相关功能的调研与开发。
               </p>
             </FadeBox>
 
