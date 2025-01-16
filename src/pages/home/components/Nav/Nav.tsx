@@ -3,6 +3,7 @@ import './index.less';
 import { useSwiper } from 'swiper/react';
 import { useSnapshot } from 'valtio/react';
 import { sideIndexStore } from '@/pages/home/store';
+import FadeBox from '@/pages/home/components/FadeBox';
 
 const NavLink = ({ children, slideToIndex }: { children: ReactNode; slideToIndex: number }) => {
   const swiper = useSwiper();
@@ -27,11 +28,21 @@ const NavLink = ({ children, slideToIndex }: { children: ReactNode; slideToIndex
 const Nav = () => {
   return (
     <div className={'nav-bar'}>
-      <NavLink slideToIndex={0}>前言</NavLink>
-      <NavLink slideToIndex={1}>工作</NavLink>
-      <NavLink slideToIndex={2}>项目</NavLink>
-      <NavLink slideToIndex={3}>社区</NavLink>
-      <NavLink slideToIndex={4}>我</NavLink>
+      <FadeBox>
+        <NavLink slideToIndex={0}>前言</NavLink>
+      </FadeBox>
+      <FadeBox>
+        <NavLink slideToIndex={1}>工作</NavLink>
+      </FadeBox>
+      <FadeBox>
+        <NavLink slideToIndex={2}>项目</NavLink>
+      </FadeBox>
+      <FadeBox>
+        <NavLink slideToIndex={3}>社区</NavLink>
+      </FadeBox>
+      <FadeBox>
+        <NavLink slideToIndex={4}>我</NavLink>
+      </FadeBox>
     </div>
   );
 };

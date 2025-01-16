@@ -2,8 +2,8 @@ import { defineConfig } from "umi";
 
 export default defineConfig({
   routes: [
-    { path: "/", redirect:'/home' },
-    { path: "/home", component: "home" },
+
+    { path: "/", component: "home" },
     { path: "/timeline", component: "timeline" },
     { path: "/test", component: "test" },
     { path: "/curve", component: "curve" },
