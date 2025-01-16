@@ -1,5 +1,6 @@
 import FadeBox from '@/pages/home/components/FadeBox';
 import './index.less';
+import { Link } from '@@/exports';
 const FirstSide = () => {
   return (
     <div className={'first-side'}>
@@ -25,9 +26,9 @@ const FirstSide = () => {
       <br></br>
 
       <FadeBox>
-        <a style={{ color: '#fff' }} href={'/vickmeng/timeline'} rel="noreferrer">
+        <Link style={{ color: '#fff' }} to={'/timeline'} rel="noreferrer">
           (点击查看一路经历)
-        </a>
+        </Link>
       </FadeBox>
     </div>
   );
