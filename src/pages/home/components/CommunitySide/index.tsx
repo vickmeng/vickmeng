@@ -61,22 +61,25 @@ const CommunitySide = () => {
 
             <FadeBox>
               <p>
+                中文官网&nbsp;
                 <a href={'https://cn.rx.js.org/'} target={'_blank'} rel="noreferrer">
-                  中文官网 https://cn.rx.js.org/
+                  https://cn.rx.js.org/
                 </a>
               </p>
             </FadeBox>
             <FadeBox>
               <p>
+                学习Rxjs操作符&nbsp;
                 <a href={'https://rxjs-cn.github.io/learn-rxjs-operators/'} target={'_blank'} rel="noreferrer">
-                  学习Rxjs操作符 https://rxjs-cn.github.io/learn-rxjs-operators/
+                  https://rxjs-cn.github.io/learn-rxjs-operators/
                 </a>
               </p>
             </FadeBox>
             <FadeBox>
               <p>
+                RxJS中文社区&nbsp;
                 <a href={'https://github.com/RxJS-CN'} target={'_blank'} rel="noreferrer">
-                  RxJS中文社区 https://github.com/RxJS-CN
+                  https://github.com/RxJS-CN
                 </a>
               </p>
             </FadeBox>
