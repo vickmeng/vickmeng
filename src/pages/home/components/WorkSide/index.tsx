@@ -4,7 +4,7 @@ import FadeBox from '@/pages/home/components/FadeBox';
 const WorkSide = () => {
   return (
     <div className={'work-side'}>
-      <div style={{ width: '200px', paddingBottom: '198px' }}>
+      <div style={{ width: '200px', paddingBottom: '184px' }}>
         <FadeBox>
           <h2 style={{ marginBottom: '60px' }}>工作经历</h2>
         </FadeBox>
@@ -17,7 +17,7 @@ const WorkSide = () => {
         <br></br>
         <br></br>
 
-        <FadeBox>加盟过高度敏捷开发团队</FadeBox>
+        <FadeBox>加入过高度敏捷开发团队</FadeBox>
         <br></br>
         <br></br>
 
@@ -72,7 +72,7 @@ const WorkSide = () => {
           </FadeBox>
           <FadeBox>
             <p>
-              Thoughtworks是一家崇尚敏捷开发、充满分享风气的公司。在这里领略了最完整的敏捷开发，经历了TDD，Pair，Showcase，Retro等一系列有趣的工程实践。
+              Thoughtworks是敏捷开发的创造者，在这里领略了最完整的敏捷实践，经历了TDD，Pair，Showcase，Retro等一系列有趣的工程实践。
             </p>
           </FadeBox>
         </div>
@@ -85,9 +85,11 @@ const WorkSide = () => {
           </p>
 
           <FadeBox>
-            <p>职业生涯的起点，负责日常迭代。</p>
+            <p>职业生涯的起点。</p>
+            <p>负责可视化相关功能的调研与研发。</p>
             <p>
-              落地从es5+Jq到ts+Angular的技术升级。作为是国内最早的一批Angular使用者，借机加入RxJS中文社区，结识了很多同好。
+              负责落地从Jquery到Ts +
+              Angular的技术升级。作为是国内最早的一批Angular使用者，借机加入RxJS中文社区，结识了很多同好。
             </p>
           </FadeBox>
         </div>

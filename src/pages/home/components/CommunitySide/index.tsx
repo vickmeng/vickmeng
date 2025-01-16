@@ -13,7 +13,13 @@ const CommunitySide = () => {
             </FadeBox>
             <FadeBox>
               <p>
-                基于rxjs的表单状态引擎，灵活、高性能、跨端、跨框架，提供完整文档与99%单元测试覆盖，解决react在表单场景的乏力。目前在公司内作为内部工具应用于多个项目。
+                基于rxjs的表单状态引擎，灵活、高性能、跨端、跨框架，提供完整文档与99%单元测试。解决react在表单场景的乏力，提供跨平台应用的代码服用能力。目前在公司内作为内部工具已经应用于多个项目。
+              </p>
+              <p>
+                文档&nbsp;
+                <a href={'https://vickmeng.github.io/rx-form/'} target={'_blank'} rel="noreferrer">
+                  https://vickmeng.github.io/rx-form/
+                </a>
               </p>
             </FadeBox>
           </div>
@@ -23,7 +29,16 @@ const CommunitySide = () => {
               <h3 className={'title'}>3D纹身模拟器</h3>
             </FadeBox>
             <FadeBox>
-              <p>基于threejs的纹身模拟工具。</p>
+              <p>基于three.js的纹身模拟工具。</p>
+            </FadeBox>
+
+            <FadeBox>
+              <p>
+                官网&nbsp;
+                <a href={'https://vickmeng.github.io/tattoo/'} target={'_blank'} rel="noreferrer">
+                  https://vickmeng.github.io/tattoo/
+                </a>
+              </p>
             </FadeBox>
           </div>
 

@@ -6,7 +6,7 @@ const ProjectSide = () => {
     <div className={'project-side'}>
       <div style={{ width: '900px' }}>
         <FadeBox>
-          <h2 style={{ marginBottom: '40px' }}>项目经历</h2>
+          <h2 style={{ marginTop: '42px', marginBottom: '24px' }}>项目经历</h2>
         </FadeBox>
         <div className={'projects-wrapper'}>
           <div className={'project-item'}>
@@ -22,7 +22,7 @@ const ProjectSide = () => {
             <FadeBox>
               <p>
                 <span className={'sub-title'}>项目介绍 </span>
-                针对工地采购场景，共10余个应用。打通招投标，竞标，下单，物流跟踪，现场“收验领”完整链路，。
+                围绕工地采购场景的整套系统，共10余个应用。打通招投标，竞标，下单，物流跟踪，现场“收验领”完整链路。
                 以策略模式适配货拉拉，满帮等多家物流商的多态化业务。
                 用跨端方案实现一套代码运行于分手机web，小程序，原生多个平台。 用微前端架构提供容器化集成能力。
                 用three.js进行现场收货3D可视化展示。
@@ -53,9 +53,9 @@ const ProjectSide = () => {
             <FadeBox>
               <p>
                 <span className={'sub-title'}>项目介绍 </span>
-                为新加坡政府打造的无代码表单生成平台，通过简单操作发布表单，类似于金数据。分设计端（Angular）和填写端（React）与自研基础组件库（React）。开发者分别来自中国、新加坡、印度等多国。
+                为新加坡政府打造的无代码表单生成平台，通过简单操作发布表单，类似于金数据。分设计端（Angular）和填写端（React）与自研基础组件库（React），并提供了完整的单元测试。开发者分别来自中国、新加坡、印度等多国。
                 过程中深感React在表单场景的乏力，于是着手开源项目
-                <a style={{ color: 'white' }} href={''}>
+                <a style={{ color: 'white' }} href={'https://vickmeng.github.io/rx-form/'}>
                   rx-form
                 </a>
                 。
@@ -83,7 +83,7 @@ const ProjectSide = () => {
             <FadeBox>
               <p>
                 <span className={'sub-title'}>项目介绍 </span>
-                项目介绍：基于Ionic的移动端混合开发项目。
+                基于Ionic的移动端混合开发项目。
               </p>
             </FadeBox>
 
@@ -108,14 +108,14 @@ const ProjectSide = () => {
             <FadeBox>
               <p>
                 <span className={'sub-title'}>项目介绍 </span>
-                项目介绍：负责调研与落地从Jq + es5到Angular + Typescript技术升级，负责可视化相关功能的调研与开发。
+                Ts + Angular的PC端web项目，可视化部分由G2 + D3完成。
               </p>
             </FadeBox>
 
             <FadeBox>
               <p>
                 <span className={'sub-title'}>重点技术 </span>
-                Typescript，Angular，D3.js，G2，Jquery
+                Typescript，Angular，D3.js，G2
               </p>
             </FadeBox>
           </div>
