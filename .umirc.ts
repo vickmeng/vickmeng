@@ -2,18 +2,16 @@ import { defineConfig } from "umi";
 
 export default defineConfig({
   routes: [
-    { path: "/", component: "home" },
+    { path: "/", redirect:'/home' },
+    { path: "/home", component: "home" },
     { path: "/timeline", component: "timeline" },
     { path: "/test", component: "test" },
     { path: "/curve", component: "curve" },
     { path: "/bezierCurve", component: "bezierCurve" },
     { path: "/catmullRom", component: "catmullRom" },
   ],
-  history: {
-    type: 'hash'
-  },
   hash: true,
-  publicPath:'./',
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   base:'vickmeng',
   outputPath:'docs',
   jsMinifier:'terser',
