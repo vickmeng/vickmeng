@@ -12,6 +12,8 @@ export default defineConfig({
   history: {
     type: 'hash'
   },
+  hash: true,
+  publicPath:'./',
   base:'vickmeng',
   outputPath:'docs',
   jsMinifier:'terser',
