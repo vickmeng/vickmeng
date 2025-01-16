@@ -4,7 +4,7 @@ import FadeBox from '@/pages/home/components/FadeBox';
 const WorkSide = () => {
   return (
     <div className={'work-side'}>
-      <div style={{ width: '200px', paddingBottom: '184px' }}>
+      <div style={{ width: '200px' }}>
         <FadeBox>
           <h2 style={{ marginBottom: '60px' }}>工作经历</h2>
         </FadeBox>
@@ -45,10 +45,10 @@ const WorkSide = () => {
           </p>
 
           <FadeBox>
-            <p>任物流创新团队前端负责人，从0组队，主导10余个项目。</p>
+            <p>任物流创新团队前端负责人，主导10余个项目。</p>
           </FadeBox>
           <FadeBox>
-            <p>团队由本部员工，外包员工，临时劳务多角色组成，最高达12人。</p>
+            <p>团队由本部员工，外包员工，临时劳务多角色组成。从0组队，最高达12人。</p>
           </FadeBox>
           <FadeBox>
             <p>负责内部协调，规范制定，内训，代码审核，重难点攻坚，招评标等工作。</p>

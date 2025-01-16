@@ -65,7 +65,7 @@ const ProjectSide = () => {
             <FadeBox>
               <p>
                 <span className={'sub-title'}>重点技术 </span>
-                Typescript，Angular，React，Formik，testing-library，Lerna
+                Typescript，Angular，React，Formik，testing-library，Jest，Lerna
               </p>
             </FadeBox>
           </div>

@@ -5,7 +5,7 @@ const CommunitySide = () => {
   return (
     <div className={'community-side'}>
       <div style={{ width: '900px' }}>
-        <h2 style={{ marginBottom: '40px' }}>社区贡献</h2>
+        <h2 style={{ marginBottom: '24px' }}>开源贡献</h2>
         <div className={'community-wrapper'}>
           <div className={'community-item'}>
             <FadeBox>
