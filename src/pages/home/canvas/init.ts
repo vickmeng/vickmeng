@@ -3,13 +3,19 @@ import { addModels } from '@/pages/home/canvas/addModels';
 import { addBackground } from '@/pages/home/canvas/addBackground';
 import { addGrass } from '@/pages/home/canvas/addGrass';
 import { addEvil } from '@/pages/home/canvas/addEvil';
+import { loadingStore } from '@/pages/home/store';
 
 document.querySelector('#home_bg')!.appendChild(renderer.domElement);
 
-addModels();
-addBackground();
-addGrass();
-addEvil();
+// loadingStore.loading = true;
+
+const onLoad = async () => {
+  await Promise.all([addModels(), addBackground(), addGrass(), addEvil()]);
+};
+
+onLoad().then(() => {
+  loadingStore.loading = false;
+});
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;

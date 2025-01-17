@@ -43,12 +43,12 @@ const MeSide = () => {
         <br></br>
 
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <div style={{ flexBasis: '200px', paddingRight: '20px' }}>
+          <div style={{ flexBasis: '220px', paddingRight: '24px' }}>
             <FadeBox>
               <p>至于为什么做了这个网站？</p>
             </FadeBox>
             <FadeBox>
-              <p>因为最近真的很迷藤本树，这里也是复刻了《链锯人》中暗之恶魔登场的名场面。</p>
+              <p>最近真的很迷藤本树，这里复刻了《链锯人》中暗之恶魔登场的名场面。</p>
             </FadeBox>
             <br></br>
 
@@ -57,9 +57,9 @@ const MeSide = () => {
             </FadeBox>
           </div>
 
-          <FadeBox>
-            <img src={darkevil} style={{ width: '200px' }}></img>
-          </FadeBox>
+          {/* <FadeBox> */}
+          <img src={darkevil} style={{ width: '200px' }}></img>
+          {/* </FadeBox> */}
         </div>
       </div>
     </div>

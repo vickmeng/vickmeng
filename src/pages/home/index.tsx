@@ -14,6 +14,7 @@ import { Mousewheel } from 'swiper/modules';
 import ProjectSide from '@/pages/home/components/ProjectSide';
 import CommunitySide from '@/pages/home/components/CommunitySide';
 import MeSide from '@/pages/home/components/MeSide';
+import Loading from '@/pages/home/components/Loading';
 
 const Home = () => {
   const { playing } = useSnapshot(playingStore);
@@ -44,6 +45,8 @@ const Home = () => {
 
   return (
     <>
+      <Loading></Loading>
+
       <div id={'home_bg'}></div>
 
       {sideIndex !== 4 && <WheelTip />}

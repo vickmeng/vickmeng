@@ -3,7 +3,7 @@ import { Tween } from '@tweenjs/tween.js';
 import { AnimationFrameSubject, camera } from '@/pages/home/canvas/core';
 import { fadeMaterial } from '@/pages/home/canvas/fadeMaterial';
 import { lastValueFrom, Subject, takeUntil } from 'rxjs';
-import { playingStore, trackIndexStore } from '@/pages/home/store';
+import { loadingStore, playingStore, trackIndexStore } from '@/pages/home/store';
 
 interface Track {
   cameraTrack: Curve<Vector3> | Vector3;
@@ -191,6 +191,10 @@ const handleSwitchTrack = async (isStart: boolean) => {
 };
 
 export const startTrackCamera = async () => {
+  if (loadingStore.loading) {
+    return;
+  }
+
   if (playingStore.playing) {
     return;
   }

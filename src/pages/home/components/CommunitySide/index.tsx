@@ -9,7 +9,7 @@ const CommunitySide = () => {
         <div className={'community-wrapper'}>
           <div className={'community-item'}>
             <FadeBox>
-              <h3 className={'title'}>rxform</h3>
+              <h3 className={'title'}>rx-form</h3>
             </FadeBox>
             <FadeBox>
               <p>

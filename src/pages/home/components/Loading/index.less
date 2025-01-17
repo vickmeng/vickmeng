@@ -1,0 +1,46 @@
+@keyframes l1 {to{opacity: 0}}
+
+@keyframes finish {
+  from {
+    display: flex;
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+    display: none;
+  }
+}
+
+
+
+.home-loading {
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  bottom:0;
+  left: 0;
+  right: 0;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* HTML: <div class="loader"></div> */
+  .loader {
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 30px;
+    animation: l1 1s linear infinite alternate;
+    color: white;
+  }
+  .loader:before {
+    content:"Loading..."
+  }
+
+
+  &.finish {
+    animation: finish 1000ms linear;
+    display: none;
+
+  }
+}

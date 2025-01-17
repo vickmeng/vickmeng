@@ -24,10 +24,10 @@ const ProjectSide = () => {
                 <div className={'desc-title'}>项目介绍 </div>
                 <div className={'desc-text'}>
                   <p>
-                    围绕工地采购场景的整套系统，共10余个应用。打通招投标，竞标，下单，物流跟踪，现场“收验领”完整链路。
+                    围绕工地采购场景的整套系统，共10余个应用。打通招投标，竞标，下单，物流跟踪，现场收/验/领完整链路。
                   </p>
                   <p>业务上以策略 + 适配模式兼容货拉拉，满帮等多家物流商的多态化流程。</p>
-                  <p>用React-native + React-native-web实现移动端跨端能力，实现一套代码运行于多个平台。</p>
+                  <p>用React-native + React-native-web实现移动端跨端能力，编写一套代码运行于多个平台。</p>
                   <p>基于qiankun的实现微前端架构，被多个系统集成。</p>
                   <p>用three.js进行现场收货3D可视化展示。</p>
                 </div>
