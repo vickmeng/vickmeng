@@ -62,7 +62,7 @@ const WorkSide = () => {
           </p>
 
           <FadeBox>
-            <p>加入海外业务线，任前端主程（高端外包线，4800/人天）。</p>
+            <p>加入海外业务线，任前端主程（高端交付线，4800/人天）。</p>
           </FadeBox>
           <FadeBox>
             <p>兼任TDD，Angular讲师。</p>
@@ -72,7 +72,7 @@ const WorkSide = () => {
           </FadeBox>
           <FadeBox>
             <p>
-              Thoughtworks是敏捷开发的创造者，在这里领略了最完整的敏捷实践，经历了TDD，Pair，Showcase，Retro等一系列有趣的工程实践。
+              Thoughtworks是敏捷开发的创造者，在这里领略了最完整的敏捷实践，经历了TDD，Pair，Showcase，Retro等一系列工程实践。
             </p>
           </FadeBox>
         </div>

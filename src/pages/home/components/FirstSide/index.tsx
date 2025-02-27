@@ -1,6 +1,6 @@
 import FadeBox from '@/pages/home/components/FadeBox';
 import './index.less';
-import { Link } from '@@/exports';
+// import { Link } from '@@/exports';
 const FirstSide = () => {
   return (
     <div className={'first-side'}>
@@ -25,11 +25,11 @@ const FirstSide = () => {
       <FadeBox>一路辗转，从北到南，现定居成都。</FadeBox>
       <br></br>
 
-      <FadeBox>
-        <Link style={{ color: '#fff' }} to={'/timeline'} rel="noreferrer">
-          (点击查看一路经历)
-        </Link>
-      </FadeBox>
+      {/* <FadeBox> */}
+      {/*  <Link style={{ color: '#fff' }} to={'/timeline'} rel="noreferrer"> */}
+      {/*    (点击查看一路经历) */}
+      {/*  </Link> */}
+      {/* </FadeBox> */}
     </div>
   );
 };

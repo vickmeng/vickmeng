@@ -1,5 +1,6 @@
 import './index.less';
 import FadeBox from '@/pages/home/components/FadeBox';
+import clock from '@/assets/clock.png';
 
 const CommunitySide = () => {
   return (
@@ -87,10 +88,11 @@ const CommunitySide = () => {
 
           <div className={'community-item'}>
             <FadeBox>
-              <h3 className={'title'}>拳击秒表（敬请期待）</h3>
+              <h3 className={'title'}>格斗秒表</h3>
             </FadeBox>
             <FadeBox>
-              <p>好用的拳击训练辅助小程序，包含比赛计时，训练时间规划，反应训练等功能。</p>
+              <p>好用的格斗训练辅助微信小程序，包含比赛计时，训练时间规划，指令训练等功能。</p>
+              <img src={clock} width={100}></img>
             </FadeBox>
           </div>
         </div>
