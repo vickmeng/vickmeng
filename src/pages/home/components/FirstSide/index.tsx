@@ -11,11 +11,11 @@ const FirstSide = () => {
       <br></br>
 
       <FadeBox>#前端</FadeBox>
-      <FadeBox>#奶爸</FadeBox>
-      <FadeBox>#退役舞者</FadeBox>
+      {/* <FadeBox>#奶爸</FadeBox> */}
+      {/* <FadeBox>#退役舞者</FadeBox> */}
       <FadeBox>#拳击票友</FadeBox>
-      <FadeBox>#纹身师</FadeBox>
-      <FadeBox>#盘核桃专家</FadeBox>
+      {/* <FadeBox>#纹身师</FadeBox> */}
+      {/* <FadeBox>#盘核桃专家</FadeBox> */}
       <FadeBox>#强直性脊柱炎患者</FadeBox>
       <br></br>
       <br></br>
