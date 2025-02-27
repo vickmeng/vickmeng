@@ -1,7 +1,7 @@
 import './index.less';
 import photo from '@/assets/photo.jpg';
 import FadeBox from '@/pages/home/components/FadeBox';
-import darkevil from '@/assets/darkevil.png';
+// import darkevil from '@/assets/darkevil.png';
 
 const MeSide = () => {
   return (
